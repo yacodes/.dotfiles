@@ -18,7 +18,7 @@ let g:scnvim_sclang_executable = '/Applications/SuperCollider.app/Contents/MacOS
 
 " update rate for server info in status line (seconds)
 " (don't set this to low or vim will get slow)
-let g:scnvim_statusline_interval = 1
+let g:scnvim_statusline_interval = 2
 
 " set this variable if you don't want the "echo args" feature
 let g:scnvim_echo_args = 1

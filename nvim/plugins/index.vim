@@ -27,6 +27,7 @@ Plug 'hail2u/vim-css3-syntax', {'for': 'css'} " CSS3
 Plug 'othree/html5.vim', {'for': 'html'} " HTML5
 Plug 'tidalcycles/vim-tidal', {'for': 'tidal'} " Tidal
 Plug 'carlitux/deoplete-ternjs', {'for': ['jsx', 'javascript'], 'do': 'yarn global add tern'}
+Plug 'davidgranstrom/scnvim', {'for': 'supercollider'}
 
 call plug#end()
 
@@ -42,3 +43,4 @@ source ~/.dotfiles/nvim/plugins/config/rainbow_parentheses.vim
 source ~/.dotfiles/nvim/plugins/config/deoplete-ternjs.vim
 source ~/.dotfiles/nvim/plugins/config/vim-tidal.vim
 source ~/.dotfiles/nvim/plugins/config/html5.vim
+source ~/.dotfiles/nvim/plugins/config/scnvim.vim
