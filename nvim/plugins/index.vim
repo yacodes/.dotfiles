@@ -31,14 +31,14 @@ Plug 'carlitux/deoplete-ternjs', {'for': ['jsx', 'javascript'], 'do': 'yarn glob
 call plug#end()
 
 " Plugins configuration files
-source ~/.config/nvim/plugins/config/theme.vim
-source ~/.config/nvim/plugins/config/deoplete.vim
-source ~/.config/nvim/plugins/config/nerdtree.vim
-source ~/.config/nvim/plugins/config/lightline.vim
-source ~/.config/nvim/plugins/config/fzf.vim
-source ~/.config/nvim/plugins/config/vim-jsx.vim
-source ~/.config/nvim/plugins/config/vim-javascript.vim
-source ~/.config/nvim/plugins/config/rainbow_parentheses.vim
-source ~/.config/nvim/plugins/config/deoplete-ternjs.vim
-source ~/.config/nvim/plugins/config/vim-tidal.vim
-source ~/.config/nvim/plugins/config/html5.vim
+source ~/.dotfiles/nvim/plugins/config/theme.vim
+source ~/.dotfiles/nvim/plugins/config/deoplete.vim
+source ~/.dotfiles/nvim/plugins/config/nerdtree.vim
+source ~/.dotfiles/nvim/plugins/config/lightline.vim
+source ~/.dotfiles/nvim/plugins/config/fzf.vim
+source ~/.dotfiles/nvim/plugins/config/vim-jsx.vim
+source ~/.dotfiles/nvim/plugins/config/vim-javascript.vim
+source ~/.dotfiles/nvim/plugins/config/rainbow_parentheses.vim
+source ~/.dotfiles/nvim/plugins/config/deoplete-ternjs.vim
+source ~/.dotfiles/nvim/plugins/config/vim-tidal.vim
+source ~/.dotfiles/nvim/plugins/config/html5.vim
