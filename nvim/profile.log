@@ -1,0 +1,102 @@
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.012  000.012: --- NVIM STARTING ---
+000.754  000.742: locale set
+001.251  000.497: inits 1
+001.277  000.026: window checked
+001.478  000.201: parsing arguments
+001.708  000.230: expanding arguments
+001.787  000.079: inits 2
+002.288  000.500: init highlight
+003.342  000.587  000.587: sourcing /Users/canvaskisa/.config/nvim/core.vim
+003.483  000.074  000.074: sourcing /Users/canvaskisa/.config/nvim/mappings.vim
+005.398  001.764  001.764: sourcing /Users/canvaskisa/.local/share/nvim/site/autoload/plug.vim
+010.089  000.019  000.019: sourcing /Users/canvaskisa/.config/nvim/plugged/vim-tidal/ftdetect/tidal.vim
+017.994  000.019  000.019: sourcing /Users/canvaskisa/.config/nvim/plugged/vim-fugitive/ftdetect/fugitive.vim
+018.136  000.026  000.026: sourcing /Users/canvaskisa/.config/nvim/plugged/ultisnips/ftdetect/snippets.vim
+018.261  000.016  000.016: sourcing /Users/canvaskisa/.config/nvim/plugged/elm.vim/ftdetect/elm.vim
+018.374  000.018  000.018: sourcing /Users/canvaskisa/.config/nvim/plugged/vim-sugarss/ftdetect/sugarss.vim
+018.554  000.083  000.083: sourcing /Users/canvaskisa/.config/nvim/plugged/vim-javascript/ftdetect/javascript.vim
+018.712  000.057  000.057: sourcing /Users/canvaskisa/.config/nvim/plugged/vim-jsx/ftdetect/javascript.vim
+018.883  007.182  006.964: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/filetype.vim
+019.121  000.045  000.045: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/ftplugin.vim
+019.347  000.042  000.042: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/indent.vim
+020.035  000.237  000.237: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/syntax/syncolor.vim
+020.165  000.532  000.295: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/syntax/synload.vim
+020.201  000.742  000.210: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/syntax/syntax.vim
+021.197  000.179  000.179: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/syntax/syncolor.vim
+021.838  000.179  000.179: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/syntax/syncolor.vim
+029.738  009.375  009.016: sourcing /Users/canvaskisa/.config/nvim/plugged/base16-vim/colors/base16-tomorrow-night.vim
+030.178  000.284  000.284: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/syntax/nosyntax.vim
+031.315  000.207  000.207: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/syntax/syncolor.vim
+032.135  000.206  000.206: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/syntax/syncolor.vim
+040.043  009.616  009.202: sourcing /Users/canvaskisa/.config/nvim/plugged/base16-vim/colors/base16-tomorrow-night.vim
+040.136  009.793  000.178: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/syntax/synload.vim
+040.169  010.351  000.273: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/syntax/syntax.vim
+040.175  019.894  000.168: sourcing /Users/canvaskisa/.config/nvim/plugins/config/theme.vim
+040.258  000.014  000.014: sourcing /Users/canvaskisa/.config/nvim/plugins/config/deoplete.vim
+040.327  000.017  000.017: sourcing /Users/canvaskisa/.config/nvim/plugins/config/nerdtree.vim
+040.887  000.224  000.224: sourcing /Users/canvaskisa/.config/nvim/plugged/lightline.vim/autoload/lightline/colorscheme.vim
+041.507  001.007  000.783: sourcing /Users/canvaskisa/.config/nvim/plugged/lightline.vim/autoload/lightline/colorscheme/jellybeans.vim
+041.528  001.151  000.144: sourcing /Users/canvaskisa/.config/nvim/plugins/config/lightline.vim
+041.625  000.035  000.035: sourcing /Users/canvaskisa/.config/nvim/plugins/config/fzf.vim
+041.692  000.012  000.012: sourcing /Users/canvaskisa/.config/nvim/plugins/config/vim-jsx.vim
+041.758  000.014  000.014: sourcing /Users/canvaskisa/.config/nvim/plugins/config/vim-javascript.vim
+041.860  000.052  000.052: sourcing /Users/canvaskisa/.config/nvim/plugins/config/rainbow_parentheses.vim
+041.962  000.050  000.050: sourcing /Users/canvaskisa/.config/nvim/plugins/config/deoplete-ternjs.vim
+042.165  000.103  000.103: sourcing /Users/canvaskisa/.config/nvim/plugins/config/vim-tidal.vim
+042.248  000.026  000.026: sourcing /Users/canvaskisa/.config/nvim/plugins/config/html5.vim
+042.254  038.715  007.553: sourcing /Users/canvaskisa/.config/nvim/plugins/index.vim
+042.260  039.572  000.196: sourcing /Users/canvaskisa/.config/nvim/init.vim
+042.266  000.406: sourcing vimrc file(s)
+042.675  000.121  000.121: sourcing /Users/canvaskisa/.config/nvim/plugged/vim-startify/plugin/startify.vim
+042.936  000.116  000.116: sourcing /Users/canvaskisa/.config/nvim/plugged/lightline.vim/plugin/lightline.vim
+043.445  000.268  000.268: sourcing /Users/canvaskisa/.config/nvim/plugged/lightline-bufferline/autoload/lightline/bufferline.vim
+043.503  000.421  000.154: sourcing /Users/canvaskisa/.config/nvim/plugged/lightline-bufferline/plugin/bufferline.vim
+044.598  000.487  000.487: sourcing /Users/canvaskisa/.config/nvim/plugged/delimitMate/autoload/delimitMate.vim
+047.176  003.524  003.037: sourcing /Users/canvaskisa/.config/nvim/plugged/delimitMate/plugin/delimitMate.vim
+047.379  000.035  000.035: sourcing /Users/canvaskisa/.config/nvim/plugged/rainbow_parentheses.vim/plugin/rainbow_parentheses.vim
+052.226  004.702  004.702: sourcing /Users/canvaskisa/.config/nvim/plugged/nerdcommenter/plugin/NERD_commenter.vim
+052.942  000.530  000.530: sourcing /Users/canvaskisa/.config/nvim/plugged/matchit.zip/plugin/matchit.vim
+053.484  000.389  000.389: sourcing /Users/canvaskisa/.config/nvim/plugged/vim-fugitive/plugin/fugitive.vim
+054.057  000.415  000.415: sourcing /Users/canvaskisa/.config/nvim/plugged/editorconfig-vim/plugin/editorconfig.vim
+054.693  000.097  000.097: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/autoload/provider/pythonx.vim
+092.783  000.257  000.257: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/autoload/remote/host.vim
+092.900  038.472  038.118: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/autoload/provider/python3.vim
+093.334  000.095  000.095: sourcing /Users/canvaskisa/.config/nvim/plugged/ultisnips/autoload/UltiSnips/map_keys.vim
+093.423  039.208  000.641: sourcing /Users/canvaskisa/.config/nvim/plugged/ultisnips/plugin/UltiSnips.vim
+093.821  000.086  000.086: sourcing /Users/canvaskisa/.config/nvim/plugged/deoplete.nvim/autoload/deoplete.vim
+093.898  000.294  000.208: sourcing /Users/canvaskisa/.config/nvim/plugged/deoplete.nvim/plugin/deoplete.vim
+094.623  000.214  000.214: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/plugin/gzip.vim
+094.694  000.017  000.017: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/plugin/health.vim
+094.826  000.083  000.083: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/plugin/man.vim
+094.911  000.034  000.034: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/plugin/matchit.vim
+095.151  000.192  000.192: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/plugin/matchparen.vim
+095.695  000.492  000.492: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/plugin/netrwPlugin.vim
+096.460  000.207  000.207: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/autoload/remote/define.vim
+096.555  000.572  000.365: sourcing /Users/canvaskisa/.local/share/nvim/rplugin.vim
+096.566  000.794  000.221: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/plugin/rplugin.vim
+096.765  000.135  000.135: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/plugin/shada.vim
+096.865  000.030  000.030: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/plugin/spellfile.vim
+097.087  000.165  000.165: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/plugin/tarPlugin.vim
+097.252  000.102  000.102: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/plugin/tohtml.vim
+097.335  000.024  000.024: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/plugin/tutor.vim
+097.594  000.197  000.197: sourcing /usr/local/Cellar/neovim/0.3.7_2/share/nvim/runtime/plugin/zipPlugin.vim
+098.383  000.618  000.618: sourcing /usr/local/opt/fzf/plugin/fzf.vim
+098.425  003.307: loading plugins
+098.539  000.114: loading packages
+098.839  000.100  000.100: sourcing /Users/canvaskisa/.config/nvim/plugged/ultisnips/after/plugin/UltiSnips_after.vim
+098.902  000.263: loading after plugins
+098.912  000.010: inits 3
+104.409  005.498: reading ShaDa
+105.553  001.143: clearing screen
+107.709  000.460  000.460: sourcing /Users/canvaskisa/.config/nvim/plugged/lightline.vim/autoload/lightline.vim
+112.641  004.315  004.315: sourcing /Users/canvaskisa/.config/nvim/plugged/vim-fugitive/autoload/fugitive.vim
+112.850  000.054  000.054: sourcing /Users/canvaskisa/.config/nvim/plugged/lightline.vim/autoload/lightline/tab.vim
+116.408  006.027: opening buffers
+119.856  003.448: BufEnter autocommands
+119.861  000.004: editing files in windows
