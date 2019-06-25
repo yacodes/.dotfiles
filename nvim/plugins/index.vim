@@ -28,6 +28,7 @@ Plug 'othree/html5.vim', {'for': 'html'} " HTML5
 Plug 'tidalcycles/vim-tidal', {'for': 'tidal'} " Tidal
 Plug 'carlitux/deoplete-ternjs', {'for': ['jsx', 'javascript'], 'do': 'yarn global add tern'}
 Plug 'davidgranstrom/scnvim', {'for': 'supercollider'}
+Plug 'neovimhaskell/haskell-vim', {'for': 'haskell'}
 
 call plug#end()
 
