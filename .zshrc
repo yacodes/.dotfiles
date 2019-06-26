@@ -14,6 +14,11 @@ ZSH_THEME="norm"
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 
+# Startup TMUX on start
+# if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+#   tmux attach || exec tmux new-session;
+# fi
+
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
