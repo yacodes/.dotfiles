@@ -18,6 +18,7 @@ set nowrap " prevent lines from wrapping
 set nobackup " prevent creating backup files
 set noswapfile " prevent creating swap files
 set showtabline=2 " show tabline
+set shell=/bin/sh " set default shell
 
 " Set gui cursor
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
