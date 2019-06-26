@@ -12,7 +12,7 @@ Plug 'scrooloose/nerdcommenter' " Comments shortcuts
 Plug 'vim-scripts/matchit.zip' " Extended % matching
 Plug 'junegunn/fzf', {'on': ['FZF'], 'dir': '~/.fzf', 'do': './install --all'} " Fuzzy file finder
 Plug 'tpope/vim-fugitive' " Git wrapper
-Plug 'dyng/ctrlsf.vim', {'on': ['CtrlSF']} " File search
+Plug 'dyng/ctrlsf.vim' " File search
 Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']} " Filetree
 Plug 'editorconfig/editorconfig-vim' " .editorconfig support
 Plug 'SirVer/ultisnips', {'for': ['supercollider']} " Snippets
