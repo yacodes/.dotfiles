@@ -14,6 +14,7 @@ ZSH_THEME="norm"
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 
+ZSH_TMUX_AUTOSTART="true"
 # Startup TMUX on start
 # if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
 #   tmux attach || exec tmux new-session;
@@ -77,12 +78,9 @@ export LANG=en_GB.UTF-8
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-plugins=(zsh-autosuggestions)
+plugins=(git zsh-autosuggestions tmux)
 
 source $ZSH/oh-my-zsh.sh
-
-zstyle ':omz:module:tmux' auto-start 'yes'
 
 # User configuration
 
