@@ -26,3 +26,6 @@ au Filetype tidal nmap <buffer> <F8> :TidalSilence 8<CR>
 
 " Tidal Send
 au Filetype tidal nmap <buffer> <CR> mavip :TidalSend<CR>`a
+
+" Comments
+let g:NERDCustomDelimiters = {'tidal': {'left': '--','right': ''}}
