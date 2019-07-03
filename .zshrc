@@ -82,6 +82,8 @@ plugins=(zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
+zstyle ':omz:module:tmux' auto-start 'yes'
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
