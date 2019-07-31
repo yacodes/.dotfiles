@@ -4,6 +4,12 @@
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/canvaskisa/.oh-my-zsh"
 export TERM=screen-256color
+export PATH=/usr/local/bin:$PATH
+
+# Env variables for golang
+export GOPATH="${HOME}/.go"
+export GOROOT="$(brew --prefix golang)/libexec"
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
