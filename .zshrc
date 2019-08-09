@@ -20,7 +20,7 @@ ZSH_THEME="norm"
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 
-ZSH_TMUX_AUTOSTART="true"
+# ZSH_TMUX_AUTOSTART="true"
 # Startup TMUX on start
 # if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
 #   tmux attach || exec tmux new-session;
