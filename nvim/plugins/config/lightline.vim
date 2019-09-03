@@ -5,10 +5,12 @@ let g:lightline = {
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
       \   'right': [ [ 'lineinfo' ],
       \              [ 'percent' ],
-      \              [ 'fileformat' ] ]
+      \              [ 'fileformat' ],
+      \              [ 'sclang' ] ],
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head',
+      \   'sclang': 'scnvim#statusline#server_status',
       \ },
       \ }
 

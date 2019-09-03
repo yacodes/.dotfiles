@@ -32,6 +32,21 @@ let g:scnvim_no_mappings = 1
 " configure the color
 highlight SCNvimEval guifg=black guibg=#faf33e ctermfg=black ctermbg=white
 
+" create a custom status line for supercollider buffers
+function! s:set_sclang_statusline()
+  setlocal stl=
+  setlocal stl+=%f
+  setlocal stl+=%=
+  setlocal stl+=%(%l,%c%)
+  setlocal stl+=\ \|
+  setlocal stl+=%18.18{scnvim#statusline#server_status()}
+endfunction
+
+augroup scnvim_stl
+  autocmd!
+  autocmd FileType supercollider call <SID>set_sclang_statusline()
+augroup END
+
 " Mappings
 " Send selection
 au Filetype supercollider nmap <buffer> <silent><CR> <Plug>(scnvim-send-block)
