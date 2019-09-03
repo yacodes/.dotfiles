@@ -118,3 +118,5 @@ alias g="git"
 alias sclang="/Applications/SuperCollider.app/Contents/MacOS/sclang"
 alias weather="curl wttr.in/Moscow"
 export PATH="/usr/local/sbin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

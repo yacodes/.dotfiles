@@ -5,7 +5,7 @@ au! BufNewFile,BufRead *.tidal setf tidal
 let g:tidal_no_mappings = 1
 
 " Tmux config
-let g:tidal_default_config = {"socket_name": "default", "target_pane": "tidal:0.3"}
+let g:tidal_default_config = {"socket_name": "default", "target_pane": "tidal:0.2"}
 
 " Hush
 au Filetype tidal nmap <buffer> <F12> :TidalHush<CR>

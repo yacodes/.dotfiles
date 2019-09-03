@@ -17,6 +17,7 @@ Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']} " Filetre
 Plug 'editorconfig/editorconfig-vim' " .editorconfig support
 Plug 'SirVer/ultisnips', {'for': ['supercollider']} " Snippets
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'} " Autocompletions
+Plug 'junegunn/goyo.vim', {'on': ['Goyo']} " Distraction free writing
 
 " Syntax
 Plug 'lambdatoast/elm.vim', {'for': 'elm'} " Elm
