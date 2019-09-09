@@ -30,6 +30,7 @@ Plug 'tidalcycles/vim-tidal', {'for': 'tidal'} " Tidal
 Plug 'carlitux/deoplete-ternjs', {'for': ['jsx', 'javascript'], 'do': 'yarn global add tern'}
 Plug 'davidgranstrom/scnvim', {'for': 'supercollider'}
 Plug 'neovimhaskell/haskell-vim', {'for': 'haskell'}
+Plug 'sophacles/vim-processing', {'for': 'processing'}
 
 call plug#end()
 
