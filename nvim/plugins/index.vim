@@ -48,3 +48,4 @@ source ~/.dotfiles/nvim/plugins/config/deoplete-ternjs.vim
 source ~/.dotfiles/nvim/plugins/config/vim-tidal.vim
 source ~/.dotfiles/nvim/plugins/config/html5.vim
 source ~/.dotfiles/nvim/plugins/config/scnvim.vim
+source ~/.dotfiles/nvim/plugins/config/vim-prettier.vim
