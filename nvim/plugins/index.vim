@@ -18,6 +18,7 @@ Plug 'editorconfig/editorconfig-vim' " .editorconfig support
 Plug 'SirVer/ultisnips', {'for': ['supercollider']} " Snippets
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'} " Autocompletions
 Plug 'junegunn/goyo.vim', {'on': ['Goyo']} " Distraction free writing
+Plug 'prettier/vim-prettier', {'do': 'yarn install', 'for': ['javascript']} " Clean JS code
 
 " Syntax
 Plug 'lambdatoast/elm.vim', {'for': 'elm'} " Elm
