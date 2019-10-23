@@ -53,6 +53,7 @@ au Filetype supercollider nmap <buffer> <silent><CR> <Plug>(scnvim-send-block)
 au Filetype supercollider xmap <buffer> <silent><CR> <Plug>(scnvim-send-selection)
 
 " Toggle window
+au Filetype tidal nmap <buffer> <silent><Space> <Plug>(scnvim-postwindow-toggle)
 au Filetype supercollider nmap <buffer> <silent><Space> <Plug>(scnvim-postwindow-toggle)
 
 " Clear window
