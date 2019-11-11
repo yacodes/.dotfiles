@@ -7,7 +7,8 @@ Plug 'mhinz/vim-startify' " Custom start screen
 Plug 'itchyny/lightline.vim' " Statusline
 Plug 'mengelbrecht/lightline-bufferline' " Bufferline
 Plug 'Raimondi/delimitMate' " Autoclose of quotes, parenthesis, brackets, etc.
-Plug 'kien/rainbow_parentheses.vim' " Rainbow parenthesis
+" Plug 'kien/rainbow_parentheses.vim' " Rainbow parenthesis
+Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdcommenter' " Comments shortcuts
 Plug 'vim-scripts/matchit.zip' " Extended % matching
 Plug 'junegunn/fzf', {'on': ['FZF'], 'dir': '~/.fzf', 'do': './install --all'} " Fuzzy file finder
@@ -19,6 +20,8 @@ Plug 'SirVer/ultisnips', {'for': ['supercollider']} " Snippets
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'} " Autocompletions
 Plug 'junegunn/goyo.vim', {'on': ['Goyo']} " Distraction free writing
 Plug 'prettier/vim-prettier', {'do': 'yarn install', 'for': ['javascript']} " Clean JS code
+
+let g:rainbow_active = 1
 
 " Syntax
 Plug 'lambdatoast/elm.vim', {'for': 'elm'} " Elm
@@ -43,7 +46,7 @@ source ~/.dotfiles/nvim/plugins/config/lightline.vim
 source ~/.dotfiles/nvim/plugins/config/fzf.vim
 source ~/.dotfiles/nvim/plugins/config/vim-jsx.vim
 source ~/.dotfiles/nvim/plugins/config/vim-javascript.vim
-source ~/.dotfiles/nvim/plugins/config/rainbow_parentheses.vim
+" source ~/.dotfiles/nvim/plugins/config/rainbow_parentheses.vim
 source ~/.dotfiles/nvim/plugins/config/deoplete-ternjs.vim
 source ~/.dotfiles/nvim/plugins/config/vim-tidal.vim
 source ~/.dotfiles/nvim/plugins/config/html5.vim
