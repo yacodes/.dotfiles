@@ -1,6 +1,3 @@
-" Snippets directories
-let g:UltiSnipsSnippetDirectories = ['UltiSnips', 'scnvim-data']
-
 au! BufNewFile,BufRead *.sc,*.scd setf supercollider " Add supercollider filetype
 
 " Eval flash
@@ -28,6 +25,9 @@ let g:scnvim_udp_port = 9670
 
 " set this variable if you don't want any default mappings
 let g:scnvim_no_mappings = 1
+
+let g:scnvim_scdoc = 1
+let g:scnvim_arghints_float = 0
 
 " configure the color
 highlight SCNvimEval guifg=black guibg=#faf33e ctermfg=black ctermbg=white
