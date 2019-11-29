@@ -33,6 +33,7 @@ Plug 'tidalcycles/vim-tidal', {'for': 'tidal'} " Tidal
 Plug 'davidgranstrom/scnvim', {'for': 'supercollider', 'do': ':UpdateRemotePlugins'}
 Plug 'neovimhaskell/haskell-vim', {'for': 'haskell'}
 Plug 'sophacles/vim-processing', {'for': 'processing'}
+Plug 'evanleck/vim-svelte'
 
 call plug#end()
 
