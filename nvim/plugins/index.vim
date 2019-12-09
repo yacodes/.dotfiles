@@ -51,3 +51,4 @@ source ~/.dotfiles/nvim/plugins/config/rainbow.vim
 source ~/.dotfiles/nvim/plugins/config/ultisnips.vim
 source ~/.dotfiles/nvim/plugins/config/supertab.vim
 source ~/.dotfiles/nvim/plugins/config/deoplete.vim
+source ~/.dotfiles/nvim/plugins/config/vim-prettier.vim
