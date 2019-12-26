@@ -14,7 +14,7 @@ Plug 'dyng/ctrlsf.vim' " File search
 Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']} " Filetree
 Plug 'editorconfig/editorconfig-vim' " .editorconfig support
 Plug 'junegunn/goyo.vim', {'on': ['Goyo']} " Distraction free writing
-Plug 'prettier/vim-prettier', {'do': 'yarn install', 'for': ['javascript']} " Clean JS code
+Plug 'prettier/vim-prettier', {'do': 'yarn install'} " Clean JS code
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips'
