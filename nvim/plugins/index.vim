@@ -23,6 +23,8 @@ Plug 'itchyny/lightline.vim' " Statusline
   Plug 'mengelbrecht/lightline-bufferline' " Bufferline
 
 " Syntax
+Plug 'leafgarland/typescript-vim', {'for': ['typescript', 'typescriptreact']} " Typescript
+Plug 'peitalin/vim-jsx-typescript', {'for': ['typescript', 'typescriptreact']} " Typescript
 Plug 'lambdatoast/elm.vim', {'for': 'elm'} " Elm
 Plug 'hhsnopek/vim-sugarss', {'for': 'sugarss'} " Sugarss
 Plug 'pangloss/vim-javascript', {'for': ['jsx', 'javascript']} " JS
