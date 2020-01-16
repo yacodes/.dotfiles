@@ -101,14 +101,14 @@ tabspaces: 2
 # Font configuration (changes require restart)
 font:
   normal:
-    family: Operator Mono Light
+    family: Iosevka Light
   bold:
-    family: Operator Mono Medium
-    style: Bold
+    family: Iosevka
+    style: bold
   italic:
-    family: Operator Mono Light Italic
-    style: Italic
-  size: 14.0
+    family: Iosevka
+    style: italic
+  size: 16.0
   offset:
     x: 0
     y: 0
@@ -282,10 +282,10 @@ live_config_reload: true
 #   - (macOS) /bin/bash --login
 #   - (Linux) user login shell
 #   - (Windows) powershell
-#shell:
-#  program: /bin/bash
-#  args:
-#    - --login
+shell:
+ program: /bin/zsh
+ args:
+  - -l
 
 # Startup directory
 #
