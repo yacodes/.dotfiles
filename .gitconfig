@@ -15,7 +15,7 @@
   pf = push --force-with-lease
   s = status --short
   st = status
-  l = log --pretty=format:'%C(yellow)| %h | %<(32,trunc)%C(reset)%s | %C(cyan)%<(20,trunc)%an %C(reset)| %C(blue)%<(15)%ad %C(reset)|' --date=format:'%d-%b-%y %H:%M'
+  l = log --pretty=format:'%C(yellow)| %h | %<(30,trunc)%C(reset)%s | %C(cyan)%<(14,trunc)%an %C(reset)| %C(blue)%<(15)%ad %C(reset)|' --date=format:'%d-%b-%y %H:%M'
 
 [diff]
 	compactionHeuristic = true
