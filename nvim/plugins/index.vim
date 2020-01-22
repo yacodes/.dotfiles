@@ -17,10 +17,13 @@ Plug 'junegunn/goyo.vim', {'on': ['Goyo']} " Distraction free writing
 Plug 'prettier/vim-prettier', {'do': 'yarn install'} " Clean JS code
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'ervandew/supertab'
+Plug 'jceb/vim-orgmode' " Orgmode
 Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
 Plug 'itchyny/lightline.vim' " Statusline
   Plug 'mengelbrecht/lightline-bufferline' " Bufferline
+Plug 'vim-scripts/utl.vim' " Universal text-linking
+Plug 'junegunn/limelight.vim'
 
 " Syntax
 Plug 'leafgarland/typescript-vim', {'for': ['typescript', 'typescriptreact']} " Typescript
@@ -54,3 +57,5 @@ source ~/.dotfiles/nvim/plugins/config/ultisnips.vim
 source ~/.dotfiles/nvim/plugins/config/supertab.vim
 source ~/.dotfiles/nvim/plugins/config/deoplete.vim
 source ~/.dotfiles/nvim/plugins/config/vim-prettier.vim
+
+let g:org_export_emacs="/usr/bin/emacs"
