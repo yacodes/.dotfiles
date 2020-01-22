@@ -1,11 +1,10 @@
-# Enable colors and change prompt:
-autoload -U colors && colors
-PS1="%B%{$fg[cyan]%}%m %{$fg[yellow]%}λ %{$fg[magenta]%}%(4~|.../%2~|%~)%{$reset_color%} $%b "
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-# export ZSH="/Users/canvaskisa/.oh-my-zsh"
+export ZSH="/Users/canvaskisa/.oh-my-zsh"
 export TERM=screen-256color
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=/usr/local/bin:$PATH
 
 # Env variables for golang
 export GOPATH="${HOME}/.go"
@@ -21,8 +20,8 @@ ZSH_THEME="norm"
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 
-# Startup TMUX
 ZSH_TMUX_AUTOSTART="true"
+# Startup TMUX on start
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   tmux attach || exec tmux new-session;
 fi
@@ -87,14 +86,14 @@ fi
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git zsh-autosuggestions tmux zsh-syntax-highlighting vi-mode)
 
-# source $ZSH/oh-my-zsh.sh
+source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-export LANG=en_US.UTF-8
+# export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
