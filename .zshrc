@@ -4,7 +4,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/canvaskisa/.oh-my-zsh"
 export TERM=screen-256color
-export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/bin:/Library/TeX/texbin:$PATH
 
 # Env variables for golang
 export GOPATH="${HOME}/.go"
@@ -117,6 +117,7 @@ alias v="nvim"
 alias g="git"
 alias sclang="/Applications/SuperCollider.app/Contents/MacOS/sclang"
 alias weather="curl wttr.in/Moscow"
+alias tidal="ghci -ghci-script"
 export PATH="/usr/local/sbin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

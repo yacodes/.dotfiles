@@ -20,7 +20,6 @@ let g:lightline#bufferline#unnamed = '[*]'
 let g:lightline.tabline = {'left': [['buffers']], 'right': [['filetype', 'fileencoding']]}
 let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
 let g:lightline.component_type = {'buffers': 'tabsel'}
-let g:lightline#bufferline#filename_modifier = ':t'
 
 let s:palette = g:lightline#colorscheme#{g:lightline.colorscheme}#palette
 let s:palette.normal.middle = [ [ 'NONE', 'NONE', 'NONE', 'NONE' ] ]
