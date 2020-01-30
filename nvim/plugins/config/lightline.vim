@@ -15,7 +15,7 @@ let g:lightline = {
       \ }
 
 let g:lightline#bufferline#show_number = 0
-let g:lightline#bufferline#shorten_path = 0
+let g:lightline#bufferline#shorten_path = 1
 let g:lightline#bufferline#unnamed = '[*]'
 let g:lightline.tabline = {'left': [['buffers']], 'right': [['filetype', 'fileencoding']]}
 let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
