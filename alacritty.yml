@@ -118,57 +118,44 @@ font:
   use_thin_strokes: true
 
 
-# base16-brewer-256.yml
-# Base16 Brewer 256 - alacritty color config
-# Timothée Poisot (http://github.com/tpoisot)
-
-# base16-classic-dark-256.yml
-# Base16 Classic Dark 256 - alacritty color config
-# Jason Heeris (http://heeris.id.au)
-
-# color_start
+# Colors (Jellybeans)
 colors:
   # Default colors
   primary:
-    background: '0x151515'
-    foreground: '0xd0d0d0'
+    background: '#161616'
+    foreground: '#e4e4e4'
 
-  # Colors the cursor will use if `custom_cursor_colors` is true
+  # Cursor volors
   cursor:
-    text: '0x151515'
-    cursor: '0xd0d0d0'
+    text: '#feffff'
+    cursor: '#ffb472'
 
   # Normal colors
   normal:
-    black:   '0x151515'
-    red:     '0xac4142'
-    green:   '0x90a959'
-    yellow:  '0xf4bf75'
-    blue:    '0x6a9fb5'
-    magenta: '0xaa759f'
-    cyan:    '0x75b5aa'
-    white:   '0xd0d0d0'
+    black:   '#a3a3a3'
+    red:     '#e98885'
+    green:   '#a3c38b'
+    yellow:  '#ffc68d'
+    blue:    '#a6cae2'
+    magenta: '#e7cdfb'
+    cyan:    '#00a69f'
+    white:   '#e4e4e4'
 
   # Bright colors
   bright:
-    black:   '0x505050'
-    red:     '0xac4142'
-    green:   '0x90a959'
-    yellow:  '0xf4bf75'
-    blue:    '0x6a9fb5'
-    magenta: '0xaa759f'
-    cyan:    '0x75b5aa'
-    white:   '0xf5f5f5'
+    black:   '#c8c8c8'
+    red:     '#ffb2b0'
+    green:   '#c8e2b9'
+    yellow:  '#ffe1af'
+    blue:    '#bddff7'
+    magenta: '#fce2ff'
+    cyan:    '#0bbdb6'
+    white:   '#feffff'
 
-  indexed_colors:
-    - { index: 16, color: '0xd28445' }
-    - { index: 17, color: '0x8f5536' }
-    - { index: 18, color: '0x202020' }
-    - { index: 19, color: '0x303030' }
-    - { index: 20, color: '0xb0b0b0' }
-    - { index: 21, color: '0xe0e0e0' }
-
-# color_end
+  # Selection colors
+  selection:
+    text: '#5963a2'
+    background: '#f6f6f6'
 
 # Visual Bell
 #
