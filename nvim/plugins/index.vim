@@ -3,6 +3,7 @@ call plug#begin('~/.config/nvim/plugged')
 
 " Extensions
 Plug 'chriskempson/base16-vim' " Colorscheme
+Plug 'nanotech/jellybeans.vim' " Colorscheme x2
 Plug 'mhinz/vim-startify' " Custom start screen
 Plug 'Raimondi/delimitMate' " Autoclose of quotes, parenthesis, brackets, etc.
 Plug 'luochen1990/rainbow' " Rainbow braces matching
