@@ -4,3 +4,4 @@
 " colorscheme base16-tomorrow-night
 colorscheme jellybeans
 syntax on
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
