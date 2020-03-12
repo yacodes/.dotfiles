@@ -305,6 +305,19 @@ values."
    dotspacemacs-whitespace-cleanup nil
    ))
 
+(defun my-setup-indent (n)
+  ;; java/c/c++
+  (setq c-basic-offset n)
+  ;; web development
+  (setq coffee-tab-width n) ; coffeescript
+  (setq javascript-indent-level n) ; javascript-mode
+  (setq js-indent-level n) ; js-mode
+  (setq js2-basic-offset n) ; js2-mode, in latest js2-mode, it's alias of js-indent-level
+  (setq web-mode-markup-indent-offset n) ; web-mode, html tag in html file
+  (setq web-mode-css-indent-offset n) ; web-mode, css in html file
+  (setq web-mode-code-indent-offset n) ; web-mode, js code in html file
+  (setq css-indent-offset n)) ; css-mode
+
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init', before layer configuration
@@ -316,16 +329,20 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 (defun dotspacemacs/user-config ()
   ;; Line numbers + git-gutter
-  (linum-mode -1)
-  (global-display-line-numbers-mode 1)
-  (setq display-line-numbers "%4d \u2502 ")
-  (set-face-background 'line-number "#151515")
-  (global-git-gutter-mode 1)
+  (linum-mode -1) ;; Hide old linum mode 
+  (global-display-line-numbers-mode 1) ;; Display line-numbers
+  (setq display-line-numbers "%4d \u2502 ") ;; Set line-numbers format
+  (set-face-background 'line-number "#151515") ;; Set git gutter column background
+
+  (global-git-gutter-mode 1) ;; Enable git-gutter
   (custom-set-variables
+   ;; Configure git-gutter symbols
    '(git-gutter:modified-sign "!")
-   '(git-gutter:added-sign "+") 
+   '(git-gutter:added-sign "+")
    '(git-gutter:deleted-sign "-"))
 
+  ;; Set indent config
+  (my-setup-indent 2)
 
   (evil-terminal-cursor-changer-activate)
   (setq evil-motion-state-cursor 'box)  ; █
