@@ -321,6 +321,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq display-line-numbers "%4d \u2502 ")
   (set-face-background 'line-number "#151515")
   (global-git-gutter-mode 1)
+  (custom-set-variables
+   '(git-gutter:modified-sign "!")
+   '(git-gutter:added-sign "+") 
+   '(git-gutter:deleted-sign "-"))
 
 
   (evil-terminal-cursor-changer-activate)
