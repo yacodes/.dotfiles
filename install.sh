@@ -16,4 +16,7 @@ ln -s ~/.dotfiles/.zshrc ~/.zshrc
 echo "Linking alacritty.yml..."
 ln -s ~/.dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
 
+echo "Linking .spacemacs..."
+ln -s ~/.dotfiles/.spacemacs ~/.spacemacs
+
 echo "Done."
