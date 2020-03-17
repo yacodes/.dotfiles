@@ -3,7 +3,7 @@
 	email = yakunichev.aleksandr@gmail.com
 
 [core]
-  editor = nvim
+  editor = vi
 
 [alias]
   a = add
