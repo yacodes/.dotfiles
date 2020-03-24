@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/canvaskisa/.oh-my-zsh"
+export ZSH="/Users/ya/.oh-my-zsh"
 export TERM=screen-256color
 export PATH=/usr/local/bin:/Library/TeX/texbin:$PATH
 
