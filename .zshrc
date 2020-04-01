@@ -2,14 +2,8 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/canvaskisa/.oh-my-zsh"
+# export ZSH="/home/ya/.oh-my-zsh"
 export TERM=screen-256color
-export PATH=/usr/local/bin:/Library/TeX/texbin:$PATH
-
-# Env variables for golang
-export GOPATH="${HOME}/.go"
-export GOROOT="$(brew --prefix golang)/libexec"
-export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -17,8 +11,8 @@ export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="norm"
 
-export LC_ALL=en_GB.UTF-8
-export LANG=en_GB.UTF-8
+# export LC_ALL=en_GB.UTF-8
+# export LANG=en_GB.UTF-8
 
 # ZSH_TMUX_AUTOSTART="true"
 # Startup TMUX on start
@@ -84,9 +78,9 @@ export LANG=en_GB.UTF-8
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions tmux zsh-syntax-highlighting vi-mode)
+plugins=()
 
-source $ZSH/oh-my-zsh.sh
+# source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -107,13 +101,14 @@ export EDITOR='vi'
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="nvim ~/.zshrc"
-alias ohmyzsh="nvim ~/.oh-my-zsh"
-alias v="nvim"
-alias g="git"
-alias sclang="/Applications/SuperCollider.app/Contents/MacOS/sclang"
-alias weather="curl wttr.in/Moscow"
-alias tidal="ghci -ghci-script"
-export PATH="/usr/local/sbin:$PATH"
+#alias zshconfig="nvim ~/.zshrc"
+#alias ohmyzsh="nvim ~/.oh-my-zsh"
+#alias v="nvim"
+#alias g="git"
+#alias sclang="/Applications/SuperCollider.app/Contents/MacOS/sclang"
+#alias weather="curl wttr.in/Moscow"
+#alias tidal="ghci -ghci-script"
+#export PATH="/usr/local/sbin:$PATH"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# source /home/ya/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

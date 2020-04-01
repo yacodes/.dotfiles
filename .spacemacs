@@ -33,14 +33,22 @@ values."
    '(
      html
      yaml
+     supercollider
+     tidalcycles
      javascript
+     typescript
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-complete-with-key-sequence-delay 0.1
+                      auto-completion-idle-delay 0.1
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-sort-by-usage t)
      better-defaults
      emacs-lisp
      osx
@@ -59,7 +67,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(sclang w3m sclang-snippets sclang-extensions)
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '()
@@ -136,7 +144,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Iosevka"
-                               :size 15
+                               :size 18
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -326,6 +334,28 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (with-eval-after-load 'org
+    (setq org-todo-keywords
+          '((sequence "TODO" "WIP" "|" "DONE")))
+    (setq org-todo-keyword-faces
+          '(("TODO" . "red")
+            ("WIP" . "teal")
+            ("DONE" . "green"))))
+
+  (add-hook 'org-mode-hook (lambda ()
+                             "Beautify Org Checkbox Symbol"
+                             (push '("[ ]" . "☐") prettify-symbols-alist)
+                             (push '("[X]" . "☑" ) prettify-symbols-alist)
+                             (push '("[-]" . "❍" ) prettify-symbols-alist)
+                             (prettify-symbols-mode)))
+
+  ;; Supercollider config
+  (setq sclang-indent-level 2 )
+  (setq sclang-show-workspace-on-startup nil)
+  (setq sclang-eval-line-forward nil)
+  (add-hook 'sclang-mode-hook 'turn-on-smartparens-mode)
+  (add-hook 'sclang-mode-hook 'auto-complete-mode)
+  ;; ---------------------------
 
   (my-setup-indent 2) ; indent 2 spaces width
   (setq x-select-enable-clipboard t) ;; copy to system clipboard
@@ -345,7 +375,7 @@ you should place your code here."
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
  '(package-selected-packages
    (quote
-    (web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data ox-reveal smeargle orgit magit-gitflow magit-popup helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit auto-dictionary yaml-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode base16-theme jellybeans-plus-theme xterm-color ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org spaceline shell-pop reveal-in-osx-finder restart-emacs request rainbow-delimiters popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum linum-relative link-hint launchctl indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump diminish diff-hl company-statistics column-enforce-mode color-theme-sanityinc-tomorrow clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (tide typescript-mode w3m company-quickhelp tidal haskell-mode sclang-extensions sclang-snippets powerline spinner org-category-capture alert log4e gntp org-plus-contrib markdown-mode hydra lv parent-mode projectile fringe-helper git-gutter+ git-gutter pkg-info epl flx highlight git-commit with-editor transient smartparens iedit anzu evil goto-chg undo-tree f s dash company bind-map bind-key yasnippet packed helm avy helm-core async auto-complete popup web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data ox-reveal smeargle orgit magit-gitflow magit-popup helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit auto-dictionary yaml-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode base16-theme jellybeans-plus-theme xterm-color ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org spaceline shell-pop reveal-in-osx-finder restart-emacs request rainbow-delimiters popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum linum-relative link-hint launchctl indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump diminish diff-hl company-statistics column-enforce-mode color-theme-sanityinc-tomorrow clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
