@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     go
      html
      yaml
      supercollider
@@ -334,7 +335,24 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (defun org-figure-export (src description format)
+    "Render valid figure with image"
+    (let ((desc (or description "")))
+        (pcase format
+          (`html (format "<figure class=\"media\"><img src=\"%s\" alt=\"%s\" title=\"%s\" loading=\"lazy\"/><figcaption>%s</figcaption></figure>" src desc desc desc))
+          (t path))))
+
+  (defun org-mp4-export (src description format)
+    "Render mp4"
+    (let ((desc (or description "")))
+      (pcase format
+        (`html (format "<figure class=\"media\"><video controls><source src=\"%s\" type=\"video/mp4\"><p>This browser does not support the video element</p></video><figcaption>%s</figcaption></figure>" src desc desc desc))
+        (t path))))
+
+
   (with-eval-after-load 'org
+    (setq org-agenda-files (list "~/org/notes.org"))
+    (setq org-default-notes-file (concat org-directory "/notes.org"))
     (setq org-todo-keywords
           '((sequence "TODO" "WIP" "|" "DONE")))
     (setq org-todo-keyword-faces
@@ -342,26 +360,31 @@ you should place your code here."
             ("WIP" . "teal")
             ("DONE" . "green"))))
 
-  (add-hook 'org-mode-hook (lambda ()
-                             "Beautify Org Checkbox Symbol"
-                             (push '("[ ]" . "☐") prettify-symbols-alist)
-                             (push '("[X]" . "☑" ) prettify-symbols-alist)
-                             (push '("[-]" . "❍" ) prettify-symbols-alist)
-                             (prettify-symbols-mode)))
+  (with-eval-after-load 'org
+    (org-link-set-parameters "mp4" :export #'org-mp4-export)
+    (org-link-set-parameters "figure" :export #'org-figure-export))
 
   ;; Supercollider config
-  (setq sclang-indent-level 2 )
+  (setq sclang-indent-level 2)
   (setq sclang-show-workspace-on-startup nil)
   (setq sclang-eval-line-forward nil)
   (add-hook 'sclang-mode-hook 'turn-on-smartparens-mode)
   (add-hook 'sclang-mode-hook 'auto-complete-mode)
   ;; ---------------------------
 
+  ;; TidalCycles config
+  (setq tidal-boot-script-path "/home/ya/works/2020-04-tidalclub-course/Boot.hs")
+
   (my-setup-indent 2) ; indent 2 spaces width
   (setq x-select-enable-clipboard t) ;; copy to system clipboard
   (spacemacs/toggle-truncate-lines-on) ; nowrap lines
   (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
   (evil-define-key 'visual evil-surround-mode-map "S" 'evil-surround-region)
+
+  ;; Custom keybindings
+  (spacemacs/set-leader-keys "fi" 'insert-file)
+
+  (cua-mode)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -373,9 +396,10 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+ '(org-agenda-files (quote ("~/org/notes.org" "~/org/rituals.org")))
  '(package-selected-packages
    (quote
-    (tide typescript-mode w3m company-quickhelp tidal haskell-mode sclang-extensions sclang-snippets powerline spinner org-category-capture alert log4e gntp org-plus-contrib markdown-mode hydra lv parent-mode projectile fringe-helper git-gutter+ git-gutter pkg-info epl flx highlight git-commit with-editor transient smartparens iedit anzu evil goto-chg undo-tree f s dash company bind-map bind-key yasnippet packed helm avy helm-core async auto-complete popup web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data ox-reveal smeargle orgit magit-gitflow magit-popup helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit auto-dictionary yaml-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode base16-theme jellybeans-plus-theme xterm-color ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org spaceline shell-pop reveal-in-osx-finder restart-emacs request rainbow-delimiters popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum linum-relative link-hint launchctl indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump diminish diff-hl company-statistics column-enforce-mode color-theme-sanityinc-tomorrow clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (go-guru go-eldoc company-go go-mode tide typescript-mode w3m company-quickhelp tidal haskell-mode sclang-extensions sclang-snippets powerline spinner org-category-capture alert log4e gntp org-plus-contrib markdown-mode hydra lv parent-mode projectile fringe-helper git-gutter+ git-gutter pkg-info epl flx highlight git-commit with-editor transient smartparens iedit anzu evil goto-chg undo-tree f s dash company bind-map bind-key yasnippet packed helm avy helm-core async auto-complete popup web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data ox-reveal smeargle orgit magit-gitflow magit-popup helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit auto-dictionary yaml-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode base16-theme jellybeans-plus-theme xterm-color ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org spaceline shell-pop reveal-in-osx-finder restart-emacs request rainbow-delimiters popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum linum-relative link-hint launchctl indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump diminish diff-hl company-statistics column-enforce-mode color-theme-sanityinc-tomorrow clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
