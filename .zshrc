@@ -8,13 +8,15 @@ export PATH=$HOME/bin:/usr/local/bin:/.cargo/bin:$PATH
 
 # Set up the prompt
 autoload -Uz vcs_info
-zstyle ':vcs_info:*' check-for-staged-changes true
-zstyle ':vcs_info:*' stagedstr '*'
-zstyle ':vcs_info:*' unstagedstr '*'
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' get-revision false
+zstyle ':vcs_info:*' unstagedstr '%F{red}*%f%b'
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-zstyle ':vcs_info:git:*' formats '%F{yellow}∮ %F{cyan}[%b%c] '
+
+zstyle ':vcs_info:git:*' formats '%F{yellow}∮ %F{cyan}[%b%u%F{cyan}]%f '
+
 
 autoload -Uz promptinit
 autoload -U colors && colors
