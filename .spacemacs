@@ -349,7 +349,6 @@ you should place your code here."
         (`html (format "<figure class=\"media\"><video controls><source src=\"%s\" type=\"video/mp4\"><p>This browser does not support the video element</p></video><figcaption>%s</figcaption></figure>" src desc desc desc))
         (t path))))
 
-
   (with-eval-after-load 'org
     (setq org-agenda-files (list "~/org/notes.org"))
     (setq org-default-notes-file (concat org-directory "/notes.org"))
@@ -359,6 +358,12 @@ you should place your code here."
           '(("TODO" . "red")
             ("WIP" . "teal")
             ("DONE" . "green"))))
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (org . t)
+     (lilypond . t)))
 
   (with-eval-after-load 'org
     (org-link-set-parameters "mp4" :export #'org-mp4-export)
