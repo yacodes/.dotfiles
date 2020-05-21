@@ -20,7 +20,7 @@ zstyle ':vcs_info:git:*' formats '%F{yellow}∮ %F{cyan}[%b%u%F{cyan}]%f '
 
 autoload -Uz promptinit
 autoload -U colors && colors
-promptinit
+# promptinit
 PROMPT='%F{yellow}λ %m%f%b %F{green}[%c]%f%b %F{yellow}%f%b'\$vcs_info_msg_0_'%f%b'
 
 export LC_ALL=en_US.UTF-8

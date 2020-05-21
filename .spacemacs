@@ -32,8 +32,10 @@ values."
    dotspacemacs-configuration-layers
    '(
      go
+     (go :variables go-tab-width 2)
      html
      yaml
+     shaders
      supercollider
      tidalcycles
      javascript
@@ -123,7 +125,7 @@ values."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner 'random
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
@@ -326,6 +328,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq web-mode-css-indent-offset n) ; web-mode, css in html file
   (setq web-mode-code-indent-offset n) ; web-mode, js code in html file
   (setq css-indent-offset n) ; css-mode
+  (setq typescript-indent-level n)
+  (setq typescript-indent-switch-clauses n)
   )
 
 (defun dotspacemacs/user-config ()
@@ -379,17 +383,18 @@ you should place your code here."
 
   ;; TidalCycles config
   (setq tidal-boot-script-path "/home/ya/works/2020-04-tidalclub-course/Boot.hs")
+>>>>>>> 43fe4da3ab5bad907fbf60be4cf83a398cc2e71e
 
+  (setq delete-by-moving-to-trash nil)
   (my-setup-indent 2) ; indent 2 spaces width
   (setq x-select-enable-clipboard t) ;; copy to system clipboard
-  (spacemacs/toggle-truncate-lines-on) ; nowrap lines
   (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
   (evil-define-key 'visual evil-surround-mode-map "S" 'evil-surround-region)
 
+  (cua-mode)
+  (add-hook 'text-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
   ;; Custom keybindings
   (spacemacs/set-leader-keys "fi" 'insert-file)
-
-  (cua-mode)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
