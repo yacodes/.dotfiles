@@ -346,6 +346,11 @@ you should place your code here."
           (`html (format "<figure class=\"media\"><img src=\"%s\" alt=\"%s\" title=\"%s\" loading=\"lazy\"/><figcaption>%s</figcaption></figure>" src desc desc desc))
           (t path))))
 
+  (setq-default js2-basic-offset 2
+                js-indent-level 2
+                typescript-indent-level 2
+                typescript-indent-switch-clauses 2)
+
   (defun org-mp4-export (src description format)
     "Render mp4"
     (let ((desc (or description "")))
@@ -354,7 +359,7 @@ you should place your code here."
         (t path))))
 
   (with-eval-after-load 'org
-    (setq org-agenda-files (list "~/org/notes.org"))
+    (setq org-agenda-files (list "~/Org/notes.org"))
     (setq org-default-notes-file (concat org-directory "/notes.org"))
     (setq org-todo-keywords
           '((sequence "TODO" "WIP" "|" "DONE")))
@@ -383,7 +388,6 @@ you should place your code here."
 
   ;; TidalCycles config
   (setq tidal-boot-script-path "/home/ya/works/2020-04-tidalclub-course/Boot.hs")
->>>>>>> 43fe4da3ab5bad907fbf60be4cf83a398cc2e71e
 
   (setq delete-by-moving-to-trash nil)
   (my-setup-indent 2) ; indent 2 spaces width
@@ -409,7 +413,7 @@ you should place your code here."
  '(org-agenda-files (quote ("~/org/notes.org" "~/org/rituals.org")))
  '(package-selected-packages
    (quote
-    (go-guru go-eldoc company-go go-mode tide typescript-mode w3m company-quickhelp tidal haskell-mode sclang-extensions sclang-snippets powerline spinner org-category-capture alert log4e gntp org-plus-contrib markdown-mode hydra lv parent-mode projectile fringe-helper git-gutter+ git-gutter pkg-info epl flx highlight git-commit with-editor transient smartparens iedit anzu evil goto-chg undo-tree f s dash company bind-map bind-key yasnippet packed helm avy helm-core async auto-complete popup web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data ox-reveal smeargle orgit magit-gitflow magit-popup helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit auto-dictionary yaml-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode base16-theme jellybeans-plus-theme xterm-color ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org spaceline shell-pop reveal-in-osx-finder restart-emacs request rainbow-delimiters popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum linum-relative link-hint launchctl indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump diminish diff-hl company-statistics column-enforce-mode color-theme-sanityinc-tomorrow clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (glsl-mode go-guru go-eldoc company-go go-mode tide typescript-mode w3m company-quickhelp tidal haskell-mode sclang-extensions sclang-snippets powerline spinner org-category-capture alert log4e gntp org-plus-contrib markdown-mode hydra lv parent-mode projectile fringe-helper git-gutter+ git-gutter pkg-info epl flx highlight git-commit with-editor transient smartparens iedit anzu evil goto-chg undo-tree f s dash company bind-map bind-key yasnippet packed helm avy helm-core async auto-complete popup web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data ox-reveal smeargle orgit magit-gitflow magit-popup helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit auto-dictionary yaml-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode base16-theme jellybeans-plus-theme xterm-color ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org spaceline shell-pop reveal-in-osx-finder restart-emacs request rainbow-delimiters popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum linum-relative link-hint launchctl indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump diminish diff-hl company-statistics column-enforce-mode color-theme-sanityinc-tomorrow clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

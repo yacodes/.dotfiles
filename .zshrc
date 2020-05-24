@@ -14,14 +14,12 @@ zstyle ':vcs_info:*' unstagedstr '%F{red}*%f%b'
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-
 zstyle ':vcs_info:git:*' formats '%F{yellow}∮ %F{cyan}[%b%u%F{cyan}]%f '
-
 
 autoload -Uz promptinit
 autoload -U colors && colors
 # promptinit
-PROMPT='%F{yellow}λ %m%f%b %F{green}[%c]%f%b %F{yellow}%f%b'\$vcs_info_msg_0_'%f%b'
+PROMPT='%F{yellow}λ %n@%m%f%b %F{green}[%c]%f%b %F{yellow}%f%b'\$vcs_info_msg_0_'%f%b'
 
 export LC_ALL=en_US.UTF-8
 
@@ -30,14 +28,14 @@ setopt histignorealldups sharehistory
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
 
-
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
 # Aliases
-alias ll="ls -la"
+alias ll="ls -l"
+alias la="ls -la"
 alias zshconfig="vi ~/.zshrc"
 alias ohmyzsh="vi ~/.oh-my-zsh"
 alias v="vi"
@@ -64,3 +62,15 @@ zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+# History
+autoload -U history-search
+zle -N history-beginning-search-backward history-search
+zle -N history-beginning-search-forward history-search
+bindkey "^P" history-beginning-search-backward
+bindkey "^F" history-beginning-search-forward
+
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
