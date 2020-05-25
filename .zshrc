@@ -4,7 +4,7 @@ export LANG=en_GB.UTF-8
 export EDITOR='vi'
 
 # Set PATH for rust lang
-export PATH=$HOME/bin:/usr/local/bin:/.cargo/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:~/.cargo/bin/:$PATH
 
 # Set up the prompt
 autoload -Uz vcs_info
