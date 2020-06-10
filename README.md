@@ -1,3 +1,8 @@
 # Dotfiles
 
-![dotfiles](https://github.com/aleksandryakunichev/media/raw/master/dotfiles.png "Dotfiles")
+## Installation
+```sh
+$ git clone https://github.com/yacodes/dotfiles.git ~/.dotfiles
+$ cd ~/.dotfiles
+$ ./install.sh
+```
