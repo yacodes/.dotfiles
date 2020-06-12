@@ -1,7 +1,7 @@
 export TERM=screen-256color
-export LC_ALL=en_GB.UTF-8
-export LANG=en_GB.UTF-8
-export EDITOR='vi'
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export EDITOR='vim'
 
 # Set PATH
 export PATH=/usr/local/bin:$PATH
@@ -34,8 +34,8 @@ HISTFILE=~/.zsh_history
 # Aliases
 alias ll="ls -l"
 alias la="ls -la"
-alias zshconfig="vi ~/.zshrc"
-alias v="vi"
+alias zshconfig="vim ~/.zshrc"
+alias v="vim"
 alias g="git"
 alias weather="curl wttr.in/Moscow"
 alias tidal="ghci -ghci-script"
