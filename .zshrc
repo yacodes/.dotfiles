@@ -32,8 +32,8 @@ SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
 # Aliases
-alias ll="ls -l"
-alias la="ls -la"
+alias ll="ls -lh"
+alias la="ls -lha"
 alias zshconfig="vim ~/.zshrc"
 alias v="vim"
 alias g="git"
