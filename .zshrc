@@ -7,6 +7,10 @@ export EDITOR='vim'
 export PATH=/usr/local/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
+export PATH=$HOME/.go/bin:$PATH
+
+# Set GOPATH
+export GOPATH=$HOME/.go:$GOPATH
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
@@ -38,7 +42,7 @@ alias zshconfig="vim ~/.zshrc"
 alias v="vim"
 alias g="git"
 alias weather="curl wttr.in/Moscow"
-alias tidal="ghci -ghci-script"
+alias tidal="stack exec --package tidal -- ghci -ghci-script"
 
 # Use modern completion system
 autoload -Uz compinit
@@ -70,3 +74,5 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Fuzzy search
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# source /usr/share/nvm/init-nvm.sh
