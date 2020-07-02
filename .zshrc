@@ -42,7 +42,6 @@ alias zshconfig="vim ~/.zshrc"
 alias v="vim"
 alias g="git"
 alias weather="curl wttr.in/Moscow"
-alias tidal="stack exec --package tidal -- ghci -ghci-script"
 
 # Use modern completion system
 autoload -Uz compinit
