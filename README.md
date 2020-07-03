@@ -24,3 +24,9 @@ $ ./install.sh
 If you already have some systems configured, then the installation script will not rewrite it. You should move them manually. Like this, for example: `$ mv ~/.zshrc ~/.zshrc.bak`.
 
 ## Screenshots
+
+![Rofi](./.media/rofi.png)
+
+![Shader](./.media/shader.png)
+
+![Audio](./.media/audio.png)

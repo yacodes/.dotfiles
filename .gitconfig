@@ -1,21 +1,21 @@
 [user]
-	name = Aleksandr Yakunichev
-	email = hi@ya.codes
+name = Aleksandr Yakunichev
+email = hi@ya.codes
 
 [core]
-  editor = vi
+editor = vim
 
 [alias]
-  a = add
-  aa = add .
-  br = branch
-  co = checkout
-  ci = commit
-  p = push
-  pf = push --force-with-lease
-  s = status --short
-  st = status
-  l = log --pretty=format:'%C(yellow) %h | %<(28,trunc)%C(reset)%s | %C(cyan)%<(14,trunc)%an %C(reset)| %C(blue)%<(15)%ad %C(reset)' --date=format:'%d-%b-%y %H:%M'
+a = add
+aa = add .
+br = branch
+co = checkout
+ci = commit
+p = push
+pf = push --force-with-lease
+s = status --short
+st = status
+l = log --pretty=format:'%C(yellow) %h | %<(28,trunc)%C(reset)%s | %C(cyan)%<(14,trunc)%an %C(reset)| %C(blue)%<(15)%ad %C(reset)' --date=format:'%d-%b-%y %H:%M'
 
 [diff]
-	compactionHeuristic = true
+compactionHeuristic = true
