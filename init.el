@@ -29,8 +29,10 @@
 (setq inhibit-startup-screen t)
 
 ;; Truncate lines
-(setq-default truncate-lines t)
-(setq-default global-visual-line-mode t)
+;; (setq-default truncate-lines t)
+
+;; Wrap words
+(setq-default word-wrap t)
 
 ;; Indentation
 (setq tab-width 2
@@ -68,7 +70,12 @@
 (use-package evil
   :ensure t
   :config
-  (evil-mode 1))
+  (evil-mode 1)
+  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+  )
 
 ;; Helm
 (use-package helm
@@ -260,9 +267,17 @@
 		    :weight 'normal
 		    :width 'normal)
 
+;; Beautiful text wrapping
+(use-package visual-fill-column
+  :ensure t)
+
 ;; Org mode
 (use-package org
-  :ensure t)
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook '(lambda () (setq visual-fill-column-width 100)))
+  (add-hook 'org-mode-hook '(lambda () (setq truncate-lines nil)))
+  (add-hook 'org-mode-hook #'visual-fill-column-mode))
 
 ;; Rainbow
 (use-package rainbow-delimiters
@@ -337,7 +352,7 @@
  '(helm-mode t)
  '(package-selected-packages
    (quote
-    (yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal sclang-snippets sclang-extensions rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode)))
+    (visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal sclang-snippets sclang-extensions rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode)))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
