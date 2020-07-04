@@ -30,6 +30,8 @@ bindsym $mod+t exec telegram-desktop
 bindsym Print exec flameshot gui
 # Kill focused window
 bindsym $mod+q kill
+# Fullscreen screenshot
+bindsym $mod+s exec scrot
 
 # change focus
 bindsym $mod+h focus left

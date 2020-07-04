@@ -25,6 +25,8 @@ If you already have some systems configured, then the installation script will n
 
 ## Screenshots
 
+![Browser](./.media/browser.png)
+
 ![Rofi](./.media/rofi.png)
 
 ![Shader](./.media/shader.png)
