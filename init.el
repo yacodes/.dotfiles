@@ -327,7 +327,7 @@
     (ad-activate 'isearch-repeat)))
 
 ;; Initial buffer
-(setq-default initial-buffer-choice "~/Org/notes.org")
+(setq-default initial-buffer-choice "~/Org/Tasks.org")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
