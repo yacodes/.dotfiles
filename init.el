@@ -277,7 +277,28 @@
   :config
   (add-hook 'org-mode-hook '(lambda () (setq visual-fill-column-width 100)))
   (add-hook 'org-mode-hook '(lambda () (setq truncate-lines nil)))
-  (add-hook 'org-mode-hook #'visual-fill-column-mode))
+  (add-hook 'org-mode-hook #'visual-fill-column-mode)
+  (setq-default org-directory "~/Org/")
+  (setq-default org-agenda-files (list "~/Org/Tasks.org")))
+
+(use-package org-ql
+  :ensure t
+  :after org
+  :config
+  (defun org-review/setka-last-week ()
+    (interactive)
+    (org-ql-search "~/Org/Tasks.org_archive"
+      '(and (and (ts :from -7 :to today) (done)) (tags "setka"))
+      :title "Setka: Last Week"
+      :sort '(date)
+      :super-groups '((:auto-ts t))))
+  (defun org-review/setka-yesterday ()
+    (interactive)
+    (org-ql-search "~/Org/Tasks.org_archive"
+      '(and (and (ts :from -1 :to today) (done)) (tags "setka"))
+      :title "Setka: Yesterday"
+      :sort '(date)
+      :super-groups '((:auto-ts t)))))
 
 ;; Rainbow
 (use-package rainbow-delimiters
@@ -350,9 +371,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(helm-mode t)
+ '(org-agenda-files (quote ("~/Org/Tasks.org")))
  '(package-selected-packages
    (quote
-    (visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal sclang-snippets sclang-extensions rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode)))
+    (org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal sclang-snippets sclang-extensions rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode)))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
