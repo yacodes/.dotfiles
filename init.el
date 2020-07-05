@@ -300,6 +300,12 @@
       :sort '(date)
       :super-groups '((:auto-ts t)))))
 
+;; PDF Tools
+(use-package pdf-tools
+  :ensure t
+  :config
+  (pdf-tools-install))
+
 ;; Rainbow
 (use-package rainbow-delimiters
   :ensure t
@@ -374,7 +380,7 @@
  '(org-agenda-files (quote ("~/Org/Tasks.org")))
  '(package-selected-packages
    (quote
-    (org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal sclang-snippets sclang-extensions rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode)))
+    (pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal sclang-snippets sclang-extensions rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode)))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
