@@ -200,6 +200,8 @@
    :keymaps '(normal emacs)
    :prefix "SPC"
    "w" (general-key "C-w")
+   "w u" 'winner-undo
+   "w z" 'winner-redo
    "x" (general-key "C-x")
    "b b" 'helm-buffers-list
    "/" 'helm-projectile-grep)
