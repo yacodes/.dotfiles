@@ -115,6 +115,14 @@
   :config
   (autopair-global-mode))
 
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
 (use-package yaml-mode
   :ensure t
   :config
@@ -133,9 +141,15 @@
 
 (use-package tide
   :ensure t
+  :after web-mode
   :config
   (add-hook 'before-save-hook 'tide-format-before-save)
-  (add-hook 'typescript-mode-hook #'setup-tide-mode))
+  (add-hook 'typescript-mode-hook #'setup-tide-mode)
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (when (string-equal "tsx" (file-name-extension buffer-file-name))
+                (setup-tide-mode)))))
 
 (defun web-mode-init-hook ()
   "Hooks for Web mode. Adjust indent."
@@ -204,7 +218,7 @@
    "w z" 'winner-redo
    "x" (general-key "C-x")
    "b b" 'helm-buffers-list
-   "/" 'helm-projectile-grep)
+   "/" 'helm-projectile-ag)
   (nmap
     :prefix ","
     ";" 'comment-line
@@ -265,7 +279,7 @@
 ;; Set default font
 (set-face-attribute 'default nil
 		    :family "Iosevka"
-		    :height 150
+		    :height 170
 		    :weight 'normal
 		    :width 'normal)
 
@@ -277,6 +291,7 @@
 (use-package org
   :ensure t
   :config
+  (setq org-log-done 'time)
   (add-hook 'org-mode-hook '(lambda () (setq visual-fill-column-width 100)))
   (add-hook 'org-mode-hook '(lambda () (setq truncate-lines nil)))
   (add-hook 'org-mode-hook #'visual-fill-column-mode)
@@ -382,7 +397,7 @@
  '(org-agenda-files (quote ("~/Org/Tasks.org")))
  '(package-selected-packages
    (quote
-    (pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal sclang-snippets sclang-extensions rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode)))
+    (helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal sclang-snippets sclang-extensions rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode)))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
