@@ -356,7 +356,9 @@
 (setenv "PATH" (concat (getenv "PATH") ":/Applications/SuperCollider.app:/Applications/SuperCollider.app/Contents/MacOS"))
 (setq exec-path (append exec-path '("/Applications/SuperCollider.app"  "/Applications/SuperCollider.app/Contents/MacOS" )))
 (use-package sclang-snippets
-  :ensure t)
+  :ensure t
+  :config
+  (setq-default sclang-indent-level 2))
 
 ;; TidalCycles
 (use-package tidal
