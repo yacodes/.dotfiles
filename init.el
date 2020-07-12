@@ -353,8 +353,6 @@
 ;; SCLang
 (add-to-list 'load-path "~/.sources/supercollider/editors/sc-el/el")
 (require 'sclang)
-(setenv "PATH" (concat (getenv "PATH") ":/Applications/SuperCollider.app:/Applications/SuperCollider.app/Contents/MacOS"))
-(setq exec-path (append exec-path '("/Applications/SuperCollider.app"  "/Applications/SuperCollider.app/Contents/MacOS" )))
 (use-package sclang-snippets
   :ensure t
   :config
@@ -366,7 +364,7 @@
   :ensure t
   :config
   ;; Global config
-  (setq-default tidal-boot-script-path "/home/ya/Workspace/Audio/TidalCycles/performances/20200626-swgbbo/Boot.hs")
+  (setq-default tidal-boot-script-path "/home/ya/Workspace/Audio/TidalCycles/Performances/20200718-nmf/Boot.hs")
   (setq-default tidal-interpreter "stack")
   (setq-default tidal-interpreter-arguments
                 (list "exec" "--package" "tidal" "--" "ghci"))
