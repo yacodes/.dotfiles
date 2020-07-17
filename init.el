@@ -135,6 +135,7 @@
   (tide-setup)
   ;;(flycheck-mode +1)
   ;;(setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (setq-default typescript-indent-level 2)
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
   (company-mode +1))
@@ -143,7 +144,7 @@
   :ensure t
   :after web-mode
   :config
-  (add-hook 'before-save-hook 'tide-format-before-save)
+  ;; (add-hook 'before-save-hook 'tide-format-before-save)
   (add-hook 'typescript-mode-hook #'setup-tide-mode)
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
   (add-hook 'web-mode-hook
@@ -153,6 +154,8 @@
 
 (defun web-mode-init-hook ()
   "Hooks for Web mode. Adjust indent."
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-indent-style 2)
   (setq web-mode-markup-indent-offset 2))
 
 (use-package web-mode
@@ -189,7 +192,8 @@
   :ensure t
   :config
   (add-hook 'js2-mode-hook 'prettier-js-mode)
-  (add-hook 'web-mode-hook 'prettier-js-mode))
+  (add-hook 'web-mode-hook 'prettier-js-mode)
+  (add-hook 'typescript-mode-hook 'prettier-js-mode))
 
 (use-package winum
   :ensure t

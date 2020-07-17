@@ -24,6 +24,9 @@ echo "Linking polybar..."
 mkdir -p ~/.config/polybar/
 ln -s ~/.dotfiles/polybar.ini ~/.config/polybar/config.ini
 
+echo "Linking polybar launch..."
+ln -s ~/.dotfiles/launch-polybar.sh ~/.config/polybar/launch.sh
+
 echo "Linking emacs..."
 mkdir -p ~/.emacs.d/
 ln -s ~/.dotfiles/init.el ~/.emacs.d/init.el
