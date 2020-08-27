@@ -8,10 +8,15 @@
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (setq load-path (append (list (expand-file-name "/usr/share/emacs/site-lisp")) load-path))
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/")))
 
 (require 'use-package)
+
+(autoload 'LilyPond-mode "lilypond-mode")
+(setq auto-mode-alist (cons '("\\.ly$" . LilyPond-mode) auto-mode-alist))
+(add-hook 'LilyPond-mode-hook (lambda () (turn-on-font-lock)))
 
 ;; Personal information
 (setq user-full-name "Aleksandr Yakunichev"
@@ -154,14 +159,23 @@
 
 (defun web-mode-init-hook ()
   "Hooks for Web mode. Adjust indent."
+  (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
-  (setq web-mode-indent-style 2)
-  (setq web-mode-markup-indent-offset 2))
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-attr-indent-offset 2)
+  (setq web-mode-attr-value-indent-offset 2)
+  (setq web-mode-indentless-elements 2)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-sql-indent-offset 2)
+  (setq web-mode-block-padding 2)
+  (setq web-mode-style-padding 2)
+  (setq web-mode-script-padding 2))
 
 (use-package web-mode
   :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
   (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
   (add-hook 'web-mode-hook  'web-mode-init-hook)
   (setq-default js-indent-level 2
@@ -299,8 +313,19 @@
   (add-hook 'org-mode-hook '(lambda () (setq visual-fill-column-width 100)))
   (add-hook 'org-mode-hook '(lambda () (setq truncate-lines nil)))
   (add-hook 'org-mode-hook #'visual-fill-column-mode)
+  (setq-default org-html-doctype "html5")
+  (setq-default org-html-html5-fancy t)
   (setq-default org-directory "~/Org/")
-  (setq-default org-agenda-files (list "~/Org/Tasks.org")))
+  (setq-default org-agenda-files (list "~/Org/Tasks.org"))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (org . t)
+     (lilypond . t))))
+
+(use-package htmlize
+  :ensure t
+  :after org)
 
 (use-package org-ql
   :ensure t
@@ -401,7 +426,7 @@
  '(org-agenda-files (quote ("~/Org/Tasks.org")))
  '(package-selected-packages
    (quote
-    (helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal sclang-snippets sclang-extensions rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode)))
+    (htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal sclang-snippets sclang-extensions rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode)))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
