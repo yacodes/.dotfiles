@@ -70,9 +70,9 @@
       visible-bell t)
 (show-paren-mode t)
 
-(use-package unicode-fonts
-   :ensure t
-   :config (unicode-fonts-setup))
+;; (use-package unicode-fonts
+;;    :ensure t
+;;    :config (unicode-fonts-setup))
 
 (use-package ligature
   :load-path "~/.sources/ligature.el"
