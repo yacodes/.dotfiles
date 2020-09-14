@@ -8,9 +8,8 @@
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
-  (setq load-path (append (list (expand-file-name "/usr/share/emacs/site-lisp")) load-path))
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-  (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/")))
+  ;; (setq load-path (append (list (expand-file-name "/usr/share/emacs/site-lisp")) load-path))
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
 
 (require 'use-package)
 
@@ -70,20 +69,11 @@
       visible-bell t)
 (show-paren-mode t)
 
-;; (use-package unicode-fonts
-;;    :ensure t
-;;    :config (unicode-fonts-setup))
-
+;; @TODO Breaks sclang-start command in sclang-mode
 (use-package ligature
   :load-path "~/.sources/ligature.el"
   :config
-  ;; Enable the "www" ligature in every possible major mode
-  (ligature-set-ligatures 't '("www"))
-  ;; Enable traditional ligature support in eww-mode, if the
-  ;; `variable-pitch' face supports it
-  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-  ;; Enable all Cascadia Code ligatures in programming modes
-  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+  (ligature-set-ligatures '(web-mode) '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
                                        ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
                                        "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
                                        "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
@@ -109,8 +99,7 @@
   (define-key evil-motion-state-map "j" 'evil-next-visual-line)
   (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
-  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
-  )
+  (define-key evil-visual-state-map "k" 'evil-previous-visual-line))
 
 ;; Helm
 (use-package helm
@@ -137,7 +126,7 @@
   :config
   (which-key-mode))
 
-;; Company (auto-complete)
+;; ;; Company (auto-complete)
 (use-package company
   :ensure t
   :config
@@ -245,7 +234,7 @@
   (winum-mode)
   (winum-set-keymap-prefix (kbd "C-w")))
 
-;; General keybindings
+;; ;; General keybindings
 (use-package general
   :ensure t
   :config
@@ -405,12 +394,10 @@
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
-;; GLSL
-(use-package glsl-mode
-  :ensure t)
+;; ;; GLSL
+(use-package glsl-mode :ensure t)
 
-;; SCLang
-(add-to-list 'load-path "~/.sources/supercollider/editors/sc-el/el")
+;; ;; SCLang
 (require 'sclang)
 (use-package sclang-snippets
   :ensure t
@@ -423,13 +410,11 @@
   :ensure t
   :config
   ;; Global config
-  (setq-default tidal-boot-script-path "/home/ya/Workspace/Audio/TidalCycles/Performances/20200718-nmf/Boot.hs")
+  (setq-default tidal-boot-script-path "/home/ya/Workspace/Audio/TidalCycles/Sandbox/2020-09-07/Boot.hs")
   (setq-default tidal-interpreter "stack")
-  (setq-default tidal-interpreter-arguments
-                (list "exec" "--package" "tidal" "--" "ghci"))
+  (setq-default tidal-interpreter-arguments (list "exec" "--package" "tidal" "--" "ghci"))
   ;; Evil keybindings
-  (evil-define-key 'normal tidal-mode-map (kbd "<RET>") 'tidal-run-multiple-lines)
-  )
+  (evil-define-key 'normal tidal-mode-map (kbd "<RET>") 'tidal-run-multiple-lines))
 
 ;; Daemon mode
 (require 'server)
@@ -455,7 +440,7 @@
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal sclang-snippets sclang-extensions rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
