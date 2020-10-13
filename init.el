@@ -148,10 +148,32 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package yaml-mode
+(use-package hideshow
   :ensure t
   :config
-  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+  (defun +data-hideshow-forward-sexp (arg)
+    (let ((start (current-indentation)))
+      (forward-line)
+      (unless (= start (current-indentation))
+        (require 'evil-indent-plus)
+        (let ((range (evil-indent-plus--same-indent-range)))
+          (goto-char (cadr range))
+          (end-of-line)))))
+  (add-to-list 'hs-special-modes-alist
+   '(yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#" +data-hideshow-forward-sexp nil))
+  )
+
+(use-package evil-indent-plus
+  :ensure t)
+
+(use-package yaml-mode
+  :ensure t
+  :mode (".yaml$")
+  ;; :hook (yaml-mode . origami-mode)
+  :init
+  (add-hook 'yaml-mode-hook (lambda () (toggle-truncate-lines t)))
+  (add-hook 'yaml-mode-hook 'hs-minor-mode)
+  )
 
 ;; Web development modules
 ;; Typescript
@@ -284,6 +306,11 @@
    :keymaps 'org-mode-map
    "t" 'org-todo)
 
+  ;; Yaml keybindings
+  (nmap
+   :keymaps 'yaml-mode-map
+   "TAB" 'hs-toggle-hiding)
+
   (nmap
     :keymaps 'org-mode-map
     :prefix ","
@@ -301,8 +328,7 @@
   ;; Projectile keybindings
   (nmap
     :prefix "SPC"
-    "p" 'projectile-command-map)
-  )
+    "p" 'projectile-command-map))
 
 (use-package evil-collection
   :ensure t
@@ -444,7 +470,7 @@
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
