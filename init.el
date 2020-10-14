@@ -15,6 +15,9 @@
 
 ;; Backup configuration
 (setq make-backup-files nil)
+(setq-default make-backup-files nil)
+(setq create-lockfiles nil)
+(setq-default create-lockfiles nil)
 
 (autoload 'LilyPond-mode "lilypond-mode")
 (setq auto-mode-alist (cons '("\\.ly$" . LilyPond-mode) auto-mode-alist))
