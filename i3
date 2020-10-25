@@ -118,6 +118,7 @@ bindsym $mod+Shift+Ctrl+Right resize grow width 3 px or 3 ppt
 # Autostart applications
 exec_always --no-startup-id "killall -q picom; picom"
 exec_always --no-startup-id "~/.config/polybar/launch.sh"
+exec_always --no-startup-id autorandr --load "~/.autorandr/default"
 # exec_always --no-startup-id "dockd --daemon"
 
 set_from_resource $term_background background
@@ -146,7 +147,7 @@ client.focused_inactive #1d1f21 #1d1f21 #c5c8c6 #373b41
 client.unfocused        #1d1f21 #1d1f21 #c5c8c6 #1d1f21
 client.urgent           #1d1f21 #1d1f21 #c5c8c6 #1d1f21
 client.placeholder      #000000 #0c0c0c #c5c8c6 #000000 
-client.background       #1d1f21
+client.background       #151515
 
 # Set inner/outer gaps
 gaps inner 15
