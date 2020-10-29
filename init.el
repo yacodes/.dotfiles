@@ -275,6 +275,7 @@
    :keymaps '(normal hybrid iedit-insert emacs)
    :prefix "SPC"
    :non-normal-prefix "SPC"
+   "t" 'toggle-truncate-lines
    "TAB" 'switch-to-previous-buffer)
   (general-define-key
    :keymaps '(normal emacs)
