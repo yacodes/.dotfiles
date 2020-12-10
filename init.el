@@ -76,7 +76,7 @@
 (use-package ligature
   :load-path "~/.sources/ligature.el"
   :config
-  (ligature-set-ligatures '(web-mode lilypond-mode)
+  (ligature-set-ligatures '(web-mode lilypond-mode typescript-mode)
 			  '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
                             ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
                             "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
