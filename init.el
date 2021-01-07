@@ -363,6 +363,7 @@
   :ensure t
   :config
   (setq org-log-done 'time)
+  (setq org-hide-leading-stars t)
   (add-hook 'org-mode-hook '(lambda () (setq visual-fill-column-width 100)))
   (add-hook 'org-mode-hook '(lambda () (setq truncate-lines nil)))
   (add-hook 'org-mode-hook #'visual-fill-column-mode)
