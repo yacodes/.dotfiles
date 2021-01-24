@@ -52,7 +52,7 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; Line numbers
-(global-display-line-numbers-mode)
+(global-display-line-numbers-mode 1)
 
 ;; Turn off the alarm
 (setq ring-bell-function 'ignore)
@@ -76,7 +76,7 @@
 (use-package ligature
   :load-path "~/.sources/ligature.el"
   :config
-  (ligature-set-ligatures '(web-mode lilypond-mode)
+  (ligature-set-ligatures '(web-mode lilypond-mode typescript-mode)
 			  '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
                             ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
                             "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
@@ -249,7 +249,33 @@
   :config
   (add-hook 'flycheck-mode-hook 'add-node-modules-path))
 
+;; Distraction-free writing
+(use-package writeroom-mode
+  :ensure t
+  :config
+  (setq-default writeroom-width 90)
+  (add-hook 'writeroom-mode-enable-hook (lambda ()
+                                          (display-line-numbers-mode -1)
+                                          (setf (cdr (assq 'continuation fringe-indicator-alist)) '(nil nil))))
+  (add-hook 'writeroom-mode-disable-hook (lambda ()
+                                           (display-line-numbers-mode 1)
+                                           (setf (cdr (assq 'continuation fringe-indicator-alist)) '(left-curly-arrow right-curly-arrow)))))
 
+;; Concentration mode
+;; (defun toggle-concentration-mode ()
+;;   "Toggle concentration mode on and off."
+;;   (interactive)
+;;   (if (get 'toggle-concentration-mode 'state)
+;;       (progn
+;;         (display-line-numbers-mode 1)
+;;         (writeroom-mode -1)
+;;         (put 'toggle-concentration-mode 'state nil))
+;;     (progn
+;;       (display-line-numbers-mode -1)
+;;       (writeroom-mode 1)
+;;       (put 'toggle-concentration-mode 'state t))))
+
+;; Prettier JS
 (use-package prettier-js
   :ensure t
   :config
@@ -276,6 +302,9 @@
    :prefix "SPC"
    :non-normal-prefix "SPC"
    "t" 'toggle-truncate-lines
+   "c" 'writeroom-mode
+   ;; "c" 'toggle-concentration-mode
+   ;; "c" 'toggle-concentration-mode
    "TAB" 'switch-to-previous-buffer)
   (general-define-key
    :keymaps '(normal emacs)
@@ -354,16 +383,20 @@
 		    :weight 'normal
 		    :width 'normal)
 
+(set-face-attribute 'fringe nil :background nil)
+
 ;; Beautiful text wrapping
 (use-package visual-fill-column
-  :ensure t)
+  :ensure t
+  :config
+  (setq-default visual-fill-column-width 90))
 
 ;; Org mode
 (use-package org
   :ensure t
   :config
   (setq org-log-done 'time)
-  (add-hook 'org-mode-hook '(lambda () (setq visual-fill-column-width 100)))
+  (setq org-hide-leading-stars t)
   (add-hook 'org-mode-hook '(lambda () (setq truncate-lines nil)))
   (add-hook 'org-mode-hook #'visual-fill-column-mode)
   (setq-default org-html-doctype "html5")
@@ -474,11 +507,5 @@
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

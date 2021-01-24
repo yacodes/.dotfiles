@@ -118,8 +118,6 @@ bindsym $mod+Shift+Ctrl+Right resize grow width 3 px or 3 ppt
 # Autostart applications
 exec_always --no-startup-id "killall -q picom; picom"
 exec_always --no-startup-id "~/.config/polybar/launch.sh"
-exec_always --no-startup-id autorandr --load "~/.autorandr/default"
-# exec_always --no-startup-id "dockd --daemon"
 
 set_from_resource $term_background background
 set_from_resource $term_foreground foreground
