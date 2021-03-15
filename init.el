@@ -42,8 +42,8 @@
 (setq-default word-wrap t)
 
 ;; Indentation
-(setq tab-width 2
-      indent-tabs-mode nil) 
+(setq-default tab-width 2)
+(setq-default indent-tabs-mode nil)
 
 ;; Remove backup files
 (setq make-backup-files nil)
@@ -59,6 +59,7 @@
 
 ;; Smart buffer switching
 (defun switch-to-previous-buffer ()
+  "Switch to previous buffer."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
@@ -76,7 +77,7 @@
 (use-package ligature
   :load-path "~/.sources/ligature.el"
   :config
-  (ligature-set-ligatures '(web-mode lilypond-mode typescript-mode)
+  (ligature-set-ligatures '(web-mode lilypond-mode typescript-mode go-mode)
 			  '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
                             ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
                             "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
@@ -179,6 +180,12 @@
   )
 
 ;; Web development modules
+;; Golang
+(use-package go-mode
+  :ensure t
+  :config
+  (add-hook 'before-save-hook 'gofmt-before-save))
+
 ;; Typescript
 (defun setup-tide-mode ()
   (interactive)
@@ -351,7 +358,9 @@
     "^" 'org-sort
     "l" 'org-insert-link
     "o" 'org-open-at-point
-    "i" 'org-clock-in)
+    "i" 'org-clock-in
+    "r r" 'org-reveal-export-to-html
+    "r b" 'org-reveal-export-to-html-and-browse)
 
   ;; Which-key keybindings
   (nmap
@@ -403,11 +412,20 @@
   (setq-default org-html-html5-fancy t)
   (setq-default org-directory "~/Org/")
   (setq-default org-agenda-files (list "~/Org/Tasks.org"))
+  (setq-default org-plantuml-jar-path
+                (expand-file-name "~/.sources/plantuml.jar"))
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
      (org . t)
-     (lilypond . t))))
+     (lilypond . t)
+     (plantuml . t))))
+
+(use-package ox-reveal
+  :ensure t
+  :after org
+  :config
+  (setq-default org-reveal-root "file:///home/ya/.sources/"))
 
 (use-package htmlize
   :ensure t
@@ -507,7 +525,7 @@
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
