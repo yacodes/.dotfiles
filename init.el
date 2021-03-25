@@ -412,6 +412,7 @@
   (setq-default org-html-html5-fancy t)
   (setq-default org-directory "~/Org/")
   (setq-default org-agenda-files (list "~/Org/Tasks.org"))
+  (setq-default org-confirm-babel-evaluate nil)
   (setq-default org-plantuml-jar-path
                 (expand-file-name "~/.sources/plantuml.jar"))
   (org-babel-do-load-languages
