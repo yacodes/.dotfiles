@@ -19,6 +19,13 @@
 (setq create-lockfiles nil)
 (setq-default create-lockfiles nil)
 
+;; Coding system
+(set-language-environment "UTF-8")
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-language-environment 'utf-8)
+(set-selection-coding-system 'utf-8)
+
 (autoload 'LilyPond-mode "lilypond-mode")
 (setq auto-mode-alist (cons '("\\.ly$" . LilyPond-mode) auto-mode-alist))
 (add-hook 'LilyPond-mode-hook (lambda () (turn-on-font-lock)))
@@ -105,6 +112,11 @@
   (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line))
+
+;; Writegood-mode
+(use-package writegood-mode
+  :load-path "~/.sources/writegood-mode"
+  :ensure t)
 
 ;; Helm
 (use-package helm
@@ -321,6 +333,7 @@
    "w z" 'winner-redo
    "x" (general-key "C-x")
    "b b" 'helm-buffers-list
+   "w g" 'writegood-mode
    "/" 'helm-projectile-ag)
   (nmap
     :prefix ","
@@ -526,7 +539,7 @@
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
