@@ -497,7 +497,7 @@
 (use-package glsl-mode :ensure t)
 
 ;; ;; SCLang
-(require 'sclang)
+;; (require 'sclang)
 (use-package sclang-snippets
   :ensure t
   :config

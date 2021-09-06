@@ -28,6 +28,7 @@ entry {
 listview {
   cycle: false;
   margin: 0;
+  lines: 6;
   scrollbar: false;
   border-color: #373b41;
   border: 0 1px 1px 1px;
@@ -35,6 +36,12 @@ listview {
 
 element {
   padding: 16px;
+}
+
+element-text,
+element-icon {
+  text-color: inherit;
+  background-color: inherit;
 }
 
 element selected {
