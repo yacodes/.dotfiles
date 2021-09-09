@@ -432,6 +432,7 @@
    'org-babel-load-languages
    '((emacs-lisp . t)
      (org . t)
+     (sql . t)
      (lilypond . t)
      (plantuml . t))))
 
