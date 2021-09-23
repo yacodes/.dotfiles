@@ -450,18 +450,18 @@
   :ensure t
   :after org
   :config
-  (defun org-review/setka-last-week ()
+  (defun org-review/tiny-last-week ()
     (interactive)
     (org-ql-search "~/Org/Tasks.org_archive"
-      '(and (and (ts :from -7 :to today) (done)) (tags "setka"))
-      :title "Setka: Last Week"
+      '(and (and (ts :from -7 :to today) (done)) (tags "tiny"))
+      :title "Tiny: Last Week"
       :sort '(date)
       :super-groups '((:auto-ts t))))
-  (defun org-review/setka-yesterday ()
+  (defun org-review/tiny-yesterday ()
     (interactive)
     (org-ql-search "~/Org/Tasks.org_archive"
-      '(and (and (ts :from -1 :to today) (done)) (tags "setka"))
-      :title "Setka: Yesterday"
+      '(and (and (ts :from -1 :to today) (done)) (tags "tiny"))
+      :title "Tiny: Yesterday"
       :sort '(date)
       :super-groups '((:auto-ts t)))))
 
