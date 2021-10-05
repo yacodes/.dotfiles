@@ -13,6 +13,11 @@
 
 (require 'use-package)
 
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
 ;; Backup configuration
 (setq make-backup-files nil)
 (setq-default make-backup-files nil)
@@ -188,18 +193,32 @@
   ;; :hook (yaml-mode . origami-mode)
   :init
   (add-hook 'yaml-mode-hook (lambda () (toggle-truncate-lines t)))
-  (add-hook 'yaml-mode-hook 'hs-minor-mode)
-  )
+  (add-hook 'yaml-mode-hook 'hs-minor-mode))
 
 ;; Web development modules
+(use-package lsp-mode
+  :ensure t
+  :init
+  :hook ((go-mode . lsp-deferred)
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands (lsp lsp-deferred))
+(use-package lsp-ui :commands lsp-ui-mode)
+(use-package helm-lsp :commands helm-lsp-workspace-symbol)
+
 ;; Golang
+(defun lsp-go-install-save-hooks ()
+  "Install lsp hooks for golang."
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
 (use-package go-mode
   :ensure t
   :config
-  (add-hook 'before-save-hook 'gofmt-before-save))
+  ;; (add-hook 'go-mode-hook 'lsp-deferred)
+  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks))
 
 ;; Typescript
 (defun setup-tide-mode ()
+  "Configure tide-mode."
   (interactive)
   (tide-setup)
   ;;(flycheck-mode +1)
@@ -438,9 +457,7 @@
 
 (use-package ox-reveal
   :ensure t
-  :after org
-  :config
-  (setq-default org-reveal-root "file:///home/ya/.sources/"))
+  :after org)
 
 (use-package htmlize
   :ensure t
@@ -540,7 +557,7 @@
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

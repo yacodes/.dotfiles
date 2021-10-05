@@ -4,18 +4,18 @@ export LANG=en_US.UTF-8
 export EDITOR='vim'
 
 # Set GOPATH
-# export GOPATH=$HOME/.go
-export GOPATH=$HOME/Workspace/ESH$GOPATH
-# export GOROOT=$HOME/.go
-# export GOBIN=$GOPATH/bin
+export GOPATH=$HOME/.go
+# export GOPATH=$GOPATH:/Workspace/ESH$GOPATH
+export GOROOT=$HOME/.go
+export GOBIN=$GOPATH/bin
 export GO111MODULE=auto
-export GO111MODULE=on
+# export GO111MODULE=on
 
 # Set PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
-export PATH=$GOPATH/bin:$PATH
+export PATH=$PATH:/$GOROOT/bin
 export PATH=$HOME/.yarn/bin:$PATH
 
 # Use emacs keybindings even if our EDITOR is set to vi
