@@ -6,7 +6,7 @@ export EDITOR='vim'
 # Set GOPATH
 export GOPATH=$HOME/.go
 # export GOPATH=$GOPATH:/Workspace/ESH$GOPATH
-export GOROOT=$HOME/.go
+# export GOROOT=$HOME/.go
 export GOBIN=$GOPATH/bin
 export GO111MODULE=auto
 # export GO111MODULE=on
@@ -15,7 +15,7 @@ export GO111MODULE=auto
 export PATH=/usr/local/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
-export PATH=$PATH:/$GOROOT/bin
+export PATH=$PATH:/$GOPATH/bin
 export PATH=$HOME/.yarn/bin:$PATH
 
 # Use emacs keybindings even if our EDITOR is set to vi
