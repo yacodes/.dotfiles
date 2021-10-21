@@ -19,3 +19,5 @@ l = log --pretty=format:'%C(yellow) %h | %<(70,trunc)%C(reset)%s | %C(cyan)%<(20
 
 [diff]
 compactionHeuristic = true
+[init]
+	defaultBranch = main

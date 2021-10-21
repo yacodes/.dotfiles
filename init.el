@@ -85,10 +85,36 @@
       visible-bell t)
 (show-paren-mode t)
 
+;; Elfeed RSS Reader
+(use-package elfeed
+  :ensure t
+  :config
+  (setq-default elfeed-db-directory "~/Org/.elfeed"))
+(use-package elfeed-org
+  :ensure t
+  :after elfeed
+  :config
+  (elfeed-org)
+  (setq-default rmh-elfeed-org-files (list "~/Org/RSS.org")))
+
 ;; @TODO Breaks sclang-start command in sclang-mode
 (use-package ligature
   :load-path "~/.sources/ligature.el"
   :config
+  (ligature-set-ligatures '(org-mode)
+			  '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "||=" "||>"
+                            ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                            "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                            "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                            "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                            "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                            "~>" "~-" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                            "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                            ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                            "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                            "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                            "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                            "\\" "://"))
   (ligature-set-ligatures '(web-mode lilypond-mode typescript-mode go-mode)
 			  '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
                             ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
@@ -353,6 +379,7 @@
    "x" (general-key "C-x")
    "b b" 'helm-buffers-list
    "w g" 'writegood-mode
+   "e" 'elfeed
    "/" 'helm-projectile-ag)
   (nmap
     :prefix ","
@@ -554,6 +581,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(elfeed-feeds nil)
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
