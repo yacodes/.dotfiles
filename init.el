@@ -85,6 +85,11 @@
       visible-bell t)
 (show-paren-mode t)
 
+;; Emojis support
+(use-package emojify
+  :ensure t
+  :hook (after-init . global-emojify-mode))
+
 ;; Elfeed RSS Reader
 (use-package elfeed
   :ensure t
@@ -585,7 +590,7 @@
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
