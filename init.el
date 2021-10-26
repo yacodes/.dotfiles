@@ -166,13 +166,12 @@
 
 (use-package helm-projectile
   :ensure t
+  :after helm
   :config
   (helm-projectile-on))
 
-;; Magit
 (use-package magit
   :ensure t)
-;; Which-key
 (use-package which-key
   :ensure t
   :config
@@ -181,13 +180,13 @@
 (use-package company ;; Autocompletion popup
   :ensure t
   :config
-  (global-company-mode) ;; Initialize globally
-  (company-tng-mode) ;; Use TAB to cycle through suggestions
-  (setq-default company-minimum-prefix-length 1) ;; Show suggestions after 1 character
-  (setq-default company-selection-wrap-around t) ;; Cycle through variants
-  (setq-default company-dabbrev-downcase nil) ;; Be aware of the case
+  (global-company-mode)                             ;; Initialize globally
+  (company-tng-mode)                                ;; Use TAB to cycle through suggestions
+  (setq-default company-minimum-prefix-length 1)    ;; Show suggestions after 1 character
+  (setq-default company-selection-wrap-around t)    ;; Cycle through variants
+  (setq-default company-dabbrev-downcase nil)       ;; Be aware of the case
   (setq-default company-format-margin-function nil) ;; Remove icons
-  (setq-default company-idle-delay 0)) ;; Show suggestions immediately
+  (setq-default company-idle-delay 0))              ;; Show suggestions immediately
 
 ;; Autopairs
 (use-package autopair
