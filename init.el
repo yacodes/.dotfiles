@@ -1,10 +1,13 @@
+;;; package --- Init file
 ;; User details
 
+;;; Commentary:
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 ;; packages
+;;; Code:
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
@@ -168,11 +171,7 @@
 
 ;; Magit
 (use-package magit
-  :ensure t
-  :config
-  (use-package evil-magit
-    :ensure t))
-
+  :ensure t)
 ;; Which-key
 (use-package which-key
   :ensure t
@@ -229,12 +228,20 @@
 ;; Web development modules
 (use-package lsp-mode
   :ensure t
-  :init
+  :config (setq-default lsp-headerline-breadcrumb-enable nil)
   :hook ((go-mode . lsp-deferred)
+         (web-mode . lsp-deferred)
+         (typescript-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
   :commands (lsp lsp-deferred))
-(use-package lsp-ui :commands lsp-ui-mode)
-(use-package helm-lsp :commands helm-lsp-workspace-symbol)
+(use-package lsp-ui
+  :ensure t
+  :after lsp-mode
+  :commands lsp-ui-mode)
+(use-package helm-lsp
+  :ensure t
+  :after lsp-mode
+  :commands helm-lsp-workspace-symbol)
 
 ;; Golang
 (defun lsp-go-install-save-hooks ()
@@ -244,10 +251,9 @@
 (use-package go-mode
   :ensure t
   :config
-  ;; (add-hook 'go-mode-hook 'lsp-deferred)
   (add-hook 'go-mode-hook #'lsp-go-install-save-hooks))
 
-;; Typescript
+;; TypeScript
 (defun setup-tide-mode ()
   "Configure tide-mode."
   (interactive)
@@ -258,14 +264,13 @@
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
   (company-mode +1))
-
 (use-package tide
   :ensure t
   :after web-mode
   :config
   ;; (add-hook 'before-save-hook 'tide-format-before-save)
   (add-hook 'typescript-mode-hook #'setup-tide-mode)
-  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
   (add-hook 'web-mode-hook
             (lambda ()
               (when (string-equal "tsx" (file-name-extension buffer-file-name))
@@ -587,10 +592,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(elfeed-feeds nil)
+ '(helm-minibuffer-history-key "M-p")
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum tide autopair ace-window evil-magit magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum autopair ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
