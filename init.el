@@ -178,12 +178,16 @@
   :config
   (which-key-mode))
 
-;; ;; Company (auto-complete)
-(use-package company
+(use-package company ;; Autocompletion popup
   :ensure t
   :config
-  (global-company-mode)
-  (setq company-idle-delay 0.1))
+  (global-company-mode) ;; Initialize globally
+  (company-tng-mode) ;; Use TAB to cycle through suggestions
+  (setq-default company-minimum-prefix-length 1) ;; Show suggestions after 1 character
+  (setq-default company-selection-wrap-around t) ;; Cycle through variants
+  (setq-default company-dabbrev-downcase nil) ;; Be aware of the case
+  (setq-default company-format-margin-function nil) ;; Remove icons
+  (setq-default company-idle-delay 0)) ;; Show suggestions immediately
 
 ;; Autopairs
 (use-package autopair
@@ -234,6 +238,7 @@
          (typescript-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
   :commands (lsp lsp-deferred))
+
 (use-package lsp-ui
   :ensure t
   :after lsp-mode
