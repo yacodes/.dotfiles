@@ -42,11 +42,6 @@
 (setq user-full-name "Aleksandr Yakunichev")
 (setq user-mail-address "hi@ya.codes")
 
-;; Remove bars
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-
 (setq inhibit-startup-screen t) ;; Configure startup screen
 ;; (setq-default truncate-lines t) ;; Truncate lines
 (setq-default word-wrap t) ;; Wrap words
@@ -467,17 +462,16 @@ If no file is associated, just close buffer without prompt for save."
   :ensure t
   :config
   (load-theme 'base16-tomorrow-night t)
-  (set-background-color "#151515"))
+  (set-background-color "#151515")
+  (setq default-frame-alist
+        '((background-color . "#151515")))
+  (set-face-attribute 'default nil
+		                  :family "Iosevka"
+		                  :height 170
+		                  :weight 'normal
+		                  :width 'normal)
+  (set-face-attribute 'fringe nil :background nil))
 
-;; Font settings
-;; Set default font
-(set-face-attribute 'default nil
-		    :family "Iosevka"
-		    :height 170
-		    :weight 'normal
-		    :width 'normal)
-
-(set-face-attribute 'fringe nil :background nil)
 
 ;; Beautiful text wrapping
 (use-package visual-fill-column
@@ -493,6 +487,7 @@ If no file is associated, just close buffer without prompt for save."
   (setq org-hide-leading-stars t)
   (add-hook 'org-mode-hook '(lambda () (setq truncate-lines nil)))
   (add-hook 'org-mode-hook #'visual-fill-column-mode)
+  (add-hook 'org-mode-hook #'writegood-mode)
   (setq-default org-html-doctype "html5")
   (setq-default org-html-html5-fancy t)
   (setq-default org-directory "~/Org/")
@@ -591,8 +586,8 @@ If no file is associated, just close buffer without prompt for save."
   (evil-define-key 'normal tidal-mode-map (kbd "<RET>") 'tidal-run-multiple-lines))
 
 ;; Daemon mode
-(require 'server)
-(if (not (server-running-p)) (server-start))
+;; (require 'server)
+;; (if (not (server-running-p)) (server-start))
 
 ;; Wrap isearch
 (defadvice isearch-repeat (after isearch-no-fail activate)
@@ -604,6 +599,12 @@ If no file is associated, just close buffer without prompt for save."
     (ad-activate 'isearch-repeat)))
 
 (setq-default initial-buffer-choice "~/Org/Tasks.org") ;; Initial buffer
+
+;; Remove bars
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(fringe-mode 0)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

@@ -21,7 +21,7 @@ bindsym $mod+Return exec st
 # Mail client
 bindsym $mod+m exec mailspring
 # Editor
-bindsym $mod+e exec emacs
+bindsym $mod+e exec "emacsclient -c -a ''"
 # Launcher
 bindsym $mod+space exec "rofi -no-default-config -no-fixed-num-lines -drun-display-format {name} -display-drun 'λ' -modi drun,window,emoji -show drun -font 'Iosevka 33' -yoffset 256 -location 2"
 # Telegram
