@@ -487,7 +487,7 @@ If no file is associated, just close buffer without prompt for save."
   (setq org-hide-leading-stars t)
   (add-hook 'org-mode-hook '(lambda () (setq truncate-lines nil)))
   (add-hook 'org-mode-hook #'visual-fill-column-mode)
-  (add-hook 'org-mode-hook #'writegood-mode)
+  (add-hook 'org-mode-hook #'writeroom-mode)
   (setq-default org-html-doctype "html5")
   (setq-default org-html-html5-fancy t)
   (setq-default org-directory "~/Org/")
