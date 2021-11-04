@@ -47,30 +47,17 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
-;; Configure startup screen
-(setq inhibit-startup-screen t)
+(setq inhibit-startup-screen t) ;; Configure startup screen
+;; (setq-default truncate-lines t) ;; Truncate lines
+(setq-default word-wrap t) ;; Wrap words
 
-;; Truncate lines
-;; (setq-default truncate-lines t)
-
-;; Wrap words
-(setq-default word-wrap t)
-
-;; Indentation
-(setq-default tab-width 2)
-(setq-default indent-tabs-mode nil)
-
-;; Remove backup files
-(setq make-backup-files nil)
-
-;; Map yes & no to y & n
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-;; Line numbers
-(global-display-line-numbers-mode 1)
-
-;; Turn off the alarm
-(setq ring-bell-function 'ignore)
+(setq-default tab-width 2)                              ;; Set tab-width
+(setq-default indent-tabs-mode nil)                     ;; Disable tabs?
+(defalias 'yes-or-no-p 'y-or-n-p)                       ;; Map yes & no to y & n
+(global-display-line-numbers-mode 1)                    ;; Show line numbers
+(global-hl-line-mode)                                   ;; Highlight line under the cursor
+(setq ring-bell-function 'ignore)                       ;; Turn off the alarm
+(setq backup-directory-alist '(("~/.emacs.d/backups"))) ;; Set backup directories
 
 ;; Smart buffer switching
 (defun switch-to-previous-buffer ()
@@ -514,22 +501,27 @@
 
 (use-package org-ql
   :ensure t
-  :after org
-  :config
-  (defun org-review/tiny-last-week ()
-    (interactive)
-    (org-ql-search "~/Org/Tasks.org_archive"
-      '(and (and (ts :from -7 :to today) (done)) (tags "tiny"))
-      :title "Tiny: Last Week"
-      :sort '(date)
-      :super-groups '((:auto-ts t))))
-  (defun org-review/tiny-yesterday ()
-    (interactive)
-    (org-ql-search "~/Org/Tasks.org_archive"
-      '(and (and (ts :from -1 :to today) (done)) (tags "tiny"))
-      :title "Tiny: Yesterday"
-      :sort '(date)
-      :super-groups '((:auto-ts t)))))
+  :after org)
+(defun tiny/weekly ()
+  "Insert formatted weekly report in the current buffer."
+  (interactive)
+  (insert
+   (replace-regexp-in-string
+    "\\]\\]" "`"
+    (replace-regexp-in-string "\\[\\[.*\\]\\[" "`"
+                              (concat
+                               (format "*Last week:*\n%s."
+                                       (mapconcat (lambda (x) (format "• %s" x))
+                                                  (org-ql-select "~/Org/Tasks.org_archive"
+                                                    '(and (and (ts :from -7 :to today) (done)) (tags "tiny"))
+                                                    :sort '(date)
+                                                    :action '(org-get-heading t t)) ";\n"))
+                               (format "\n\n*This week:*\n%s."
+                                       (mapconcat (lambda (x) (format "• %s" x))
+                                                  (org-ql-select "~/Org/Tasks.org"
+                                                    '(and (todo) (tags "tiny"))
+                                                    :sort '(date)
+                                                    :action '(org-get-heading t t)) ";\n")))))))
 
 ;; PDF Tools
 (use-package pdf-tools
@@ -595,8 +587,7 @@
     (ad-enable-advice 'isearch-repeat 'after 'isearch-no-fail)
     (ad-activate 'isearch-repeat)))
 
-;; Initial buffer
-(setq-default initial-buffer-choice "~/Org/Tasks.org")
+(setq-default initial-buffer-choice "~/Org/Tasks.org") ;; Initial buffer
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
