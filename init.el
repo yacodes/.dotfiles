@@ -39,8 +39,8 @@
 (add-hook 'LilyPond-mode-hook (lambda () (turn-on-font-lock)))
 
 ;; Personal information
-(setq user-full-name "Aleksandr Yakunichev"
-      user-mail-address "hi@ya.codes")
+(setq user-full-name "Aleksandr Yakunichev")
+(setq user-mail-address "hi@ya.codes")
 
 ;; Remove bars
 (scroll-bar-mode -1)
@@ -73,7 +73,21 @@
 (setq echo-keystrokes 0.1
       use-dialog-box nil
       visible-bell t)
-(show-paren-mode t)
+
+(setq-default show-paren-style 'parenthesis) ;; Highlighting style (parenthesis | expression | mixed)
+(show-paren-mode t)                          ;; Highlight matching brackets
+(electric-pair-mode)                         ;; Auto close bracket insertion (Emacs 24+)
+
+(defun delete-current-file ()
+  "Delete the file associated with the current buffer.
+Delete the current buffer too.
+If no file is associated, just close buffer without prompt for save."
+  (interactive)
+  (let ((currentFile (buffer-file-name)))
+    (when (yes-or-no-p (concat "Delete file?: " currentFile))
+      (kill-buffer (current-buffer))
+      (when currentFile
+        (delete-file currentFile)))))
 
 ;; Emojis support
 (use-package emojify
@@ -183,12 +197,6 @@
   (setq-default company-format-margin-function nil) ;; Remove icons
   (setq-default company-idle-delay 0))              ;; Show suggestions immediately
 
-;; Autopairs
-(use-package autopair
-  :ensure t
-  :config
-  (autopair-global-mode))
-
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)
@@ -214,6 +222,8 @@
 
 (use-package evil-indent-plus
   :ensure t)
+
+(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable) ;; Emacs lisp rainbow
 
 (use-package yaml-mode
   :ensure t
@@ -376,8 +386,6 @@
    :non-normal-prefix "SPC"
    "t" 'toggle-truncate-lines
    "c" 'writeroom-mode
-   ;; "c" 'toggle-concentration-mode
-   ;; "c" 'toggle-concentration-mode
    "TAB" 'switch-to-previous-buffer)
   (general-define-key
    :keymaps '(normal emacs)
@@ -390,6 +398,9 @@
    "w g" 'writegood-mode
    "e" 'elfeed
    "/" 'helm-projectile-ag)
+  (general-define-key
+   :keymaps '(normal emacs)
+   "%" 'match-paren)
   (nmap
     :prefix ","
     ";" 'comment-line
@@ -404,11 +415,17 @@
     "g" 'magit)
   (nmap
     :prefix "SPC f"
+    "d" 'delete-current-file
     "s" 'save-buffer
     "S" 'save-some-buffers
     "i" 'insert-file
     "f" 'helm-find-files)
-  
+
+  ;; Elisp keybindings
+  (nmap
+    :keymaps 'emacs-lisp-mode-map
+    "RET" 'eval-print-last-sexp)
+
   ;; Org-mode keybindings
   (nmap
    :keymaps 'org-mode-map
@@ -536,7 +553,6 @@
   (rainbow-delimiters-mode))
 
 ;; Matches parens
-(global-set-key (kbd "%") 'match-paren)
 (defun match-paren (arg)
   "Go to the matching paren if on a paren; otherwise insert %."
   (interactive "p")
@@ -599,7 +615,7 @@
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(undo-tree emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum autopair ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(undo-tree emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
