@@ -11,9 +11,7 @@
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
-  ;; (setq load-path (append (list (expand-file-name "/usr/share/emacs/site-lisp")) load-path))
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
-
 (require 'use-package)
 
 (use-package exec-path-from-shell
@@ -577,7 +575,8 @@ If no file is associated, just close buffer without prompt for save."
 
 ;; Matches parens
 (defun match-paren (arg)
-  "Go to the matching paren if on a paren; otherwise insert %."
+  "Go to the matching paren if on a paren; otherwise insert %.
+ARG: I do not know what this is."
   (interactive "p")
   (cond ((looking-at "\\s(") (forward-list 1) (backward-char 1))
         ((looking-at "\\s)") (forward-char 1) (backward-list 1))
@@ -612,10 +611,6 @@ If no file is associated, just close buffer without prompt for save."
   (setq-default tidal-interpreter-arguments (list "exec" "--package" "tidal" "--" "ghci"))
   ;; Evil keybindings
   (evil-define-key 'normal tidal-mode-map (kbd "<RET>") 'tidal-run-multiple-lines))
-
-;; Daemon mode
-;; (require 'server)
-;; (if (not (server-running-p)) (server-start))
 
 ;; Wrap isearch
 (defadvice isearch-repeat (after isearch-no-fail activate)
