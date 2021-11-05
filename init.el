@@ -367,6 +367,28 @@ If no file is associated, just close buffer without prompt for save."
   (winum-mode)
   (winum-set-keymap-prefix (kbd "C-w")))
 
+
+(defun insert-umlaut-a ()
+  "Insert umlaut ä at cursor point."
+  (interactive)
+  (forward-char 1)
+  (insert "ä"))
+(defun insert-umlaut-u ()
+  "Insert umlaut ü at cursor point."
+  (interactive)
+  (forward-char 1)
+  (insert "ü"))
+(defun insert-umlaut-o ()
+  "Insert umlaut ö at cursor point."
+  (interactive)
+  (forward-char 1)
+  (insert "ö"))
+(defun insert-umlaut-s ()
+  "Insert umlaut ß at cursor point."
+  (interactive)
+  (forward-char 1)
+  (insert "ß"))
+
 ;; ;; General keybindings
 (use-package general
   :ensure t
@@ -415,6 +437,12 @@ If no file is associated, just close buffer without prompt for save."
     "S" 'save-some-buffers
     "i" 'insert-file
     "f" 'helm-find-files)
+  (nmap ;; Deutsch letters bindings
+   :prefix "SPC d"
+   "a" 'insert-umlaut-a
+   "u" 'insert-umlaut-u
+   "o" 'insert-umlaut-o
+   "s" 'insert-umlaut-s)
 
   ;; Elisp keybindings
   (nmap
