@@ -13,22 +13,22 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
-(unless (package-installed-p 'use-package) ;; Install use-package if not yet
+;; Install use-package if not yet
+(unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-(eval-and-compile
-  (setq use-package-always-ensure t ;; Always ensure that package is installed
-        use-package-expand-minimally t))
+(setq-default
+ use-package-always-ensure t)
 
+;; Sync user shell and Emacs shell
 (use-package exec-path-from-shell
   :config
   (exec-path-from-shell-initialize))
 
 ;; Backup configuration
-(setq make-backup-files nil)
-(setq-default make-backup-files nil)
-(setq create-lockfiles nil)
-(setq-default create-lockfiles nil)
+(setq-default
+ make-backup-files nil ; Do not make backup files
+ create-lockfiles nil) ; Do not create lockfiles
 
 ;; Coding system
 (set-language-environment "UTF-8")
@@ -42,10 +42,10 @@
 (add-hook 'LilyPond-mode-hook (lambda () (turn-on-font-lock)))
 
 ;; Personal information
-(setq user-full-name "Aleksandr Yakunichev")
-(setq user-mail-address "hi@ya.codes")
+(setq-default user-full-name "Aleksandr Yakunichev")
+(setq-default user-mail-address "hi@ya.codes")
 
-(setq inhibit-startup-screen t) ;; Configure startup screen
+(setq-default inhibit-startup-screen t) ;; Configure startup screen
 ;; (setq-default truncate-lines t) ;; Truncate lines
 (setq-default word-wrap t) ;; Wrap words
 
@@ -54,8 +54,8 @@
 (defalias 'yes-or-no-p 'y-or-n-p)                       ;; Map yes & no to y & n
 (global-display-line-numbers-mode 1)                    ;; Show line numbers
 (global-hl-line-mode)                                   ;; Highlight line under the cursor
-(setq ring-bell-function 'ignore)                       ;; Turn off the alarm
-(setq backup-directory-alist '(("~/.emacs.d/backups"))) ;; Set backup directories
+(setq-default ring-bell-function 'ignore)                       ;; Turn off the alarm
+(setq-default backup-directory-alist '(("~/.emacs.d/backups"))) ;; Set backup directories
 
 ;; Smart buffer switching
 (defun switch-to-previous-buffer ()
@@ -63,15 +63,14 @@
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
-;; key bindings
+;; Text scaling key bindings
+;; @TODO Move to general.el
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 
-;; Turn down the time to echo keystrokes so I don't have to wait around for things to happen. Dialog boxes are also a bit annoying, so just have Emacs use the echo area for everything. Beeping is for robots, and I am not a robot. Use a visual indicator instead of making horrible noises. Oh, and always highlight parentheses. A person could go insane without that.
-(setq echo-keystrokes 0.1
-      use-dialog-box nil
-      visible-bell t)
-
+(setq-default echo-keystrokes 0.1)
+(setq-default use-dialog-box nil)
+(setq-default visible-bell t)
 (setq-default show-paren-style 'parenthesis) ;; Highlighting style (parenthesis | expression | mixed)
 (show-paren-mode t)                          ;; Highlight matching brackets
 (electric-pair-mode)                         ;; Auto close bracket insertion (Emacs 24+)
@@ -204,15 +203,13 @@ If no file is associated, just close buffer without prompt for save."
   (add-to-list 'hs-special-modes-alist
    '(yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#" +data-hideshow-forward-sexp nil))
   )
-
 (use-package evil-indent-plus)
 
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable) ;; Emacs lisp rainbow
 
 (use-package yaml-mode
-  :mode (".yaml$")
-  ;; :hook (yaml-mode . origami-mode)
-  :init
+  :config
+  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
   (add-hook 'yaml-mode-hook (lambda () (toggle-truncate-lines t)))
   (add-hook 'yaml-mode-hook 'hs-minor-mode))
 
@@ -264,18 +261,18 @@ If no file is associated, just close buffer without prompt for save."
                 (setup-tide-mode)))))
 
 (defun web-mode-init-hook ()
-  "Hooks for Web mode. Adjust indent."
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-attr-indent-offset 2)
-  (setq web-mode-attr-value-indent-offset 2)
-  (setq web-mode-indentless-elements 2)
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-sql-indent-offset 2)
-  (setq web-mode-block-padding 2)
-  (setq web-mode-style-padding 2)
-  (setq web-mode-script-padding 2))
+  "Hooks for Web mode.  Adjust indent."
+  (setq-default web-mode-markup-indent-offset 2)
+  (setq-default web-mode-css-indent-offset 2)
+  (setq-default web-mode-code-indent-offset 2)
+  (setq-default web-mode-attr-indent-offset 2)
+  (setq-default web-mode-attr-value-indent-offset 2)
+  (setq-default web-mode-indentless-elements 2)
+  (setq-default web-mode-markup-indent-offset 2)
+  (setq-default web-mode-sql-indent-offset 2)
+  (setq-default web-mode-block-padding 2)
+  (setq-default web-mode-style-padding 2)
+  (setq-default web-mode-script-padding 2))
 
 (use-package web-mode
   :config
