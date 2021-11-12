@@ -8,14 +8,19 @@
 ;; You may delete these explanatory comments.
 ;; packages
 ;;; Code:
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (package-initialize)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
-(require 'use-package)
+(require 'package)
+(add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
+
+(unless (package-installed-p 'use-package) ;; Install use-package if not yet
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-and-compile
+  (setq use-package-always-ensure t ;; Always ensure that package is installed
+        use-package-expand-minimally t))
 
 (use-package exec-path-from-shell
-  :ensure t
   :config
   (exec-path-from-shell-initialize))
 
@@ -84,16 +89,13 @@ If no file is associated, just close buffer without prompt for save."
 
 ;; Emojis support
 (use-package emojify
-  :ensure t
   :hook (after-init . global-emojify-mode))
 
 ;; Elfeed RSS Reader
 (use-package elfeed
-  :ensure t
   :config
   (setq-default elfeed-db-directory "~/Org/.elfeed"))
 (use-package elfeed-org
-  :ensure t
   :after elfeed
   :config
   (elfeed-org)
@@ -137,14 +139,12 @@ If no file is associated, just close buffer without prompt for save."
 
 ;; Undo-redo
 (use-package undo-tree
-  :ensure t
   :config
   (global-undo-tree-mode))
 
 ;; Evil mode
 (setq-default evil-want-keybinding nil)
 (use-package evil
-  :ensure t
   :after undo-tree
   :config
   (evil-mode 1)
@@ -156,31 +156,25 @@ If no file is associated, just close buffer without prompt for save."
 
 ;; Writegood-mode
 (use-package writegood-mode
-  :load-path "~/.sources/writegood-mode"
-  :ensure t)
+  :load-path "~/.sources/writegood-mode")
 
 ;; Helm
 (use-package helm
-  :ensure t
   :config
   (require 'helm-config)
   (helm-mode 1))
 
 (use-package helm-projectile
-  :ensure t
   :after helm
   :config
   (helm-projectile-on))
 
-(use-package magit
-  :ensure t)
+(use-package magit)
 (use-package which-key
-  :ensure t
   :config
   (which-key-mode))
 
 (use-package company ;; Autocompletion popup
-  :ensure t
   :config
   (global-company-mode)                             ;; Initialize globally
   (company-tng-mode)                                ;; Use TAB to cycle through suggestions
@@ -191,7 +185,6 @@ If no file is associated, just close buffer without prompt for save."
   (setq-default company-idle-delay 0))              ;; Show suggestions immediately
 
 (use-package markdown-mode
-  :ensure t
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
@@ -199,7 +192,6 @@ If no file is associated, just close buffer without prompt for save."
   :init (setq markdown-command "multimarkdown"))
 
 (use-package hideshow
-  :ensure t
   :config
   (defun +data-hideshow-forward-sexp (arg)
     (let ((start (current-indentation)))
@@ -213,13 +205,11 @@ If no file is associated, just close buffer without prompt for save."
    '(yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#" +data-hideshow-forward-sexp nil))
   )
 
-(use-package evil-indent-plus
-  :ensure t)
+(use-package evil-indent-plus)
 
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable) ;; Emacs lisp rainbow
 
 (use-package yaml-mode
-  :ensure t
   :mode (".yaml$")
   ;; :hook (yaml-mode . origami-mode)
   :init
@@ -228,7 +218,6 @@ If no file is associated, just close buffer without prompt for save."
 
 ;; Web development modules
 (use-package lsp-mode
-  :ensure t
   :config (setq-default lsp-headerline-breadcrumb-enable nil)
   :hook ((go-mode . lsp-deferred)
          (web-mode . lsp-deferred)
@@ -237,11 +226,9 @@ If no file is associated, just close buffer without prompt for save."
   :commands (lsp lsp-deferred))
 
 (use-package lsp-ui
-  :ensure t
   :after lsp-mode
   :commands lsp-ui-mode)
 (use-package helm-lsp
-  :ensure t
   :after lsp-mode
   :commands helm-lsp-workspace-symbol)
 
@@ -251,7 +238,6 @@ If no file is associated, just close buffer without prompt for save."
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
 (use-package go-mode
-  :ensure t
   :config
   (add-hook 'go-mode-hook #'lsp-go-install-save-hooks))
 
@@ -267,7 +253,6 @@ If no file is associated, just close buffer without prompt for save."
   (tide-hl-identifier-mode +1)
   (company-mode +1))
 (use-package tide
-  :ensure t
   :after web-mode
   :config
   ;; (add-hook 'before-save-hook 'tide-format-before-save)
@@ -293,7 +278,6 @@ If no file is associated, just close buffer without prompt for save."
   (setq web-mode-script-padding 2))
 
 (use-package web-mode
-  :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
@@ -308,7 +292,6 @@ If no file is associated, just close buffer without prompt for save."
                 web-mode-code-indent-offset 2))
 
 (use-package flycheck
-  :ensure t
   :config
   (require 'flycheck)
   (global-flycheck-mode)
@@ -321,13 +304,11 @@ If no file is associated, just close buffer without prompt for save."
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
 (use-package add-node-modules-path
-  :ensure t
   :config
   (add-hook 'flycheck-mode-hook 'add-node-modules-path))
 
 ;; Distraction-free writing
 (use-package writeroom-mode
-  :ensure t
   :config
   (setq-default writeroom-width 90)
   (add-hook 'writeroom-mode-enable-hook (lambda ()
@@ -353,14 +334,12 @@ If no file is associated, just close buffer without prompt for save."
 
 ;; Prettier JS
 (use-package prettier-js
-  :ensure t
   :config
   (add-hook 'js2-mode-hook 'prettier-js-mode)
   (add-hook 'web-mode-hook 'prettier-js-mode)
   (add-hook 'typescript-mode-hook 'prettier-js-mode))
 
 (use-package winum
-  :ensure t
   :config
   (winum-mode)
   (winum-set-keymap-prefix (kbd "C-w")))
@@ -389,7 +368,6 @@ If no file is associated, just close buffer without prompt for save."
 
 ;; ;; General keybindings
 (use-package general
-  :ensure t
   :config
 
   (general-evil-setup t)
@@ -479,13 +457,11 @@ If no file is associated, just close buffer without prompt for save."
     "p" 'projectile-command-map))
 
 (use-package evil-collection
-  :ensure t
   :config
   (evil-collection-init))
 
 ;; Theme
 (use-package base16-theme
-  :ensure t
   :config
   (load-theme 'base16-tomorrow-night t)
   (set-background-color "#151515")
@@ -501,13 +477,11 @@ If no file is associated, just close buffer without prompt for save."
 
 ;; Beautiful text wrapping
 (use-package visual-fill-column
-  :ensure t
   :config
   (setq-default visual-fill-column-width 90))
 
 ;; Org mode
 (use-package org
-  :ensure t
   :config
   (setq org-log-done 'time)
   (setq org-hide-leading-stars t)
@@ -530,15 +504,12 @@ If no file is associated, just close buffer without prompt for save."
      (plantuml . t))))
 
 (use-package ox-reveal
-  :ensure t
   :after org)
 
 (use-package htmlize
-  :ensure t
   :after org)
 
 (use-package org-ql
-  :ensure t
   :after org)
 (defun tiny/weekly ()
   "Insert formatted weekly report in the current buffer."
@@ -563,13 +534,11 @@ If no file is associated, just close buffer without prompt for save."
 
 ;; PDF Tools
 (use-package pdf-tools
-  :ensure t
   :config
   (pdf-tools-install))
 
 ;; Rainbow
 (use-package rainbow-delimiters
-  :ensure t
   :config
   (rainbow-delimiters-mode))
 
@@ -584,26 +553,14 @@ ARG: I do not know what this is."
 
 ;; Projectile
 (use-package projectile
-  :ensure t
   :config
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
-;; ;; GLSL
-(use-package glsl-mode :ensure t)
-
-;; ;; SCLang
-;; (require 'sclang)
-(use-package sclang-snippets
-  :ensure t
-  :config
-  (setq-default sclang-indent-level 2))
-
 ;; TidalCycles
 (use-package tidal
   ;; Music pattern live-coding language syntax and environment
-  :ensure t
   :config
   ;; Global config
   (setq-default tidal-boot-script-path "/home/ya/Workspace/Audio/TidalCycles/Sandbox/2020-09-07/Boot.hs")
