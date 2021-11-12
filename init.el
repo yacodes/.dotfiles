@@ -318,20 +318,6 @@ If no file is associated, just close buffer without prompt for save."
                                            (display-line-numbers-mode 1)
                                            (setf (cdr (assq 'continuation fringe-indicator-alist)) '(left-curly-arrow right-curly-arrow)))))
 
-;; Concentration mode
-;; (defun toggle-concentration-mode ()
-;;   "Toggle concentration mode on and off."
-;;   (interactive)
-;;   (if (get 'toggle-concentration-mode 'state)
-;;       (progn
-;;         (display-line-numbers-mode 1)
-;;         (writeroom-mode -1)
-;;         (put 'toggle-concentration-mode 'state nil))
-;;     (progn
-;;       (display-line-numbers-mode -1)
-;;       (writeroom-mode 1)
-;;       (put 'toggle-concentration-mode 'state t))))
-
 ;; Prettier JS
 (use-package prettier-js
   :config
@@ -343,7 +329,6 @@ If no file is associated, just close buffer without prompt for save."
   :config
   (winum-mode)
   (winum-set-keymap-prefix (kbd "C-w")))
-
 
 (defun insert-umlaut-a ()
   "Insert umlaut ä at cursor point."
@@ -369,8 +354,8 @@ If no file is associated, just close buffer without prompt for save."
 ;; ;; General keybindings
 (use-package general
   :config
-
   (general-evil-setup t)
+  (general-auto-unbind-keys)
     
   ;; General execute
   (general-define-key
@@ -380,6 +365,9 @@ If no file is associated, just close buffer without prompt for save."
    "t" 'toggle-truncate-lines
    "c" 'writeroom-mode
    "TAB" 'switch-to-previous-buffer)
+  (general-define-key
+   :prefix "C-c"
+   "b" 'switch-to-previous-buffer)
   (general-define-key
    :keymaps '(normal emacs)
    :prefix "SPC"
@@ -532,12 +520,12 @@ If no file is associated, just close buffer without prompt for save."
                                                     :sort '(date)
                                                     :action '(org-get-heading t t)) ";\n")))))))
 
-;; PDF Tools
 (use-package pdf-tools
+  :after general
   :config
-  (pdf-tools-install))
+  (pdf-tools-install)
+  (add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1))))
 
-;; Rainbow
 (use-package rainbow-delimiters
   :config
   (rainbow-delimiters-mode))
