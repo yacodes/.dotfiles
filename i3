@@ -5,8 +5,8 @@
 set $mod Mod4
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-default_border pixel 1
-default_floating_border pixel 1
+default_border pixel 2
+default_floating_border pixel 2
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -141,12 +141,12 @@ set_from_resource $term_color15    color15
 # Theme colors
 # class                  border  backgr. text    indic.   child_border
 client.focused          #373b41 #373b41 #373b41 #373b41
-client.focused_inactive #1d1f21 #1d1f21 #c5c8c6 #373b41
-client.unfocused        #1d1f21 #1d1f21 #c5c8c6 #1d1f21
-client.urgent           #1d1f21 #1d1f21 #c5c8c6 #1d1f21
+client.focused_inactive #202225 #202225 #c5c8c6 #373b41
+client.unfocused        #202225 #202225 #c5c8c6 #202225
+client.urgent           #202225 #202225 #c5c8c6 #202225
 client.placeholder      #000000 #0c0c0c #c5c8c6 #000000 
 client.background       #151515
 
 # Set inner/outer gaps
-gaps inner 15
+gaps inner 8
 gaps outer 0
