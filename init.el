@@ -61,7 +61,7 @@
 (defun switch-to-previous-buffer ()
   "Switch to previous buffer."
   (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
+  (switch-to-buffer (other-buffer (current-buffer) t)))
 
 ;; Text scaling key bindings
 ;; @TODO Move to general.el
