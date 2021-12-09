@@ -452,11 +452,7 @@ If no file is associated, just close buffer without prompt for save."
   (set-background-color "#151515")
   (setq default-frame-alist
         '((background-color . "#151515")))
-  (set-face-attribute 'default nil
-		                  :family "Iosevka"
-		                  :height 170
-		                  :weight 'normal
-		                  :width 'normal)
+  (set-face-attribute 'default nil :family "Iosevka" :weight 'regular :height 165 :width 'normal)
   (set-face-attribute 'fringe nil :background nil))
 
 
