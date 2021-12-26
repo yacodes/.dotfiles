@@ -224,7 +224,8 @@ If no file is associated, just close buffer without prompt for save."
 
 (use-package lsp-ui
   :after lsp-mode
-  :commands lsp-ui-mode)
+  :commands lsp-ui-mode
+  :config (setq-default lsp-ui-doc-show-with-cursor t))
 (use-package helm-lsp
   :after lsp-mode
   :commands helm-lsp-workspace-symbol)
