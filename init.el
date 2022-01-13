@@ -370,17 +370,16 @@ If no file is associated, just close buffer without prompt for save."
     
   ;; General execute
   (general-define-key
-   :keymaps '(normal hybrid iedit-insert emacs)
+   :states 'normal
+   :keymaps 'override
    :prefix "SPC"
    :non-normal-prefix "SPC"
    "t" 'toggle-truncate-lines
    "c" 'writeroom-mode
    "TAB" 'switch-to-previous-buffer)
   (general-define-key
-   :prefix "C-c"
-   "b" 'switch-to-previous-buffer)
-  (general-define-key
-   :keymaps '(normal emacs)
+   :states 'normal
+   :keymaps 'override
    :prefix "SPC"
    "w" (general-key "C-w")
    "w u" 'winner-undo
