@@ -17,8 +17,8 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-(setq-default
- use-package-always-ensure t)
+(setq-default use-package-always-ensure t)
+
 
 ;; Sync user shell and Emacs shell
 (use-package exec-path-from-shell
@@ -26,9 +26,8 @@
   (exec-path-from-shell-initialize))
 
 ;; Backup configuration
-(setq-default
- make-backup-files nil ; Do not make backup files
- create-lockfiles nil) ; Do not create lockfiles
+(setq-default make-backup-files nil) ;; Do not make backup files
+(setq-default create-lockfiles nil)  ;; Do not create lockfiles
 
 ;; Coding system
 (set-language-environment "UTF-8")
@@ -46,8 +45,9 @@
 (setq-default user-mail-address "hi@ya.codes")
 
 (setq-default inhibit-startup-screen t) ;; Configure startup screen
-;; (setq-default truncate-lines t) ;; Truncate lines
-(setq-default word-wrap t) ;; Wrap words
+;; (setq-default truncate-lines t)         ;; Truncate lines
+(setq-default word-wrap t)              ;; Wrap words
+(setq-default split-height-threshold 1) ;; Windows default splitting
 
 (setq-default tab-width 2)                              ;; Set tab-width
 (setq-default indent-tabs-mode nil)                     ;; Disable tabs?
@@ -89,6 +89,20 @@ If no file is associated, just close buffer without prompt for save."
 ;; Emojis support
 (use-package emojify
   :hook (after-init . global-emojify-mode))
+
+;; Geiser for Scheme-related stuff
+(use-package geiser)
+(use-package geiser-guile
+  :after geiser
+  :config
+  (setq-default geiser-guile-binary "/usr/bin/guile3"))
+
+;; Evil-in-REPL instead of the minibuffer
+(use-package eval-in-repl
+  :config
+  (load "./eval-in-repl-geiser.el")
+  (require 'eval-in-repl-geiser)
+  (setq-default eir-jump-after-eval nil))
 
 ;; Elfeed RSS Reader
 (use-package elfeed
@@ -201,10 +215,9 @@ If no file is associated, just close buffer without prompt for save."
           (goto-char (cadr range))
           (end-of-line)))))
   (add-to-list 'hs-special-modes-alist
-   '(yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#" +data-hideshow-forward-sexp nil))
-  )
-(use-package evil-indent-plus)
+   '(yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#" +data-hideshow-forward-sexp nil)))
 
+(use-package evil-indent-plus)
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable) ;; Emacs lisp rainbow
 
 (use-package yaml-mode
@@ -411,6 +424,11 @@ If no file is associated, just close buffer without prompt for save."
     :keymaps 'emacs-lisp-mode-map
     "RET" 'eval-print-last-sexp)
 
+  ;; Geiser keybindings
+  (nmap
+    :keymaps 'geiser-mode-map
+    "RET" 'eir-eval-in-geiser)
+
   ;; Org-mode keybindings
   (nmap
    :keymaps 'org-mode-map
@@ -455,7 +473,6 @@ If no file is associated, just close buffer without prompt for save."
         '((background-color . "#151515")))
   (set-face-attribute 'default nil :family "Iosevka" :weight 'regular :height 165 :width 'normal)
   (set-face-attribute 'fringe nil :background nil))
-
 
 ;; Beautiful text wrapping
 (use-package visual-fill-column
@@ -578,7 +595,7 @@ ARG: I do not know what this is."
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(undo-tree emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(eval-in-repl evil-in-repl undo-tree emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
