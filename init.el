@@ -469,9 +469,8 @@ If no file is associated, just close buffer without prompt for save."
   :config
   (load-theme 'base16-tomorrow-night t)
   (set-background-color "#151515")
-  (setq default-frame-alist
-        '((background-color . "#151515")))
-  (set-face-attribute 'default nil :family "Iosevka" :weight 'regular :height 165 :width 'normal)
+  (setq default-frame-alist '((background-color . "#151515")))
+  (set-face-attribute 'default nil :family "Iosevka" :height 178)
   (set-face-attribute 'fringe nil :background nil))
 
 ;; Beautiful text wrapping
