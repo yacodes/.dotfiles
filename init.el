@@ -101,8 +101,12 @@ If no file is associated, just close buffer without prompt for save."
 (use-package eval-in-repl
   :config
   (load "./eval-in-repl-geiser.el")
+  (load "./eval-in-repl-ielm.el")
   (require 'eval-in-repl-geiser)
-  (setq-default eir-jump-after-eval nil))
+  (require 'eval-in-repl-ielm)
+  (setq-default eir-jump-after-eval nil)
+  (setq-default eir-always-split-script-window t)
+  (setq-default eir-repl-placement 'below))
 
 ;; Elfeed RSS Reader
 (use-package elfeed
@@ -421,7 +425,7 @@ If no file is associated, just close buffer without prompt for save."
   ;; Elisp keybindings
   (nmap
     :keymaps 'emacs-lisp-mode-map
-    "RET" 'eval-print-last-sexp)
+    "RET" 'eir-eval-in-ielm)
 
   ;; Geiser keybindings
   (nmap
