@@ -19,7 +19,6 @@
   (package-install 'use-package))
 (setq-default use-package-always-ensure t)
 
-
 ;; Sync user shell and Emacs shell
 (use-package exec-path-from-shell
   :config
@@ -91,11 +90,18 @@ If no file is associated, just close buffer without prompt for save."
   :hook (after-init . global-emojify-mode))
 
 ;; Geiser for Scheme-related stuff
+(defun setup-lisp-repl ()
+  "Set up Lisp repl config."
+  (display-line-numbers-mode -1) ;; Remove line-numbers from REPL
+  (minimize-window (selected-window)) ;; Minimize and then adjust window height as desired
+  (window-resize (selected-window) 6))
 (use-package geiser)
 (use-package geiser-guile
   :after geiser
   :config
-  (setq-default geiser-guile-binary "/usr/bin/guile3"))
+  (setq-default geiser-guile-binary "/usr/bin/guile3")
+  (add-hook 'geiser-repl-mode-hook 'setup-lisp-repl)
+  (add-hook 'ielm-mode-hook 'setup-lisp-repl))
 
 ;; Evil-in-REPL instead of the minibuffer
 (use-package eval-in-repl
@@ -105,7 +111,6 @@ If no file is associated, just close buffer without prompt for save."
   (require 'eval-in-repl-geiser)
   (require 'eval-in-repl-ielm)
   (setq-default eir-jump-after-eval nil)
-  (setq-default eir-always-split-script-window t)
   (setq-default eir-repl-placement 'below))
 
 ;; Elfeed RSS Reader
@@ -345,27 +350,6 @@ If no file is associated, just close buffer without prompt for save."
   (winum-mode)
   (winum-set-keymap-prefix (kbd "C-w")))
 
-(defun insert-umlaut-a ()
-  "Insert umlaut ä at cursor point."
-  (interactive)
-  (forward-char 1)
-  (insert "ä"))
-(defun insert-umlaut-u ()
-  "Insert umlaut ü at cursor point."
-  (interactive)
-  (forward-char 1)
-  (insert "ü"))
-(defun insert-umlaut-o ()
-  "Insert umlaut ö at cursor point."
-  (interactive)
-  (forward-char 1)
-  (insert "ö"))
-(defun insert-umlaut-s ()
-  "Insert umlaut ß at cursor point."
-  (interactive)
-  (forward-char 1)
-  (insert "ß"))
-
 ;; ;; General keybindings
 (use-package general
   :config
@@ -415,12 +399,6 @@ If no file is associated, just close buffer without prompt for save."
     "S" 'save-some-buffers
     "i" 'insert-file
     "f" 'helm-find-files)
-  (nmap ;; Deutsch letters bindings
-   :prefix "SPC d"
-   "a" 'insert-umlaut-a
-   "u" 'insert-umlaut-u
-   "o" 'insert-umlaut-o
-   "s" 'insert-umlaut-s)
 
   ;; Elisp keybindings
   (nmap
@@ -481,11 +459,15 @@ If no file is associated, just close buffer without prompt for save."
   :config
   (setq-default visual-fill-column-width 90))
 
+(setq-default fill-column 90)
+(setq-default comment-column 90)
+
 ;; Org mode
 (use-package org
   :config
-  (setq org-log-done 'time)
-  (setq org-hide-leading-stars t)
+  (setq-default org-log-done 'time)
+  (setq-default org-hide-leading-stars t)
+  (setq-default org-archive-reversed-order t)
   (add-hook 'org-mode-hook '(lambda () (setq truncate-lines nil)))
   (add-hook 'org-mode-hook #'visual-fill-column-mode)
   (add-hook 'org-mode-hook #'writeroom-mode)
