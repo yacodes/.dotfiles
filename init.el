@@ -17,8 +17,7 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-(setq-default
- use-package-always-ensure t)
+(setq-default use-package-always-ensure t)
 
 ;; Sync user shell and Emacs shell
 (use-package exec-path-from-shell
@@ -26,9 +25,8 @@
   (exec-path-from-shell-initialize))
 
 ;; Backup configuration
-(setq-default
- make-backup-files nil ; Do not make backup files
- create-lockfiles nil) ; Do not create lockfiles
+(setq-default make-backup-files nil) ;; Do not make backup files
+(setq-default create-lockfiles nil)  ;; Do not create lockfiles
 
 ;; Coding system
 (set-language-environment "UTF-8")
@@ -46,8 +44,9 @@
 (setq-default user-mail-address "hi@ya.codes")
 
 (setq-default inhibit-startup-screen t) ;; Configure startup screen
-;; (setq-default truncate-lines t) ;; Truncate lines
-(setq-default word-wrap t) ;; Wrap words
+;; (setq-default truncate-lines t)         ;; Truncate lines
+(setq-default word-wrap t)              ;; Wrap words
+(setq-default split-height-threshold 1) ;; Windows default splitting
 
 (setq-default tab-width 2)                              ;; Set tab-width
 (setq-default indent-tabs-mode nil)                     ;; Disable tabs?
@@ -61,7 +60,7 @@
 (defun switch-to-previous-buffer ()
   "Switch to previous buffer."
   (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
+  (switch-to-buffer (other-buffer (current-buffer) t)))
 
 ;; Text scaling key bindings
 ;; @TODO Move to general.el
@@ -89,6 +88,30 @@ If no file is associated, just close buffer without prompt for save."
 ;; Emojis support
 (use-package emojify
   :hook (after-init . global-emojify-mode))
+
+;; Geiser for Scheme-related stuff
+(defun setup-lisp-repl ()
+  "Set up Lisp repl config."
+  (display-line-numbers-mode -1) ;; Remove line-numbers from REPL
+  (minimize-window (selected-window)) ;; Minimize and then adjust window height as desired
+  (window-resize (selected-window) 6))
+(use-package geiser)
+(use-package geiser-guile
+  :after geiser
+  :config
+  (setq-default geiser-guile-binary "/usr/bin/guile3")
+  (add-hook 'geiser-repl-mode-hook 'setup-lisp-repl)
+  (add-hook 'ielm-mode-hook 'setup-lisp-repl))
+
+;; Evil-in-REPL instead of the minibuffer
+(use-package eval-in-repl
+  :config
+  (load "./eval-in-repl-geiser.el")
+  (load "./eval-in-repl-ielm.el")
+  (require 'eval-in-repl-geiser)
+  (require 'eval-in-repl-ielm)
+  (setq-default eir-jump-after-eval nil)
+  (setq-default eir-repl-placement 'below))
 
 ;; Elfeed RSS Reader
 (use-package elfeed
@@ -201,10 +224,9 @@ If no file is associated, just close buffer without prompt for save."
           (goto-char (cadr range))
           (end-of-line)))))
   (add-to-list 'hs-special-modes-alist
-   '(yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#" +data-hideshow-forward-sexp nil))
-  )
-(use-package evil-indent-plus)
+   '(yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#" +data-hideshow-forward-sexp nil)))
 
+(use-package evil-indent-plus)
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable) ;; Emacs lisp rainbow
 
 (use-package yaml-mode
@@ -328,27 +350,6 @@ If no file is associated, just close buffer without prompt for save."
   (winum-mode)
   (winum-set-keymap-prefix (kbd "C-w")))
 
-(defun insert-umlaut-a ()
-  "Insert umlaut ä at cursor point."
-  (interactive)
-  (forward-char 1)
-  (insert "ä"))
-(defun insert-umlaut-u ()
-  "Insert umlaut ü at cursor point."
-  (interactive)
-  (forward-char 1)
-  (insert "ü"))
-(defun insert-umlaut-o ()
-  "Insert umlaut ö at cursor point."
-  (interactive)
-  (forward-char 1)
-  (insert "ö"))
-(defun insert-umlaut-s ()
-  "Insert umlaut ß at cursor point."
-  (interactive)
-  (forward-char 1)
-  (insert "ß"))
-
 ;; ;; General keybindings
 (use-package general
   :config
@@ -357,17 +358,16 @@ If no file is associated, just close buffer without prompt for save."
     
   ;; General execute
   (general-define-key
-   :keymaps '(normal hybrid iedit-insert emacs)
+   :states 'normal
+   :keymaps 'override
    :prefix "SPC"
    :non-normal-prefix "SPC"
    "t" 'toggle-truncate-lines
    "c" 'writeroom-mode
    "TAB" 'switch-to-previous-buffer)
   (general-define-key
-   :prefix "C-c"
-   "b" 'switch-to-previous-buffer)
-  (general-define-key
-   :keymaps '(normal emacs)
+   :states 'normal
+   :keymaps 'override
    :prefix "SPC"
    "w" (general-key "C-w")
    "w u" 'winner-undo
@@ -399,17 +399,16 @@ If no file is associated, just close buffer without prompt for save."
     "S" 'save-some-buffers
     "i" 'insert-file
     "f" 'helm-find-files)
-  (nmap ;; Deutsch letters bindings
-   :prefix "SPC d"
-   "a" 'insert-umlaut-a
-   "u" 'insert-umlaut-u
-   "o" 'insert-umlaut-o
-   "s" 'insert-umlaut-s)
 
   ;; Elisp keybindings
   (nmap
     :keymaps 'emacs-lisp-mode-map
-    "RET" 'eval-print-last-sexp)
+    "RET" 'eir-eval-in-ielm)
+
+  ;; Geiser keybindings
+  (nmap
+    :keymaps 'geiser-mode-map
+    "RET" 'eir-eval-in-geiser)
 
   ;; Org-mode keybindings
   (nmap
@@ -451,22 +450,24 @@ If no file is associated, just close buffer without prompt for save."
   :config
   (load-theme 'base16-tomorrow-night t)
   (set-background-color "#151515")
-  (setq default-frame-alist
-        '((background-color . "#151515")))
-  (set-face-attribute 'default nil :family "Iosevka" :weight 'regular :height 165 :width 'normal)
+  (setq default-frame-alist '((background-color . "#151515")))
+  (set-face-attribute 'default nil :family "Iosevka" :height 178)
   (set-face-attribute 'fringe nil :background nil))
-
 
 ;; Beautiful text wrapping
 (use-package visual-fill-column
   :config
   (setq-default visual-fill-column-width 90))
 
+(setq-default fill-column 90)
+(setq-default comment-column 90)
+
 ;; Org mode
 (use-package org
   :config
-  (setq org-log-done 'time)
-  (setq org-hide-leading-stars t)
+  (setq-default org-log-done 'time)
+  (setq-default org-hide-leading-stars t)
+  (setq-default org-archive-reversed-order t)
   (add-hook 'org-mode-hook '(lambda () (setq truncate-lines nil)))
   (add-hook 'org-mode-hook #'visual-fill-column-mode)
   (add-hook 'org-mode-hook #'writeroom-mode)
@@ -578,7 +579,7 @@ ARG: I do not know what this is."
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(undo-tree emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(eval-in-repl evil-in-repl undo-tree emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

@@ -23,7 +23,7 @@ bindsym $mod+m exec mailspring
 # Editor
 bindsym $mod+e exec "emacsclient -c -a ''"
 # Launcher
-bindsym $mod+space exec "rofi -no-default-config -no-fixed-num-lines -drun-display-format {name} -display-drun 'λ' -modi drun,window,emoji -show drun -font 'Iosevka 30' -yoffset 256 -location 2"
+bindsym $mod+space exec "rofi -no-default-config -no-fixed-num-lines -drun-display-format {name} -display-drun 'λ' -modi drun,window,emoji -show drun -font 'Iosevka Light 40' -yoffset 256 -location 2"
 # Telegram
 bindsym $mod+t exec telegram-desktop
 # Screenshot
@@ -116,7 +116,7 @@ bindsym $mod+Shift+Ctrl+Up resize shrink height 3 px or 3 ppt
 bindsym $mod+Shift+Ctrl+Right resize grow width 3 px or 3 ppt
 
 # Autostart applications
-exec_always --no-startup-id "~/.config/polybar/launch.sh"
+# exec_always --no-startup-id "~/.config/polybar/launch.sh"
 
 set_from_resource $term_background background
 set_from_resource $term_foreground foreground
