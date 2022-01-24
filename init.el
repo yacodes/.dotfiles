@@ -17,7 +17,6 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-(setq-default use-package-always-ensure t)
 
 ;; Sync user shell and Emacs shell
 (use-package exec-path-from-shell
@@ -89,12 +88,21 @@ If no file is associated, just close buffer without prompt for save."
 (use-package emojify
   :hook (after-init . global-emojify-mode))
 
-;; Geiser for Scheme-related stuff
+;; Lisps
 (defun setup-lisp-repl ()
   "Set up Lisp repl config."
   (display-line-numbers-mode -1) ;; Remove line-numbers from REPL
   (minimize-window (selected-window)) ;; Minimize and then adjust window height as desired
   (window-resize (selected-window) 6))
+
+;; CIDER for Clojure development
+(use-package cider
+  :ensure t
+  :config
+  (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode-enable) ;; Emacs lisp rainbow
+  (add-hook 'cider-repl-mode-hook (lambda () (display-line-numbers-mode -1))))
+
+;; Geiser for Scheme-related stuff
 (use-package geiser)
 (use-package geiser-guile
   :after geiser
@@ -108,8 +116,10 @@ If no file is associated, just close buffer without prompt for save."
   :config
   (load "./eval-in-repl-geiser.el")
   (load "./eval-in-repl-ielm.el")
+  (load "./eval-in-repl-cider.el")
   (require 'eval-in-repl-geiser)
   (require 'eval-in-repl-ielm)
+  (require 'eval-in-repl-cider)
   (setq-default eir-jump-after-eval nil)
   (setq-default eir-repl-placement 'below))
 
@@ -141,7 +151,7 @@ If no file is associated, just close buffer without prompt for save."
                             "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
                             "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
                             "\\" "://"))
-  (ligature-set-ligatures '(web-mode lilypond-mode typescript-mode go-mode)
+  (ligature-set-ligatures '(geiser-mode elisp-mode web-mode lilypond-mode typescript-mode go-mode)
 			  '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
                             ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
                             "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
@@ -400,6 +410,11 @@ If no file is associated, just close buffer without prompt for save."
     "i" 'insert-file
     "f" 'helm-find-files)
 
+  ;; CIDER keybindings
+  (nmap
+    :keymaps 'clojure-mode-map
+    "RET" 'eir-eval-in-cider)
+
   ;; Elisp keybindings
   (nmap
     :keymaps 'emacs-lisp-mode-map
@@ -579,7 +594,7 @@ ARG: I do not know what this is."
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(eval-in-repl evil-in-repl undo-tree emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(cider eval-in-repl evil-in-repl undo-tree emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
