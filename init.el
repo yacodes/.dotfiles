@@ -151,7 +151,7 @@ If no file is associated, just close buffer without prompt for save."
                             "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
                             "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
                             "\\" "://"))
-  (ligature-set-ligatures '(geiser-mode elisp-mode web-mode lilypond-mode typescript-mode go-mode)
+  (ligature-set-ligatures '(geiser-mode clojure-mode elisp-mode web-mode lilypond-mode typescript-mode go-mode)
 			  '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
                             ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
                             "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
