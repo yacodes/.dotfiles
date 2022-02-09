@@ -481,7 +481,9 @@ If no file is associated, just close buffer without prompt for save."
 (use-package org
   :config
   (setq-default org-log-done 'time)
+  (setq-default org-startup-folded t)
   (setq-default org-hide-leading-stars t)
+  (setq-default org-hide-emphasis-markers t)
   (setq-default org-archive-reversed-order t)
   (add-hook 'org-mode-hook '(lambda () (setq truncate-lines nil)))
   (add-hook 'org-mode-hook #'visual-fill-column-mode)
@@ -489,10 +491,12 @@ If no file is associated, just close buffer without prompt for save."
   (setq-default org-html-doctype "html5")
   (setq-default org-html-html5-fancy t)
   (setq-default org-directory "~/Org/")
+  (setq-default org-tag-faces )
   (setq-default org-agenda-files (list "~/Org/Tasks.org"))
   (setq-default org-confirm-babel-evaluate nil)
-  (setq-default org-plantuml-jar-path
-                (expand-file-name "~/.sources/plantuml.jar"))
+  (setq-default org-plantuml-jar-path (expand-file-name "~/.sources/plantuml.jar"))
+  (set-face-attribute 'org-tag nil :weight 'regular)
+  (set-face-attribute 'org-document-title nil :height 290 :weight 'regular)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
@@ -500,6 +504,21 @@ If no file is associated, just close buffer without prompt for save."
      (sql . t)
      (lilypond . t)
      (plantuml . t))))
+
+(use-package org-roam
+  :ensure t
+  :after org
+  :custom (org-roam-directory (file-truename "/home/ya/Org/Wiki/"))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture)
+         ;; Dailies
+         ("C-c n j" . org-roam-dailies-capture-today))
+  :config
+  (setq-default org-roam-db-location "/home/ya/Org/Wiki/org-roam.db")
+  (org-roam-db-autosync-mode))
 
 (use-package ox-reveal
   :after org)
@@ -594,7 +613,7 @@ ARG: I do not know what this is."
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(cider eval-in-repl evil-in-repl undo-tree emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(org-roam cider eval-in-repl evil-in-repl undo-tree emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
