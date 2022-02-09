@@ -428,7 +428,8 @@ If no file is associated, just close buffer without prompt for save."
   ;; Org-mode keybindings
   (nmap
    :keymaps 'org-mode-map
-   "t" 'org-todo)
+   "t" 'org-todo
+   "RET" 'org-open-at-point)
 
   ;; Yaml keybindings
   (nmap
@@ -485,6 +486,7 @@ If no file is associated, just close buffer without prompt for save."
   (setq-default org-hide-leading-stars t)
   (setq-default org-hide-emphasis-markers t)
   (setq-default org-archive-reversed-order t)
+  (add-to-list 'org-link-frame-setup '(file . find-file))
   (add-hook 'org-mode-hook '(lambda () (setq truncate-lines nil)))
   (add-hook 'org-mode-hook #'visual-fill-column-mode)
   (add-hook 'org-mode-hook #'writeroom-mode)
@@ -508,16 +510,16 @@ If no file is associated, just close buffer without prompt for save."
 (use-package org-roam
   :ensure t
   :after org
-  :custom (org-roam-directory (file-truename "/home/ya/Org/Wiki/"))
+  :custom
+  (org-roam-directory (file-truename "~/Org/Roam/"))
+  (org-roam-completion-everywhere t)
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n c" . org-roam-capture)
-         ;; Dailies
          ("C-c n j" . org-roam-dailies-capture-today))
   :config
-  (setq-default org-roam-db-location "/home/ya/Org/Wiki/org-roam.db")
   (org-roam-db-autosync-mode))
 
 (use-package ox-reveal
