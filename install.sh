@@ -31,4 +31,8 @@ echo "Linking emacs..."
 mkdir -p ~/.emacs.d/
 ln -fs ~/.dotfiles/init.el ~/.emacs.d/init.el
 
+echo "Linking dunstrc ..."
+mkdir -p ~/.config/dunst/
+ln -fs ~/.dotfiles/dunstrc ~/.config/dunst/dunstrc
+
 echo "Done."
