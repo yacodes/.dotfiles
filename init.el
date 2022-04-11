@@ -111,12 +111,26 @@ If no file is associated, just close buffer without prompt for save."
   (add-hook 'geiser-repl-mode-hook 'setup-lisp-repl)
   (add-hook 'ielm-mode-hook 'setup-lisp-repl))
 
+;; (use-package js3-mode
+;;   :ensure t
+;;   :config
+;;   (require 'eval-in-repl-javascript))
+
+;; (use-package js2-mode
+;;   :ensure t
+;;   :config
+;;   (require 'eval-in-repl-javascript))
+
+(use-package js-comint
+  :ensure t)
+
 ;; Evil-in-REPL instead of the minibuffer
 (use-package eval-in-repl
   :config
   (load "./eval-in-repl-geiser.el")
   (load "./eval-in-repl-ielm.el")
   (load "./eval-in-repl-cider.el")
+  ;; (load "./eval-in-repl-javascript.el")
   (require 'eval-in-repl-geiser)
   (require 'eval-in-repl-ielm)
   (require 'eval-in-repl-cider)
@@ -168,6 +182,7 @@ If no file is associated, just close buffer without prompt for save."
   ;; Enables ligature checks globally in all buffers. You can also do it
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
+
 
 ;; Undo-redo
 (use-package undo-tree
@@ -410,6 +425,22 @@ If no file is associated, just close buffer without prompt for save."
     "i" 'insert-file
     "f" 'helm-find-files)
 
+  ;; JS keybindings
+  (nmap
+    :keymaps 'web-mode-map
+    "RET" 'js-comint-send-buffer)
+  (nmap
+    :prefix ","
+    :keymaps 'web-mode-map
+    "," 'js-comint-send-last-sexp)
+  (vmap
+    :keymaps 'web-mode-map
+    "RET" 'js-comint-send-region)
+
+  ;; (nmap
+  ;;   :keymaps 'js2-mode-map
+  ;;   "RET" 'eir-eval-in-javascript)
+
   ;; CIDER keybindings
   (nmap
     :keymaps 'clojure-mode-map
@@ -615,7 +646,7 @@ ARG: I do not know what this is."
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(org-roam cider eval-in-repl evil-in-repl undo-tree emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(js-comint js2-mode js3-mode org-roam cider eval-in-repl evil-in-repl undo-tree emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
