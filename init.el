@@ -187,7 +187,8 @@ If no file is associated, just close buffer without prompt for save."
 ;; Undo-redo
 (use-package undo-tree
   :config
-  (global-undo-tree-mode))
+  (global-undo-tree-mode)
+  (setq undo-tree-auto-save-history nil))
 
 ;; Evil mode
 (setq-default evil-want-keybinding nil)
