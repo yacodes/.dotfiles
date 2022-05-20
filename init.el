@@ -390,6 +390,8 @@ If no file is associated, just close buffer without prompt for save."
    :non-normal-prefix "SPC"
    "t" 'toggle-truncate-lines
    "c" 'writeroom-mode
+   "v l" 'set-light-theme
+   "v d" 'set-dark-theme
    "TAB" 'switch-to-previous-buffer)
   (general-define-key
    :states 'normal
@@ -494,11 +496,21 @@ If no file is associated, just close buffer without prompt for save."
   (evil-collection-init))
 
 ;; Theme
-(use-package base16-theme
-  :config
+(defun set-dark-theme ()
+  "Set dark theme for the editor globally."
+  (interactive)
   (load-theme 'base16-tomorrow-night t)
   (set-background-color "#151515")
-  (setq default-frame-alist '((background-color . "#151515")))
+  (setq default-frame-alist '((background-color . "#151515"))))
+(defun set-light-theme ()
+  "Set light theme for the editor globally."
+  (interactive)
+  (load-theme 'base16-google-light t))
+
+(use-package base16-theme
+  :ensure t
+  :config
+  (set-dark-theme)
   (set-face-attribute 'default nil :family "Iosevka" :height 178)
   (set-face-attribute 'fringe nil :background nil))
 
