@@ -1,7 +1,7 @@
 # Mical
-> Merge several .ics or .ical files into one.
+ Merge several .ics or .ical files into one.
 
-Does not parse .ics files in any way and do not modify the initial ones. Just manipulating text strings.
+Does not parse .ics files in any way and do not modify the initial ones. Just manipulate text strings.
 
 ## Usage
 
