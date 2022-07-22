@@ -1,0 +1,6 @@
+*.map
+*.ics
+.log/
+events/
+node_modules/
+index.js

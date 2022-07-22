@@ -356,7 +356,7 @@ If no file is associated, just close buffer without prompt for save."
 ;; Distraction-free writing
 (use-package writeroom-mode
   :config
-  (setq-default writeroom-width 90)
+  (setq-default writeroom-width 100)
   (add-hook 'writeroom-mode-enable-hook (lambda ()
                                           (display-line-numbers-mode -1)
                                           (setf (cdr (assq 'continuation fringe-indicator-alist)) '(nil nil))))
