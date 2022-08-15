@@ -57,16 +57,15 @@ const getEvent = (lines: ICalLine[]): ICalLine[] => {
   return result;
 };
 
-const [filesGlob] = argv.slice(2);
-if (!filesGlob) {
+const filenames = argv.slice(2);
+if (!filenames) {
   console.error(
     "No files for merging found. Please provide a glob to the ical files as a 1st argument. Example: mical ./events/*.ics > result.ics"
   );
   process.exit();
 }
 
-const files = glob
-  .sync(filesGlob)
+const files = filenames
   .map((filename: string): string =>
     fs.readFileSync(filename, { encoding: "utf8" })
   )

@@ -262,13 +262,27 @@ If no file is associated, just close buffer without prompt for save."
   (add-hook 'yaml-mode-hook 'hs-minor-mode))
 
 ;; Web development modules
+(defun lsp--eslint-before-save (orig-fun)
+  "Run lsp-eslint-apply-all-fixes and then run the ORIG-FUN lsp--before-save."
+  (when lsp-eslint-auto-fix-on-save (lsp-eslint-fix-all))
+  (funcall orig-fun))
+
 (use-package lsp-mode
   :config (setq-default lsp-headerline-breadcrumb-enable nil)
+          (setq-default lsp-eslint-auto-fix-on-save t)
+          (advice-add 'lsp--before-save :around #'lsp--eslint-before-save)
   :hook ((go-mode . lsp-deferred)
          (web-mode . lsp-deferred)
          (typescript-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
   :commands (lsp lsp-deferred))
+
+;; Prettier JS
+(use-package prettier-js
+  :config
+  (add-hook 'js2-mode-hook 'prettier-js-mode)
+  (add-hook 'web-mode-hook 'prettier-js-mode)
+  (add-hook 'typescript-mode-hook 'prettier-js-mode))
 
 (use-package lsp-ui
   :after lsp-mode
@@ -364,12 +378,6 @@ If no file is associated, just close buffer without prompt for save."
                                            (display-line-numbers-mode 1)
                                            (setf (cdr (assq 'continuation fringe-indicator-alist)) '(left-curly-arrow right-curly-arrow)))))
 
-;; Prettier JS
-(use-package prettier-js
-  :config
-  (add-hook 'js2-mode-hook 'prettier-js-mode)
-  (add-hook 'web-mode-hook 'prettier-js-mode)
-  (add-hook 'typescript-mode-hook 'prettier-js-mode))
 
 (use-package winum
   :config
@@ -659,7 +667,7 @@ ARG: I do not know what this is."
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(js-comint js2-mode js3-mode org-roam cider eval-in-repl evil-in-repl undo-tree emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode prettier-js prettier-js-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(js-comint js2-mode js3-mode org-roam cider eval-in-repl evil-in-repl undo-tree emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
