@@ -73,6 +73,8 @@
 (show-paren-mode t)                          ;; Highlight matching brackets
 (electric-pair-mode)                         ;; Auto close bracket insertion (Emacs 24+)
 
+(blink-cursor-mode 0)
+
 (defun delete-current-file ()
   "Delete the file associated with the current buffer.
 Delete the current buffer too.
@@ -264,13 +266,16 @@ If no file is associated, just close buffer without prompt for save."
 ;; Web development modules
 (defun lsp--eslint-before-save (orig-fun)
   "Run lsp-eslint-apply-all-fixes and then run the ORIG-FUN lsp--before-save."
-  (when lsp-eslint-auto-fix-on-save (lsp-eslint-fix-all))
+  (when lsp-eslint-auto-fix-on-save (lsp-eslint-apply-all-fixes))
   (funcall orig-fun))
 
 (use-package lsp-mode
-  :config (setq-default lsp-headerline-breadcrumb-enable nil)
-          (setq-default lsp-eslint-auto-fix-on-save t)
+  :config (setq-default lsp-eslint-auto-fix-on-save t)
+          (setq-default lsp-headerline-breadcrumb-enable nil)
           (advice-add 'lsp--before-save :around #'lsp--eslint-before-save)
+          (setq-default gc-cons-threshold 100000000)
+          (setq-default read-process-output-max (* 1024 1024))
+          (setq-default lsp-idle-delay 0.500)
   :hook ((go-mode . lsp-deferred)
          (web-mode . lsp-deferred)
          (typescript-mode . lsp-deferred)
@@ -278,11 +283,11 @@ If no file is associated, just close buffer without prompt for save."
   :commands (lsp lsp-deferred))
 
 ;; Prettier JS
-(use-package prettier-js
-  :config
-  (add-hook 'js2-mode-hook 'prettier-js-mode)
-  (add-hook 'web-mode-hook 'prettier-js-mode)
-  (add-hook 'typescript-mode-hook 'prettier-js-mode))
+;; (use-package prettier-js
+;;   :config
+;;   (add-hook 'js2-mode-hook 'prettier-js-mode)
+;;   (add-hook 'web-mode-hook 'prettier-js-mode)
+;;   (add-hook 'typescript-mode-hook 'prettier-js-mode))
 
 (use-package lsp-ui
   :after lsp-mode

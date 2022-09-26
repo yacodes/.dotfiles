@@ -7,6 +7,8 @@ set $mod Mod4
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
 default_border pixel 2
 default_floating_border pixel 2
+hide_edge_borders both
+for_window [all] border pixel 2 # workaround for https://github.com/i3/i3/issues/5149
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -18,8 +20,6 @@ floating_modifier $mod
 # Applications shortcuts
 # Terminal
 bindsym $mod+Return exec st
-# Mail client
-bindsym $mod+m exec mailspring
 # Editor
 bindsym $mod+e exec "emacsclient -c -a ''"
 # Launcher
