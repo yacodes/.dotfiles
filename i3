@@ -21,7 +21,7 @@ floating_modifier $mod
 # Terminal
 bindsym $mod+Return exec st
 # Editor
-bindsym $mod+e exec "emacsclient -c -a ''"
+bindsym $mod+e exec "env LSP_USE_PLISTS=true emacsclient -c -a ''"
 # Launcher
 bindsym $mod+space exec "rofi -no-default-config -no-fixed-num-lines -drun-display-format {name} -display-drun 'λ' -modi drun,window,emoji -show drun -font 'Iosevka Light 40' -yoffset 256 -location 2"
 # Telegram

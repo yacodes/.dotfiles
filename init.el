@@ -270,12 +270,15 @@ If no file is associated, just close buffer without prompt for save."
   (funcall orig-fun))
 
 (use-package lsp-mode
+  :ensure t
   :config (setq-default lsp-eslint-auto-fix-on-save t)
           (setq-default lsp-headerline-breadcrumb-enable nil)
           (advice-add 'lsp--before-save :around #'lsp--eslint-before-save)
           (setq-default gc-cons-threshold 100000000)
           (setq-default read-process-output-max (* 1024 1024))
           (setq-default lsp-idle-delay 0.500)
+          (setq-default lsp-use-plists t)
+          (setq-default lsp-log-io nil)
   :hook ((go-mode . lsp-deferred)
          (web-mode . lsp-deferred)
          (typescript-mode . lsp-deferred)
@@ -291,6 +294,7 @@ If no file is associated, just close buffer without prompt for save."
 
 (use-package lsp-ui
   :after lsp-mode
+  :ensure t
   :commands lsp-ui-mode
   :config (setq-default lsp-ui-doc-show-with-cursor t))
 (use-package helm-lsp
@@ -322,10 +326,14 @@ If no file is associated, just close buffer without prompt for save."
   :config
   ;; (add-hook 'before-save-hook 'tide-format-before-save)
   (add-hook 'typescript-mode-hook #'setup-tide-mode)
-  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode))
   (add-hook 'web-mode-hook
             (lambda ()
               (when (string-equal "tsx" (file-name-extension buffer-file-name))
+                (setup-tide-mode))))
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (when (string-equal "ts" (file-name-extension buffer-file-name))
                 (setup-tide-mode)))))
 
 (defun web-mode-init-hook ()

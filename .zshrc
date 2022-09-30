@@ -41,9 +41,6 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
-# Use LSPs plists
-LSP_USE_PLISTS=true
-
 # Aliases
 alias ll="ls -lh"
 alias la="ls -lha"
