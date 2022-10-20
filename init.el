@@ -17,9 +17,13 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
+(eval-and-compile
+    (setq use-package-always-ensure t
+	  use-package-expand-minimally t))
 
 ;; Sync user shell and Emacs shell
 (use-package exec-path-from-shell
+  :ensure t
   :config
   (exec-path-from-shell-initialize))
 
@@ -72,7 +76,6 @@
 (setq-default show-paren-style 'parenthesis) ;; Highlighting style (parenthesis | expression | mixed)
 (show-paren-mode t)                          ;; Highlight matching brackets
 (electric-pair-mode)                         ;; Auto close bracket insertion (Emacs 24+)
-
 (blink-cursor-mode 0)
 
 (defun delete-current-file ()
@@ -85,10 +88,6 @@ If no file is associated, just close buffer without prompt for save."
       (kill-buffer (current-buffer))
       (when currentFile
         (delete-file currentFile)))))
-
-;; Emojis support
-(use-package emojify
-  :hook (after-init . global-emojify-mode))
 
 ;; Lisps
 (defun setup-lisp-repl ()
@@ -204,10 +203,6 @@ If no file is associated, just close buffer without prompt for save."
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line))
 
-;; Writegood-mode
-(use-package writegood-mode
-  :load-path "~/.sources/writegood-mode")
-
 ;; Helm
 (use-package helm
   :config
@@ -264,13 +259,15 @@ If no file is associated, just close buffer without prompt for save."
   (add-hook 'yaml-mode-hook 'hs-minor-mode))
 
 ;; Web development modules
+(use-package typescript-mode
+  :mode ("\\.tsx?\\'" . typescript-mode))
+
 (defun lsp--eslint-before-save (orig-fun)
   "Run lsp-eslint-apply-all-fixes and then run the ORIG-FUN lsp--before-save."
   (when lsp-eslint-auto-fix-on-save (lsp-eslint-apply-all-fixes))
   (funcall orig-fun))
 
 (use-package lsp-mode
-  :ensure t
   :config (setq-default lsp-eslint-auto-fix-on-save t)
           (setq-default lsp-headerline-breadcrumb-enable nil)
           (advice-add 'lsp--before-save :around #'lsp--eslint-before-save)
@@ -281,22 +278,15 @@ If no file is associated, just close buffer without prompt for save."
           (setq-default lsp-log-io nil)
   :hook ((go-mode . lsp-deferred)
          (web-mode . lsp-deferred)
-         (typescript-mode . lsp-deferred)
+         ;; (typescript-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
   :commands (lsp lsp-deferred))
 
-;; Prettier JS
-;; (use-package prettier-js
-;;   :config
-;;   (add-hook 'js2-mode-hook 'prettier-js-mode)
-;;   (add-hook 'web-mode-hook 'prettier-js-mode)
-;;   (add-hook 'typescript-mode-hook 'prettier-js-mode))
-
 (use-package lsp-ui
   :after lsp-mode
-  :ensure t
   :commands lsp-ui-mode
-  :config (setq-default lsp-ui-doc-show-with-cursor t))
+  :config
+  (setq-default lsp-ui-doc-show-with-cursor t))
 (use-package helm-lsp
   :after lsp-mode
   :commands helm-lsp-workspace-symbol)
@@ -423,7 +413,6 @@ If no file is associated, just close buffer without prompt for save."
    "w z" 'winner-redo
    "x" (general-key "C-x")
    "b b" 'helm-buffers-list
-   "w g" 'writegood-mode
    "e" 'elfeed
    "/" 'helm-projectile-ag)
   (general-define-key
@@ -616,12 +605,6 @@ If no file is associated, just close buffer without prompt for save."
                                                     :sort '(date)
                                                     :action '(org-get-heading t t)) ";\n")))))))
 
-(use-package pdf-tools
-  :after general
-  :config
-  (pdf-tools-install)
-  (add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1))))
-
 (use-package rainbow-delimiters
   :config
   (rainbow-delimiters-mode))
@@ -680,7 +663,7 @@ ARG: I do not know what this is."
  '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(js-comint js2-mode js3-mode org-roam cider eval-in-repl evil-in-repl undo-tree emojify exec-path-from-shell writegood-mode ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag pdf-tools org-ql visual-fill-column yaml-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
+   '(js-comint js2-mode js3-mode org-roam cider eval-in-repl evil-in-repl undo-tree emojify exec-path-from-shell ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag org-ql visual-fill-column yaml-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
