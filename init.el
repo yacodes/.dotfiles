@@ -106,32 +106,6 @@ If no file is associated, just close buffer without prompt for save."
   (setq-default eir-jump-after-eval nil)
   (setq-default eir-repl-placement 'below))
 
-;; ---------------------------------------------------------
-;; Completion system
-(use-package vertico
-  :init
-  (vertico-mode)
-
-  ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
-  ;; Vertico commands are hidden in normal buffers.
-  (setq read-extended-command-predicate #'command-completion-default-include-p)
-
-  ;; Enable recursive minibuffers
-  (setq enable-recursive-minibuffers t))
-
-;; Optionally use the `orderless' completion style.
-(use-package orderless
-  :init
-  (setq completion-styles '(orderless basic))
-  (setq completion-category-defaults nil)
-  (setq completion-category-overrides '((file (styles partial-completion)))))
-
-;; Persist history over Emacs restarts. Vertico sorts by history position.
-(use-package savehist
-  :init
-  (savehist-mode))
-;; Completion system
-;; ---------------------------------------------------------
 
 ;; @TODO Breaks sclang-start command in sclang-mode
 (use-package ligature
@@ -422,6 +396,31 @@ ARG: I do not know what this is."
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (fringe-mode 0)
+
+;; Completion system
+(use-package vertico
+  :general (general-nmap "SPC b" 'switch-to-buffer)
+  :init
+  (vertico-mode)
+
+  ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
+  ;; Vertico commands are hidden in normal buffers.
+  (setq read-extended-command-predicate #'command-completion-default-include-p)
+
+  ;; Enable recursive minibuffers
+  (setq enable-recursive-minibuffers t))
+
+;; Optionally use the `orderless' completion style.
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless basic))
+  (setq completion-category-defaults nil)
+  (setq completion-category-overrides '((file (styles partial-completion)))))
+
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(use-package savehist
+  :init
+  (savehist-mode))
 
 ;; Distraction-free writing
 (use-package writeroom-mode
