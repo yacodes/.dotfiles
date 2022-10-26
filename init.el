@@ -18,14 +18,8 @@
   (package-refresh-contents)
   (package-install 'use-package))
 (eval-and-compile
-    (setq use-package-always-ensure t
-	  use-package-expand-minimally t))
-
-;; Sync user shell and Emacs shell
-(use-package exec-path-from-shell
-  :ensure t
-  :config
-  (exec-path-from-shell-initialize))
+    (setq use-package-always-ensure t)
+	  (setq use-package-expand-minimally t))
 
 ;; Backup configuration
 (setq-default make-backup-files nil) ;; Do not make backup files
@@ -38,16 +32,12 @@
 (set-language-environment 'utf-8)
 (set-selection-coding-system 'utf-8)
 
-(autoload 'LilyPond-mode "lilypond-mode")
-(setq auto-mode-alist (cons '("\\.ly$" . LilyPond-mode) auto-mode-alist))
-(add-hook 'LilyPond-mode-hook (lambda () (turn-on-font-lock)))
-
 ;; Personal information
 (setq-default user-full-name "Aleksandr Yakunichev")
 (setq-default user-mail-address "hi@ya.codes")
 
 (setq-default inhibit-startup-screen t) ;; Configure startup screen
-;; (setq-default truncate-lines t)         ;; Truncate lines
+;; (setq-default truncate-lines t)      ;; Truncate lines
 (setq-default word-wrap t)              ;; Wrap words
 (setq-default split-height-threshold 1) ;; Windows default splitting
 
@@ -66,7 +56,6 @@
   (switch-to-buffer (other-buffer (current-buffer) t)))
 
 ;; Text scaling key bindings
-;; @TODO Move to general.el
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 
@@ -96,57 +85,53 @@ If no file is associated, just close buffer without prompt for save."
   (minimize-window (selected-window)) ;; Minimize and then adjust window height as desired
   (window-resize (selected-window) 6))
 
-;; CIDER for Clojure development
-(use-package cider
-  :ensure t
-  :config
-  (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode-enable) ;; Emacs lisp rainbow
-  (add-hook 'cider-repl-mode-hook (lambda () (display-line-numbers-mode -1))))
-
 ;; Geiser for Scheme-related stuff
 (use-package geiser)
 (use-package geiser-guile
-  :after geiser
+  :mode ("\\.scm\\'" . geiser-mode)
+  :init (setq geiser-guile-binary "/usr/bin/guile3")
   :config
-  (setq-default geiser-guile-binary "/usr/bin/guile3")
   (add-hook 'geiser-repl-mode-hook 'setup-lisp-repl)
   (add-hook 'ielm-mode-hook 'setup-lisp-repl))
 
-;; (use-package js3-mode
-;;   :ensure t
-;;   :config
-;;   (require 'eval-in-repl-javascript))
-
-;; (use-package js2-mode
-;;   :ensure t
-;;   :config
-;;   (require 'eval-in-repl-javascript))
-
-(use-package js-comint
-  :ensure t)
-
-;; Evil-in-REPL instead of the minibuffer
+;; Eval-in-REPL instead of the minibuffer
 (use-package eval-in-repl
+  :mode ("\\.scm\\'" . geiser-mode)
   :config
   (load "./eval-in-repl-geiser.el")
   (load "./eval-in-repl-ielm.el")
-  (load "./eval-in-repl-cider.el")
   ;; (load "./eval-in-repl-javascript.el")
   (require 'eval-in-repl-geiser)
   (require 'eval-in-repl-ielm)
-  (require 'eval-in-repl-cider)
   (setq-default eir-jump-after-eval nil)
   (setq-default eir-repl-placement 'below))
 
-;; Elfeed RSS Reader
-(use-package elfeed
-  :config
-  (setq-default elfeed-db-directory "~/Org/.elfeed"))
-(use-package elfeed-org
-  :after elfeed
-  :config
-  (elfeed-org)
-  (setq-default rmh-elfeed-org-files (list "~/Org/RSS.org")))
+;; ---------------------------------------------------------
+;; Completion system
+(use-package vertico
+  :init
+  (vertico-mode)
+
+  ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
+  ;; Vertico commands are hidden in normal buffers.
+  (setq read-extended-command-predicate #'command-completion-default-include-p)
+
+  ;; Enable recursive minibuffers
+  (setq enable-recursive-minibuffers t))
+
+;; Optionally use the `orderless' completion style.
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless basic))
+  (setq completion-category-defaults nil)
+  (setq completion-category-overrides '((file (styles partial-completion)))))
+
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(use-package savehist
+  :init
+  (savehist-mode))
+;; Completion system
+;; ---------------------------------------------------------
 
 ;; @TODO Breaks sclang-start command in sclang-mode
 (use-package ligature
@@ -166,7 +151,7 @@ If no file is associated, just close buffer without prompt for save."
                             "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
                             "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
                             "\\" "://"))
-  (ligature-set-ligatures '(geiser-mode clojure-mode elisp-mode web-mode lilypond-mode typescript-mode go-mode)
+  (ligature-set-ligatures '(geiser-mode clojure-mode elisp-mode lilypond-mode typescript-mode)
 			  '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
                             ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
                             "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
@@ -184,17 +169,14 @@ If no file is associated, just close buffer without prompt for save."
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
 
-
 ;; Undo-redo
 (use-package undo-tree
-  :config
-  (global-undo-tree-mode)
-  (setq undo-tree-auto-save-history nil))
+  :init (setq undo-tree-auto-save-history nil)
+  :config (global-undo-tree-mode))
 
 ;; Evil mode
-(setq-default evil-want-keybinding nil)
 (use-package evil
-  :after undo-tree
+  :init (setq evil-want-keybinding nil)
   :config
   (evil-mode 1)
   (evil-set-undo-system 'undo-tree)
@@ -203,40 +185,25 @@ If no file is associated, just close buffer without prompt for save."
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line))
 
-;; Helm
-(use-package helm
-  :config
-  (require 'helm-config)
-  (helm-mode 1))
-
-(use-package helm-projectile
-  :after helm
-  :config
-  (helm-projectile-on))
-
-(use-package magit)
-(use-package which-key
-  :config
-  (which-key-mode))
-
 (use-package company ;; Autocompletion popup
+  :init
+  (setq company-minimum-prefix-length 1)    ;; Show suggestions after 1 character
+  (setq company-selection-wrap-around t)    ;; Cycle through variants
+  (setq company-dabbrev-downcase nil)       ;; Be aware of the case
+  (setq company-format-margin-function nil) ;; Remove icons
+  (setq company-idle-delay 0)               ;; Show suggestions immediately
   :config
-  (global-company-mode)                             ;; Initialize globally
-  (company-tng-mode)                                ;; Use TAB to cycle through suggestions
-  (setq-default company-minimum-prefix-length 1)    ;; Show suggestions after 1 character
-  (setq-default company-selection-wrap-around t)    ;; Cycle through variants
-  (setq-default company-dabbrev-downcase nil)       ;; Be aware of the case
-  (setq-default company-format-margin-function nil) ;; Remove icons
-  (setq-default company-idle-delay 0))              ;; Show suggestions immediately
+  ;; Initialize globally
+  (global-company-mode)
 
-(use-package markdown-mode
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
+  ;; Use TAB to cycle through suggestions
+  (company-tng-mode))
+
+(use-package evil-indent-plus)
+(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable) ;; Emacs lisp rainbow
 
 (use-package hideshow
+  :after yaml-mode
   :config
   (defun +data-hideshow-forward-sexp (arg)
     (let ((start (current-indentation)))
@@ -249,111 +216,6 @@ If no file is associated, just close buffer without prompt for save."
   (add-to-list 'hs-special-modes-alist
    '(yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#" +data-hideshow-forward-sexp nil)))
 
-(use-package evil-indent-plus)
-(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable) ;; Emacs lisp rainbow
-
-(use-package yaml-mode
-  :config
-  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
-  (add-hook 'yaml-mode-hook (lambda () (toggle-truncate-lines t)))
-  (add-hook 'yaml-mode-hook 'hs-minor-mode))
-
-;; Web development modules
-(use-package typescript-mode
-  :mode ("\\.tsx?\\'" . typescript-mode))
-
-(defun lsp--eslint-before-save (orig-fun)
-  "Run lsp-eslint-apply-all-fixes and then run the ORIG-FUN lsp--before-save."
-  (when lsp-eslint-auto-fix-on-save (lsp-eslint-apply-all-fixes))
-  (funcall orig-fun))
-
-(use-package lsp-mode
-  :config (setq-default lsp-eslint-auto-fix-on-save t)
-          (setq-default lsp-headerline-breadcrumb-enable nil)
-          (advice-add 'lsp--before-save :around #'lsp--eslint-before-save)
-          (setq-default gc-cons-threshold 100000000)
-          (setq-default read-process-output-max (* 1024 1024))
-          (setq-default lsp-idle-delay 0.500)
-          (setq-default lsp-use-plists t)
-          (setq-default lsp-log-io nil)
-  :hook ((go-mode . lsp-deferred)
-         (web-mode . lsp-deferred)
-         ;; (typescript-mode . lsp-deferred)
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands (lsp lsp-deferred))
-
-(use-package lsp-ui
-  :after lsp-mode
-  :commands lsp-ui-mode
-  :config
-  (setq-default lsp-ui-doc-show-with-cursor t))
-(use-package helm-lsp
-  :after lsp-mode
-  :commands helm-lsp-workspace-symbol)
-
-;; Golang
-(defun lsp-go-install-save-hooks ()
-  "Install lsp hooks for golang."
-  (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
-(use-package go-mode
-  :config
-  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks))
-
-;; TypeScript
-(defun setup-tide-mode ()
-  "Configure tide-mode."
-  (interactive)
-  (tide-setup)
-  ;;(flycheck-mode +1)
-  ;;(setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (setq-default typescript-indent-level 2)
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  (company-mode +1))
-(use-package tide
-  :after web-mode
-  :config
-  ;; (add-hook 'before-save-hook 'tide-format-before-save)
-  (add-hook 'typescript-mode-hook #'setup-tide-mode)
-  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode))
-  (add-hook 'web-mode-hook
-            (lambda ()
-              (when (string-equal "tsx" (file-name-extension buffer-file-name))
-                (setup-tide-mode))))
-  (add-hook 'web-mode-hook
-            (lambda ()
-              (when (string-equal "ts" (file-name-extension buffer-file-name))
-                (setup-tide-mode)))))
-
-(defun web-mode-init-hook ()
-  "Hooks for Web mode.  Adjust indent."
-  (setq-default web-mode-markup-indent-offset 2)
-  (setq-default web-mode-css-indent-offset 2)
-  (setq-default web-mode-code-indent-offset 2)
-  (setq-default web-mode-attr-indent-offset 2)
-  (setq-default web-mode-attr-value-indent-offset 2)
-  (setq-default web-mode-indentless-elements 2)
-  (setq-default web-mode-markup-indent-offset 2)
-  (setq-default web-mode-sql-indent-offset 2)
-  (setq-default web-mode-block-padding 2)
-  (setq-default web-mode-style-padding 2)
-  (setq-default web-mode-script-padding 2))
-
-(use-package web-mode
-  :config
-  (add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.js?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
-  (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
-  (add-hook 'web-mode-hook  'web-mode-init-hook)
-  (setq-default js-indent-level 2
-                web-mode-markup-indent-offset 2
-                web-mode-css-indent-offset 2
-                web-mode-code-indent-offset 2))
-
 (use-package flycheck
   :config
   (require 'flycheck)
@@ -361,31 +223,12 @@ If no file is associated, just close buffer without prompt for save."
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
                         '(javascript-jshint json-jsonlist)))
-  ;; Enable eslint checker for web-mode
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
   ;; Enable flycheck globally
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
 (use-package add-node-modules-path
   :config
   (add-hook 'flycheck-mode-hook 'add-node-modules-path))
-
-;; Distraction-free writing
-(use-package writeroom-mode
-  :config
-  (setq-default writeroom-width 100)
-  (add-hook 'writeroom-mode-enable-hook (lambda ()
-                                          (display-line-numbers-mode -1)
-                                          (setf (cdr (assq 'continuation fringe-indicator-alist)) '(nil nil))))
-  (add-hook 'writeroom-mode-disable-hook (lambda ()
-                                           (display-line-numbers-mode 1)
-                                           (setf (cdr (assq 'continuation fringe-indicator-alist)) '(left-curly-arrow right-curly-arrow)))))
-
-
-(use-package winum
-  :config
-  (winum-mode)
-  (winum-set-keymap-prefix (kbd "C-w")))
 
 ;; ;; General keybindings
 (use-package general
@@ -409,12 +252,7 @@ If no file is associated, just close buffer without prompt for save."
    :keymaps 'override
    :prefix "SPC"
    "w" (general-key "C-w")
-   "w u" 'winner-undo
-   "w z" 'winner-redo
-   "x" (general-key "C-x")
-   "b b" 'helm-buffers-list
-   "e" 'elfeed
-   "/" 'helm-projectile-ag)
+   "x" (general-key "C-x"))
   (general-define-key
    :keymaps '(normal emacs)
    "%" 'match-paren)
@@ -428,36 +266,14 @@ If no file is associated, just close buffer without prompt for save."
     "\\" 'indent-region)
   (nmap
     :prefix "SPC"
-    ";" 'comment-line
-    "g" 'magit)
+    ";" 'comment-line)
   (nmap
     :prefix "SPC f"
     "d" 'delete-current-file
     "s" 'save-buffer
     "S" 'save-some-buffers
     "i" 'insert-file
-    "f" 'helm-find-files)
-
-  ;; JS keybindings
-  (nmap
-    :keymaps 'web-mode-map
-    "RET" 'js-comint-send-buffer)
-  (nmap
-    :prefix ","
-    :keymaps 'web-mode-map
-    "," 'js-comint-send-last-sexp)
-  (vmap
-    :keymaps 'web-mode-map
-    "RET" 'js-comint-send-region)
-
-  ;; (nmap
-  ;;   :keymaps 'js2-mode-map
-  ;;   "RET" 'eir-eval-in-javascript)
-
-  ;; CIDER keybindings
-  (nmap
-    :keymaps 'clojure-mode-map
-    "RET" 'eir-eval-in-cider)
+    "f" 'find-file)
 
   ;; Elisp keybindings
   (nmap
@@ -490,16 +306,7 @@ If no file is associated, just close buffer without prompt for save."
     "i" 'org-clock-in
     "r r" 'org-reveal-export-to-html
     "r b" 'org-reveal-export-to-html-and-browse)
-
-  ;; Which-key keybindings
-  (nmap
-   :prefix "SPC"
-   "?" 'which-key-show-full-major-mode)
-
-  ;; Projectile keybindings
-  (nmap
-    :prefix "SPC"
-    "p" 'projectile-command-map))
+)
 
 (use-package evil-collection
   :config
@@ -516,9 +323,7 @@ If no file is associated, just close buffer without prompt for save."
   "Set light theme for the editor globally."
   (interactive)
   (load-theme 'base16-google-light t))
-
 (use-package base16-theme
-  :ensure t
   :config
   (set-dark-theme)
   (set-face-attribute 'default nil :family "Iosevka" :height 178)
@@ -526,8 +331,8 @@ If no file is associated, just close buffer without prompt for save."
 
 ;; Beautiful text wrapping
 (use-package visual-fill-column
-  :config
-  (setq-default visual-fill-column-width 90))
+  :init
+  (setq visual-fill-column-width 90))
 
 (setq-default fill-column 90)
 (setq-default comment-column 90)
@@ -558,11 +363,9 @@ If no file is associated, just close buffer without prompt for save."
    '((emacs-lisp . t)
      (org . t)
      (sql . t)
-     (lilypond . t)
      (plantuml . t))))
 
 (use-package org-roam
-  :ensure t
   :after org
   :custom
   (org-roam-directory (file-truename "~/Org/Roam/"))
@@ -579,32 +382,6 @@ If no file is associated, just close buffer without prompt for save."
 (use-package ox-reveal
   :after org)
 
-(use-package htmlize
-  :after org)
-
-(use-package org-ql
-  :after org)
-(defun tiny/weekly ()
-  "Insert formatted weekly report in the current buffer."
-  (interactive)
-  (insert
-   (replace-regexp-in-string
-    "\\]\\]" "`"
-    (replace-regexp-in-string "\\[\\[.*\\]\\[" "`"
-                              (concat
-                               (format "*Last week:*\n%s."
-                                       (mapconcat (lambda (x) (format "• %s" x))
-                                                  (org-ql-select "~/Org/Tasks.org_archive"
-                                                    '(and (and (ts :from -7 :to today) (done)) (tags "tiny"))
-                                                    :sort '(date)
-                                                    :action '(org-get-heading t t)) ";\n"))
-                               (format "\n\n*This week:*\n%s."
-                                       (mapconcat (lambda (x) (format "• %s" x))
-                                                  (org-ql-select "~/Org/Tasks.org"
-                                                    '(and (todo) (tags "tiny"))
-                                                    :sort '(date)
-                                                    :action '(org-get-heading t t)) ";\n")))))))
-
 (use-package rainbow-delimiters
   :config
   (rainbow-delimiters-mode))
@@ -618,23 +395,16 @@ ARG: I do not know what this is."
         ((looking-at "\\s)") (forward-char 1) (backward-list 1))
         (t (self-insert-command (or arg 1)))))
 
-;; Projectile
-(use-package projectile
-  :config
-  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (projectile-mode +1))
-
 ;; TidalCycles
-(use-package tidal
-  ;; Music pattern live-coding language syntax and environment
-  :config
-  ;; Global config
-  (setq-default tidal-boot-script-path "/home/ya/Workspace/Audio/TidalCycles/Sandbox/2020-09-07/Boot.hs")
-  (setq-default tidal-interpreter "stack")
-  (setq-default tidal-interpreter-arguments (list "exec" "--package" "tidal" "--" "ghci"))
-  ;; Evil keybindings
-  (evil-define-key 'normal tidal-mode-map (kbd "<RET>") 'tidal-run-multiple-lines))
+;; (use-package tidal
+;;   ;; Music pattern live-coding language syntax and environment
+;;   :config
+;;   ;; Global config
+;;   (setq-default tidal-boot-script-path "/home/ya/Workspace/Audio/TidalCycles/Sandbox/2020-09-07/Boot.hs")
+;;   (setq-default tidal-interpreter "stack")
+;;   (setq-default tidal-interpreter-arguments (list "exec" "--package" "tidal" "--" "ghci"))
+;;   ;; Evil keybindings
+;;   (evil-define-key 'normal tidal-mode-map (kbd "<RET>") 'tidal-run-multiple-lines))
 
 ;; Wrap isearch
 (defadvice isearch-repeat (after isearch-no-fail activate)
@@ -653,18 +423,76 @@ ARG: I do not know what this is."
 (menu-bar-mode -1)
 (fringe-mode 0)
 
+;; Distraction-free writing
+(use-package writeroom-mode
+  :config
+  (setq-default writeroom-width 100)
+  (add-hook 'writeroom-mode-enable-hook (lambda ()
+                                          (display-line-numbers-mode -1)
+                                          (setf (cdr (assq 'continuation fringe-indicator-alist)) '(nil nil))))
+  (add-hook 'writeroom-mode-disable-hook (lambda ()
+                                           (display-line-numbers-mode 1)
+                                           (setf (cdr (assq 'continuation fringe-indicator-alist)) '(left-curly-arrow right-curly-arrow)))))
+
+;; YAML
+(use-package yaml-mode
+  :mode (("\\.yml\\'" . yaml-mode))
+  :hook ((yaml-mode-hook . (lambda () (toggle-truncate-lines t)))
+         (yaml-mode-hook . hs-minor-mode)))
+
+;; Markdown
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
+;; TypeScript
+(use-package typescript-mode
+  :mode ("\\.tsx?\\'" . typescript-mode))
+(defun setup-tide-mode ()
+  "Configure tide-mode."
+  (interactive)
+  (tide-setup)
+  ;;(flycheck-mode +1)
+  ;;(setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (setq-default typescript-indent-level 2)
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+(use-package tide
+  :after typescript-mode
+  :mode ("\\.tsx?\\'" . typescript-mode)
+  :hook ((typescript-mode-hook . setup-tide-mode)))
+
+(use-package elfeed
+  :general (general-nmap "SPC e" 'elfeed)
+  :init (setq elfeed-db-directory "~/Org/.elfeed"))
+(use-package elfeed-org
+  :after elfeed
+  :init (setq rmh-elfeed-org-files (list "~/Org/RSS.org"))
+  :config (elfeed-org))
+
+(use-package magit
+  :general (general-nmap "SPC g" 'magit))
+
+(use-package projectile
+  :general (general-nmap "SPC p" '(:keymap projectile-command-map))
+  :config
+  (projectile-mode +1))
+
+(use-package which-key
+  :general (general-nmap "SPC ?" 'which-key-show-full-major-mode))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(elfeed-feeds nil)
- '(helm-minibuffer-history-key "M-p")
- '(helm-mode t)
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(js-comint js2-mode js3-mode org-roam cider eval-in-repl evil-in-repl undo-tree emojify exec-path-from-shell ox-reveal go-mode writeroom-mode evil-indent-plus bicycle yafolding highlight-indentation highlight-indentation-mode origami flycheck unicode-fonts htmlize helm-ag org-ql visual-fill-column yaml-mode add-node-modules-path web-mode winum ace-window magit helm-projectile evil-collection company which-key helm general gnu-elpa-keyring-update evil tidal rainbow-delimiters markdown-mode use-package base16-theme projectile glsl-mode))
- '(winner-mode t))
+   '(elfeed-org orderless vertico org-roam eval-in-repl undo-tree ox-reveal writeroom-mode evil-indent-plus flycheck unicode-fonts visual-fill-column yaml-mode add-node-modules-path magit evil-collection company which-key general evil rainbow-delimiters markdown-mode use-package base16-theme projectile)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
