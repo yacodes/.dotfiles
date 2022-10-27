@@ -176,20 +176,6 @@ If no file is associated, just close buffer without prompt for save."
   (add-to-list 'hs-special-modes-alist
    '(yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#" +data-hideshow-forward-sexp nil)))
 
-;; (use-package flycheck
-;;   :config
-;;   (require 'flycheck)
-;;   (global-flycheck-mode)
-;;   (setq-default flycheck-disabled-checkers
-;;                 (append flycheck-disabled-checkers
-;;                         '(javascript-jshint json-jsonlist)))
-;;   ;; Enable flycheck globally
-;;   (add-hook 'after-init-hook #'global-flycheck-mode))
-
-;; (use-package add-node-modules-path
-;;   :config
-;;   (add-hook 'flycheck-mode-hook 'add-node-modules-path))
-
 ;; ;; General keybindings
 (use-package general
   :config
@@ -233,7 +219,8 @@ If no file is associated, just close buffer without prompt for save."
     "s" 'save-buffer
     "S" 'save-some-buffers
     "i" 'insert-file
-    "f" 'find-file)
+    ;; "f" 'find-file
+    )
 
   ;; Elisp keybindings
   (nmap
@@ -327,15 +314,15 @@ If no file is associated, just close buffer without prompt for save."
 
 (use-package org-roam
   :after org
+
   :custom
   (org-roam-directory (file-truename "~/Org/Roam/"))
   (org-roam-completion-everywhere t)
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n g" . org-roam-graph)
+
+  :bind (("C-c n f" . org-roam-node-find)
          ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture)
-         ("C-c n j" . org-roam-dailies-capture-today))
+         ("C-c n c" . org-roam-capture))
+
   :config
   (org-roam-db-autosync-mode))
 
@@ -383,28 +370,27 @@ ARG: I do not know what this is."
 (menu-bar-mode -1)
 (fringe-mode 0)
 
-;; Completion system
 (use-package vertico
   :custom 
   ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
   ;; Vertico commands are hidden in normal buffers.
   (read-extended-command-predicate #'command-completion-default-include-p)
 
-  ;; Enable recursive minibuffers
   (enable-recursive-minibuffers t)
-
   (vertico-cycle t)
+
   :init
   (vertico-mode))
 
 (use-package vertico-directory
   :after vertico
-  :ensure nil
+
   ;; More convenient directory navigation commands
   :bind (:map vertico-map
               ("RET" . vertico-directory-enter)
               ("DEL" . vertico-directory-delete-char)
               ("M-DEL" . vertico-directory-delete-word))
+
   ;; Tidy shadowed file names
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
@@ -426,9 +412,9 @@ ARG: I do not know what this is."
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
   :custom
-  (completion-styles '(orderless basic))
+  (completion-styles '(orderless partical-completion basic))
   (completion-category-defaults nil)
-  (completion-category-overrides '((file (styles partial-completion)))))
+  (completion-category-overrides '((eglot (styles . (basic))))))
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
@@ -447,19 +433,39 @@ ARG: I do not know what this is."
                                            (display-line-numbers-mode 1)
                                            (setf (cdr (assq 'continuation fringe-indicator-alist)) '(left-curly-arrow right-curly-arrow)))))
 
-;; YAML
 (use-package yaml-mode
   :mode (("\\.yml\\'" . yaml-mode))
   :hook ((yaml-mode-hook . (lambda () (toggle-truncate-lines t)))
          (yaml-mode-hook . hs-minor-mode)))
 
-;; Markdown
 (use-package markdown-mode
+  :custom (markdown-command "multimarkdown")
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :custom (markdown-command "multimarkdown"))
+         ("\\.markdown\\'" . markdown-mode)))
+
+(use-package tree-sitter
+  :config
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+(use-package tree-sitter-langs
+  :after tree-sitter)
+
+(use-package typescript-mode
+  :mode (("\\.tsx\\'" . typescript-mode)
+         ("\\.ts\\'" . typescript-mode))
+  :interpreter ("typescript" . typescript-mode)
+  :custom (typescript-indent-level 2))
+
+(use-package eglot
+  :custom
+  (eglot-autoshutdown t)
+
+  :hook ((typescript-mode . eglot-ensure)
+         (javascript-mode . eglot-ensure)
+         (css-mode . eglot-ensure)))
 
 (use-package elfeed
   :general (general-nmap "SPC e" 'elfeed)
@@ -469,31 +475,32 @@ ARG: I do not know what this is."
   :custom (rmh-elfeed-org-files (list "~/Org/RSS.org"))
   :config (elfeed-org))
 
-(use-package corfu
+(use-package company
   :custom
-  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-  (corfu-auto t)                 ;; Enable auto completion
-  ;; (corfu-separator ?\s)          ;; Orderless field separator
-  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-  (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-  (corfu-preview-current nil)    ;; Disable current candidate preview
-  (corfu-preselect-first nil)    ;; Disable candidate preselection
-  (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-  (corfu-echo-documentation nil) ;; Disable documentation in the echo area
-  (corfu-scroll-margin 5)        ;; Use scroll margin
-  (corfu-auto-delay 0)
-  (corfu-auto-prefix 0)
-
-  :bind (:map corfu-map
-              ("TAB" . corfu-next)
-              ([tab] . corfu-next)
-              ("S-TAB" . corfu-previous)
-              ([backtab] . corfu-previous))
-
+  (company-format-margin-function nil)
   :init
-  (global-corfu-mode))
+  (global-company-mode))
+
+;; (use-package corfu
+;;   :custom
+;;   (corfu-cycle t)
+;;   (corfu-auto t)
+;;   (corfu-auto-prefix 2)
+;;   (corfu-auto-delay 0.25)
+;;   (corfu-preview-current nil) 
+
+;;   :init
+;;   (global-corfu-mode))
 
 (use-package emacs
+  :custom
+  (js-indent-level 2)
+
+  :general
+  (general-nmap "SPC b b" 'switch-to-buffer)
+  (general-nmap "SPC b k" 'kill-current-buffer)
+  (general-nmap "SPC f f" 'find-file)
+
   :init
   (setq completion-cycle-threshold 3)
 
@@ -514,7 +521,12 @@ ARG: I do not know what this is."
 
 ;; Open find-file minibuffer instantly instead of the default menu
 (use-package project
-  :custom (project-switch-commands 'project-find-file))
+  :general
+  (general-nmap "SPC p p" 'project-switch-project)
+  (general-nmap "SPC p f" 'project-find-file)
+
+  :custom
+  (project-switch-commands 'project-find-file))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -523,7 +535,7 @@ ARG: I do not know what this is."
  ;; If there is more than one, they won't work right.
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(eglot corfu consult elfeed-org orderless vertico org-roam eval-in-repl undo-tree ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode add-node-modules-path magit evil-collection which-key general evil rainbow-delimiters markdown-mode use-package base16-theme)))
+   '(company typescript-mode corfu consult elfeed-org vertico org-roam eval-in-repl undo-tree ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil rainbow-delimiters markdown-mode use-package base16-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
