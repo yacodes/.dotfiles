@@ -371,14 +371,6 @@ ARG: I do not know what this is."
 (fringe-mode 0)
 
 (use-package vertico
-  :custom 
-  ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
-  ;; Vertico commands are hidden in normal buffers.
-  (read-extended-command-predicate #'command-completion-default-include-p)
-
-  (enable-recursive-minibuffers t)
-  (vertico-cycle t)
-
   :init
   (vertico-mode))
 
@@ -412,9 +404,10 @@ ARG: I do not know what this is."
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
   :custom
-  (completion-styles '(orderless partical-completion basic))
+  (completion-styles '(orderless basic))
   (completion-category-defaults nil)
-  (completion-category-overrides '((eglot (styles . (basic))))))
+  (completion-category-overrides '((eglot (styles basic))
+                                   (file (styles partial-completion)))))
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
@@ -495,6 +488,11 @@ ARG: I do not know what this is."
 (use-package emacs
   :custom
   (js-indent-level 2)
+  (enable-recursive-minibuffers t)
+  (completion-cycle-threshold 3)
+  (read-file-name-completion-ignore-case t)
+  (read-buffer-completion-ignore-case t)
+  (completion-ignore-case t)
 
   :general
   (general-nmap "SPC b b" 'switch-to-buffer)
@@ -502,8 +500,6 @@ ARG: I do not know what this is."
   (general-nmap "SPC f f" 'find-file)
 
   :init
-  (setq completion-cycle-threshold 3)
-
   ;; Emacs 28: Hide commands in M-x which do not apply to the current mode.
   ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
   (setq read-extended-command-predicate
