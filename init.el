@@ -159,20 +159,6 @@ If no file is associated, just close buffer without prompt for save."
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line))
 
-(use-package company ;; Autocompletion popup
-  :init
-  (setq company-minimum-prefix-length 1)    ;; Show suggestions after 1 character
-  (setq company-selection-wrap-around t)    ;; Cycle through variants
-  (setq company-dabbrev-downcase nil)       ;; Be aware of the case
-  (setq company-format-margin-function nil) ;; Remove icons
-  (setq company-idle-delay 0)               ;; Show suggestions immediately
-  :config
-  ;; Initialize globally
-  (global-company-mode)
-
-  ;; Use TAB to cycle through suggestions
-  (company-tng-mode))
-
 (use-package evil-indent-plus)
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable) ;; Emacs lisp rainbow
 
@@ -190,19 +176,19 @@ If no file is associated, just close buffer without prompt for save."
   (add-to-list 'hs-special-modes-alist
    '(yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#" +data-hideshow-forward-sexp nil)))
 
-(use-package flycheck
-  :config
-  (require 'flycheck)
-  (global-flycheck-mode)
-  (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers
-                        '(javascript-jshint json-jsonlist)))
-  ;; Enable flycheck globally
-  (add-hook 'after-init-hook #'global-flycheck-mode))
+;; (use-package flycheck
+;;   :config
+;;   (require 'flycheck)
+;;   (global-flycheck-mode)
+;;   (setq-default flycheck-disabled-checkers
+;;                 (append flycheck-disabled-checkers
+;;                         '(javascript-jshint json-jsonlist)))
+;;   ;; Enable flycheck globally
+;;   (add-hook 'after-init-hook #'global-flycheck-mode))
 
-(use-package add-node-modules-path
-  :config
-  (add-hook 'flycheck-mode-hook 'add-node-modules-path))
+;; (use-package add-node-modules-path
+;;   :config
+;;   (add-hook 'flycheck-mode-hook 'add-node-modules-path))
 
 ;; ;; General keybindings
 (use-package general
@@ -399,23 +385,50 @@ ARG: I do not know what this is."
 
 ;; Completion system
 (use-package vertico
-  :general (general-nmap "SPC b" 'switch-to-buffer)
-  :init
-  (vertico-mode)
-
+  :custom 
   ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
   ;; Vertico commands are hidden in normal buffers.
-  (setq read-extended-command-predicate #'command-completion-default-include-p)
+  (read-extended-command-predicate #'command-completion-default-include-p)
 
   ;; Enable recursive minibuffers
-  (setq enable-recursive-minibuffers t))
+  (enable-recursive-minibuffers t)
+
+  (vertico-cycle t)
+  :init
+  (vertico-mode))
+
+(use-package vertico-directory
+  :after vertico
+  :ensure nil
+  ;; More convenient directory navigation commands
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word))
+  ;; Tidy shadowed file names
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+(use-package marginalia
+  :init
+  (marginalia-mode))
+
+(use-package consult
+  :custom
+  (register-preview-delay 0)
+  (register-preview-function #'consult-register-format)
+
+  :general
+  (general-nmap "SPC /" 'consult-git-grep)
+
+  :init
+  (advice-add #'register-preview :override #'consult-register-window))
 
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
-  :init
-  (setq completion-styles '(orderless basic))
-  (setq completion-category-defaults nil)
-  (setq completion-category-overrides '((file (styles partial-completion)))))
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
@@ -424,8 +437,9 @@ ARG: I do not know what this is."
 
 ;; Distraction-free writing
 (use-package writeroom-mode
+  :custom
+  (writeroom-width 100)
   :config
-  (setq-default writeroom-width 100)
   (add-hook 'writeroom-mode-enable-hook (lambda ()
                                           (display-line-numbers-mode -1)
                                           (setf (cdr (assq 'continuation fringe-indicator-alist)) '(nil nil))))
@@ -445,44 +459,62 @@ ARG: I do not know what this is."
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
-
-;; TypeScript
-(use-package typescript-mode
-  :mode ("\\.tsx?\\'" . typescript-mode))
-(defun setup-tide-mode ()
-  "Configure tide-mode."
-  (interactive)
-  (tide-setup)
-  ;;(flycheck-mode +1)
-  ;;(setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (setq-default typescript-indent-level 2)
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  (company-mode +1))
-(use-package tide
-  :after typescript-mode
-  :mode ("\\.tsx?\\'" . typescript-mode)
-  :hook ((typescript-mode-hook . setup-tide-mode)))
+  :custom (markdown-command "multimarkdown"))
 
 (use-package elfeed
   :general (general-nmap "SPC e" 'elfeed)
-  :init (setq elfeed-db-directory "~/Org/.elfeed"))
+  :custom (elfeed-db-directory "~/Org/.elfeed"))
 (use-package elfeed-org
   :after elfeed
-  :init (setq rmh-elfeed-org-files (list "~/Org/RSS.org"))
+  :custom (rmh-elfeed-org-files (list "~/Org/RSS.org"))
   :config (elfeed-org))
+
+(use-package corfu
+  :custom
+  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  (corfu-auto t)                 ;; Enable auto completion
+  ;; (corfu-separator ?\s)          ;; Orderless field separator
+  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+  (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+  (corfu-preview-current nil)    ;; Disable current candidate preview
+  (corfu-preselect-first nil)    ;; Disable candidate preselection
+  (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+  (corfu-echo-documentation nil) ;; Disable documentation in the echo area
+  (corfu-scroll-margin 5)        ;; Use scroll margin
+  (corfu-auto-delay 0)
+  (corfu-auto-prefix 0)
+
+  :bind (:map corfu-map
+              ("TAB" . corfu-next)
+              ([tab] . corfu-next)
+              ("S-TAB" . corfu-previous)
+              ([backtab] . corfu-previous))
+
+  :init
+  (global-corfu-mode))
+
+(use-package emacs
+  :init
+  (setq completion-cycle-threshold 3)
+
+  ;; Emacs 28: Hide commands in M-x which do not apply to the current mode.
+  ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
+  (setq read-extended-command-predicate
+        #'command-completion-default-include-p)
+
+  ;; Enable indentation+completion using the TAB key.
+  ;; `completion-at-point' is often bound to M-TAB.
+  (setq tab-always-indent 'complete))
 
 (use-package magit
   :general (general-nmap "SPC g" 'magit))
 
-(use-package projectile
-  :general (general-nmap "SPC p" '(:keymap projectile-command-map))
-  :config
-  (projectile-mode +1))
-
 (use-package which-key
   :general (general-nmap "SPC ?" 'which-key-show-full-major-mode))
+
+;; Open find-file minibuffer instantly instead of the default menu
+(use-package project
+  :custom (project-switch-commands 'project-find-file))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -491,7 +523,7 @@ ARG: I do not know what this is."
  ;; If there is more than one, they won't work right.
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(elfeed-org orderless vertico org-roam eval-in-repl undo-tree ox-reveal writeroom-mode evil-indent-plus flycheck unicode-fonts visual-fill-column yaml-mode add-node-modules-path magit evil-collection company which-key general evil rainbow-delimiters markdown-mode use-package base16-theme projectile)))
+   '(eglot corfu consult elfeed-org orderless vertico org-roam eval-in-repl undo-tree ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode add-node-modules-path magit evil-collection which-key general evil rainbow-delimiters markdown-mode use-package base16-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
