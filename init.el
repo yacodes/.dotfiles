@@ -396,7 +396,8 @@ ARG: I do not know what this is."
   (register-preview-function #'consult-register-format)
 
   :general
-  (general-nmap "SPC /" 'consult-git-grep)
+  (general-nmap "SPC / /" 'consult-git-grep)
+  (general-nmap "SPC / f" 'consult-flymake)
 
   :init
   (advice-add #'register-preview :override #'consult-register-window))
@@ -438,6 +439,14 @@ ARG: I do not know what this is."
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode)))
 
+(use-package js-mode
+  :custom
+  (js-indent-level 2)
+  (js-switch-indent-offset 2)
+
+  :mode (("\\.js\\'" . js-mode)
+         ("\\.jsx\\." . js-mode)))
+
 (use-package tree-sitter
   :config
   (global-tree-sitter-mode)
@@ -447,18 +456,39 @@ ARG: I do not know what this is."
   :after tree-sitter)
 
 (use-package typescript-mode
+  :after tree-sitter
+
   :mode (("\\.tsx\\'" . typescript-mode)
          ("\\.ts\\'" . typescript-mode))
   :interpreter ("typescript" . typescript-mode)
-  :custom (typescript-indent-level 2))
+
+  :custom
+  (typescript-indent-level 2)
+
+  :config
+  (define-derived-mode typescriptreact-mode typescript-mode "TypeScript TSX")
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescriptreact-mode))
+  (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
+
+(use-package flymake
+  :custom
+  (flymake-fringe-indicator-position nil))
+
+;; (use-package flymake-eslint
+;;   :hook ((typescript-mode . (lambda ()
+;;                               (setq-local eglot-stay-out-of '(flymake))
+;;                               (add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend nil t)
+;;                               (flymake-eslint-enable)))))
 
 (use-package eglot
-  :custom
-  (eglot-autoshutdown t)
-
   :hook ((typescript-mode . eglot-ensure)
-         (javascript-mode . eglot-ensure)
+         ;; (typescript-mode . (lambda () (add-hook 'before-save-hook 'eglot-format-buffer nil 'local)))
          (css-mode . eglot-ensure)))
+
+(use-package json-mode
+  :mode (("\\.json\\'" . json-mode))
+  :interpreter ("json" . json-mode)
+  :hook ((json-mode . (lambda () (add-hook 'before-save-hook 'json-pretty-print-buffer nil 'local)))))
 
 (use-package elfeed
   :general (general-nmap "SPC e" 'elfeed)
@@ -468,31 +498,16 @@ ARG: I do not know what this is."
   :custom (rmh-elfeed-org-files (list "~/Org/RSS.org"))
   :config (elfeed-org))
 
-(use-package company
-  :custom
-  (company-format-margin-function nil)
-  :init
-  (global-company-mode))
-
-;; (use-package corfu
-;;   :custom
-;;   (corfu-cycle t)
-;;   (corfu-auto t)
-;;   (corfu-auto-prefix 2)
-;;   (corfu-auto-delay 0.25)
-;;   (corfu-preview-current nil) 
-
-;;   :init
-;;   (global-corfu-mode))
-
 (use-package emacs
   :custom
+  (css-indent-offset 2)
   (js-indent-level 2)
   (enable-recursive-minibuffers t)
   (completion-cycle-threshold 3)
   (read-file-name-completion-ignore-case t)
   (read-buffer-completion-ignore-case t)
   (completion-ignore-case t)
+  (gc-cons-threshold (* 8 1024 1024))
 
   :general
   (general-nmap "SPC b b" 'switch-to-buffer)
@@ -524,6 +539,28 @@ ARG: I do not know what this is."
   :custom
   (project-switch-commands 'project-find-file))
 
+(use-package corfu
+  :custom
+  (corfu-auto t)
+  (corfu-cycle t)
+  (corfu-auto-prefix 1)
+  (corfu-preview-current nil) 
+
+  :init
+  (global-corfu-mode))
+
+(use-package cape
+  :custom
+  (dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'"))
+
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-abbrev)
+  (add-to-list 'completion-at-point-functions #'cape-history)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  (add-to-list 'completion-at-point-functions #'cape-sgml)
+  (add-to-list 'completion-at-point-functions #'cape-file))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -531,7 +568,7 @@ ARG: I do not know what this is."
  ;; If there is more than one, they won't work right.
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(company typescript-mode corfu consult elfeed-org vertico org-roam eval-in-repl undo-tree ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil rainbow-delimiters markdown-mode use-package base16-theme)))
+   '(cape json-mode typescript-mode consult elfeed-org vertico org-roam eval-in-repl undo-tree ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil rainbow-delimiters markdown-mode use-package base16-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
