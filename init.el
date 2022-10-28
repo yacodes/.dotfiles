@@ -543,7 +543,7 @@ ARG: I do not know what this is."
   :custom
   (corfu-auto t)
   (corfu-cycle t)
-  (corfu-auto-prefix 1)
+  (corfu-auto-prefix 0)
   (corfu-preview-current nil) 
 
   :init
