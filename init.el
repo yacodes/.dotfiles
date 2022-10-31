@@ -18,8 +18,8 @@
   (package-refresh-contents)
   (package-install 'use-package))
 (eval-and-compile
-    (setq use-package-always-ensure t)
-	  (setq use-package-expand-minimally t))
+  (setq use-package-always-ensure t)
+  (setq use-package-expand-minimally t))
 
 ;; Backup configuration
 (setq-default make-backup-files nil) ;; Do not make backup files
@@ -371,6 +371,9 @@ ARG: I do not know what this is."
 (fringe-mode 0)
 
 (use-package vertico
+  :custom
+  (vertico-cycle t)
+
   :init
   (vertico-mode))
 
@@ -502,8 +505,8 @@ ARG: I do not know what this is."
   :custom
   (css-indent-offset 2)
   (js-indent-level 2)
+  (completion-cycle-threshold 1)
   (enable-recursive-minibuffers t)
-  (completion-cycle-threshold 3)
   (read-file-name-completion-ignore-case t)
   (read-buffer-completion-ignore-case t)
   (completion-ignore-case t)
