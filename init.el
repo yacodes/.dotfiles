@@ -541,15 +541,25 @@ ARG: I do not know what this is."
 
 (use-package corfu
   :custom
-  (corfu-auto t)
   (corfu-cycle t)
-  (corfu-auto-prefix 0)
+  ;; (corfu-auto t)
+  ;; (corfu-auto-prefix 0)
   (corfu-preview-current nil) 
+  (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+  (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+  (corfu-preselect-first nil)    ;; Disable candidate preselection
+  (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+  (corfu-scroll-margin 5)        ;; Use scroll margin
 
   :init
   (global-corfu-mode))
 
 (use-package cape
+  :after corfu
+
+  :bind (("M-p" . completion-at-point)
+         ("M-/" . cape-dabbrev))
+
   :custom
   (dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'"))
 
