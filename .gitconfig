@@ -1,7 +1,7 @@
 [user]
 name = Aleksandr Yakunichev
 email = hi@ya.codes
-signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCwxtqsMFiBNkqg3ilHizPxY9O20yVhpfvzlUWaHDemICso\n2Ldr9TphlFC5UfM2wR2SKcuTHoBzBdiTR8zgkvLx1O+dpX7Yr51FymMDyvU47f+QnYucrUijLhmJ5rP7NOrM\nyCHeGWLrrK91lrhsbi26fBw1fCIlDca413sf canvaskisa@Mac-mini-Aleksandr.local
+	signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCwxtqsMFiBNkqg3ilHizPxY9O20yVhpfvzlUWaHDemICsoMc/17BWC8QEhmt2H4BdHLsaA5sQg4z+448/ZqTVc8Ajpk/r6iLHN1cjfMbJrtNoy8nojSAHLJV6LMRt8f5Neu2K82Ldr9TphlFC5UfM2wR2SKcuTHoBzBdiTR8zgkvLx1O+dpX7Yr51FymMDyvU47f+QnYucrUijLhmJ5rP7NOrMZvyHhUME3c3BLOst6AG2WYvAYybD/xpUI58BvkEIgcrvuP1iC/B+TifutmIr12lXQq6zX0rJW7422tXhRAstDQ85yCHeGWLrrK91lrhsbi26fBw1fCIlDca413sf
 
 [core]
 editor = vim
@@ -25,4 +25,6 @@ compactionHeuristic = true
 defaultBranch = main
 
 [gpg]
-format = ssh
+	format = ssh
+[commit]
+	gpgsign = true
