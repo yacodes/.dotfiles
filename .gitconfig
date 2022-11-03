@@ -1,6 +1,7 @@
 [user]
 name = Aleksandr Yakunichev
 email = hi@ya.codes
+signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCwxtqsMFiBNkqg3ilHizPxY9O20yVhpfvzlUWaHDemICso\n2Ldr9TphlFC5UfM2wR2SKcuTHoBzBdiTR8zgkvLx1O+dpX7Yr51FymMDyvU47f+QnYucrUijLhmJ5rP7NOrM\nyCHeGWLrrK91lrhsbi26fBw1fCIlDca413sf canvaskisa@Mac-mini-Aleksandr.local
 
 [core]
 editor = vim
@@ -19,5 +20,9 @@ l = log --pretty=format:'%C(yellow) %h | %<(70,trunc)%C(reset)%s | %C(cyan)%<(20
 
 [diff]
 compactionHeuristic = true
+
 [init]
-	defaultBranch = main
+defaultBranch = main
+
+[gpg]
+format = ssh
