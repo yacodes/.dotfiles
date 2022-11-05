@@ -542,11 +542,13 @@ ARG: I do not know what this is."
   :custom
   (project-switch-commands 'project-find-file))
 
-(defun ya/enable-aggressive-corfu-mode ()
-  "Enable agressive corfu-mode."
+(defun ya-enable-aggressive-corfu-mode ()
+  "Enable agressive autocompletion corfu-mode."
   (setq-local corfu-auto t
               corfu-auto-delay 0
               corfu-auto-prefix 0
+              corfu-quit-no-match nil
+              completion-styles '(orderless basic)
               org-roam-completion-functions nil)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 
@@ -557,7 +559,7 @@ ARG: I do not know what this is."
   (corfu-cycle t)
   (corfu-preview-current nil) 
 
-  :hook ((org-mode . ya/enable-aggressive-corfu-mode))
+  :hook ((org-mode . ya-enable-aggressive-corfu-mode))
 
   :init
   (global-corfu-mode))
@@ -568,17 +570,8 @@ ARG: I do not know what this is."
   :bind (("C-M-i" . completion-at-point)
          ("M-/" . cape-dabbrev))
 
-  :custom
-  (dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'"))
-
   :init
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  ;; (add-to-list 'completion-at-point-functions #'cape-abbrev)
-  ;; (add-to-list 'completion-at-point-functions #'cape-history)
-  ;; (add-to-list 'completion-at-point-functions #'cape-keyword)
-  ;; (add-to-list 'completion-at-point-functions #'cape-sgml)
-  ;; (add-to-list 'completion-at-point-functions #'cape-file)
-  )
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
