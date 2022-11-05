@@ -542,27 +542,23 @@ ARG: I do not know what this is."
   :custom
   (project-switch-commands 'project-find-file))
 
+(defun ya/enable-aggressive-corfu-mode ()
+  "Enable agressive corfu-mode."
+  (setq-local corfu-auto t
+        corfu-auto-delay 0
+        corfu-auto-prefix 0
+        org-roam-completion-functions nil)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+
 (use-package corfu
   :after org
 
   :custom
   (corfu-cycle t)
-  ;; (corfu-auto t)
-  ;; (corfu-auto-prefix 0)
   (corfu-preview-current nil) 
-  (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-  ;; (corfu-preselect-first nil)    ;; Disable candidate preselection
-  ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-  (corfu-scroll-margin 5)        ;; Use scroll margin
 
-  :hook ((org-mode . (lambda ()
-                       (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-                       (add-to-list 'completion-at-point-functions #'cape-file)
-                       (setq corfu-auto t
-                             corfu-auto-delay 0
-                             corfu-auto-prefix 0
-                             completion-styles '(orderless basic)))))
+  :hook ((org-mode . ya/enable-aggressive-corfu-mode)
+         (org-roam-mode . ya/enable-aggressive-corfu-mode))
 
   :init
   (global-corfu-mode))
