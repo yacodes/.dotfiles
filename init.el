@@ -543,16 +543,26 @@ ARG: I do not know what this is."
   (project-switch-commands 'project-find-file))
 
 (use-package corfu
+  :after org
+
   :custom
   (corfu-cycle t)
   ;; (corfu-auto t)
   ;; (corfu-auto-prefix 0)
   (corfu-preview-current nil) 
   (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-  (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-  (corfu-preselect-first nil)    ;; Disable candidate preselection
-  (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+  ;; (corfu-preselect-first nil)    ;; Disable candidate preselection
+  ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
   (corfu-scroll-margin 5)        ;; Use scroll margin
+
+  :hook ((org-mode . (lambda ()
+                       (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+                       (add-to-list 'completion-at-point-functions #'cape-file)
+                       (setq corfu-auto t
+                             corfu-auto-delay 0
+                             corfu-auto-prefix 0
+                             completion-styles '(orderless basic)))))
 
   :init
   (global-corfu-mode))
@@ -560,7 +570,7 @@ ARG: I do not know what this is."
 (use-package cape
   :after corfu
 
-  :bind (("M-p" . completion-at-point)
+  :bind (("C-M-i" . completion-at-point)
          ("M-/" . cape-dabbrev))
 
   :custom
@@ -568,11 +578,12 @@ ARG: I do not know what this is."
 
   :init
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-abbrev)
-  (add-to-list 'completion-at-point-functions #'cape-history)
-  (add-to-list 'completion-at-point-functions #'cape-keyword)
-  (add-to-list 'completion-at-point-functions #'cape-sgml)
-  (add-to-list 'completion-at-point-functions #'cape-file))
+  ;; (add-to-list 'completion-at-point-functions #'cape-abbrev)
+  ;; (add-to-list 'completion-at-point-functions #'cape-history)
+  ;; (add-to-list 'completion-at-point-functions #'cape-keyword)
+  ;; (add-to-list 'completion-at-point-functions #'cape-sgml)
+  ;; (add-to-list 'completion-at-point-functions #'cape-file)
+  )
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
