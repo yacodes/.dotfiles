@@ -545,9 +545,9 @@ ARG: I do not know what this is."
 (defun ya/enable-aggressive-corfu-mode ()
   "Enable agressive corfu-mode."
   (setq-local corfu-auto t
-        corfu-auto-delay 0
-        corfu-auto-prefix 0
-        org-roam-completion-functions nil)
+              corfu-auto-delay 0
+              corfu-auto-prefix 0
+              org-roam-completion-functions nil)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 
 (use-package corfu
@@ -557,8 +557,7 @@ ARG: I do not know what this is."
   (corfu-cycle t)
   (corfu-preview-current nil) 
 
-  :hook ((org-mode . ya/enable-aggressive-corfu-mode)
-         (org-roam-mode . ya/enable-aggressive-corfu-mode))
+  :hook ((org-mode . ya/enable-aggressive-corfu-mode))
 
   :init
   (global-corfu-mode))
