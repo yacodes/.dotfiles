@@ -46,8 +46,9 @@
 (defalias 'yes-or-no-p 'y-or-n-p)                       ;; Map yes & no to y & n
 (global-display-line-numbers-mode 1)                    ;; Show line numbers
 (global-hl-line-mode)                                   ;; Highlight line under the cursor
-(setq-default ring-bell-function 'ignore)                       ;; Turn off the alarm
-(setq-default backup-directory-alist '(("~/.emacs.d/backups"))) ;; Set backup directories
+(setq-default ring-bell-function 'ignore)               ;; Turn off the alarm
+(setq backup-directory-alist `((".*" . ,temporary-file-directory))) ;; Store backups in /tmp directory
+(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t))) ;; Store autosave files in /tmp directory
 
 ;; Smart buffer switching
 (defun switch-to-previous-buffer ()
@@ -548,7 +549,7 @@ ARG: I do not know what this is."
               corfu-auto-delay 0
               corfu-auto-prefix 0
               corfu-quit-no-match nil
-              completion-styles '(orderless basic)
+              completion-styles '(basic)
               org-roam-completion-functions nil)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 
