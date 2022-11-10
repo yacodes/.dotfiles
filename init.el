@@ -441,7 +441,10 @@ ARG: I do not know what this is."
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode)))
+         ("\\.markdown\\'" . markdown-mode))
+  :custom-face
+  (markdown-inline-code-face ((t (:family "Iosevka"))))
+  (markdown-code-face ((t (:family "Iosevka")))))
 
 (use-package js-mode
   :custom
@@ -547,7 +550,7 @@ ARG: I do not know what this is."
   "Enable agressive autocompletion corfu-mode."
   (setq-local corfu-auto t
               corfu-auto-delay 0
-              corfu-auto-prefix 0
+              corfu-auto-prefix 2
               corfu-quit-no-match nil
               completion-styles '(basic)
               org-roam-completion-functions nil)
