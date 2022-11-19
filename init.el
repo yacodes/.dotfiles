@@ -514,7 +514,6 @@ ARG: I do not know what this is."
   (read-file-name-completion-ignore-case t)
   (read-buffer-completion-ignore-case t)
   (completion-ignore-case t)
-  (gc-cons-threshold (* 8 1024 1024))
 
   :general
   (general-nmap "SPC b b" 'switch-to-buffer)
