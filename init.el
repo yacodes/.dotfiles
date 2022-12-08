@@ -481,6 +481,11 @@ ARG: I do not know what this is."
   :custom
   (flymake-fringe-indicator-position nil))
 
+(use-package apheleia
+  :ensure t
+  :config
+  (apheleia-global-mode +1))
+
 ;; (use-package flymake-eslint
 ;;   :hook ((typescript-mode . (lambda ()
 ;;                               (setq-local eglot-stay-out-of '(flymake))
