@@ -86,6 +86,11 @@ If no file is associated, just close buffer without prompt for save."
   (minimize-window (selected-window)) ;; Minimize and then adjust window height as desired
   (window-resize (selected-window) 6))
 
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
 ;; Geiser for Scheme-related stuff
 (use-package geiser)
 (use-package geiser-guile
@@ -378,17 +383,17 @@ ARG: I do not know what this is."
   :init
   (vertico-mode))
 
-(use-package vertico-directory
-  :after vertico
+;; (use-package vertico-directory
+;;   :after vertico
 
-  ;; More convenient directory navigation commands
-  :bind (:map vertico-map
-              ("RET" . vertico-directory-enter)
-              ("DEL" . vertico-directory-delete-char)
-              ("M-DEL" . vertico-directory-delete-word))
+;;   ;; More convenient directory navigation commands
+;;   :bind (:map vertico-map
+;;               ("RET" . vertico-directory-enter)
+;;               ("DEL" . vertico-directory-delete-char)
+;;               ("M-DEL" . vertico-directory-delete-word))
 
-  ;; Tidy shadowed file names
-  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+;;   ;; Tidy shadowed file names
+;;   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 (use-package marginalia
   :init
@@ -446,13 +451,13 @@ ARG: I do not know what this is."
   (markdown-inline-code-face ((t (:family "Iosevka"))))
   (markdown-code-face ((t (:family "Iosevka")))))
 
-(use-package js-mode
-  :custom
-  (js-indent-level 2)
-  (js-switch-indent-offset 2)
+;; (use-package js-mode
+;;   :custom
+;;   (js-indent-level 2)
+;;   (js-switch-indent-offset 2)
 
-  :mode (("\\.js\\'" . js-mode)
-         ("\\.jsx\\." . js-mode)))
+;;   :mode (("\\.js\\'" . js-mode)
+;;          ("\\.jsx\\." . js-mode)))
 
 (use-package tree-sitter
   :config
@@ -465,7 +470,7 @@ ARG: I do not know what this is."
 (use-package typescript-mode
   :after tree-sitter
 
-  :mode (("\\.tsx\\'" . typescript-mode)
+  :mode (("\\.tsx\\'" . typescriptreact-mode)
          ("\\.ts\\'" . typescript-mode))
   :interpreter ("typescript" . typescript-mode)
 
@@ -481,6 +486,17 @@ ARG: I do not know what this is."
   :custom
   (flymake-fringe-indicator-position nil))
 
+;; (use-package prettier-js
+;;   :ensure t
+
+;;   :custom
+;;   (prettier-js-command "/home/ya/.yarn/bin/prettier")
+
+;;   :config
+;;   (add-hook 'typescript-mode-hook 'prettier-js-mode)
+;;   (add-hook 'css-mode-hook 'prettier-js-mode)
+;;   (add-hook 'typescriptreact-mode-hook 'prettier-js-mode))
+
 (use-package apheleia
   :ensure t
   :config
@@ -494,6 +510,7 @@ ARG: I do not know what this is."
 
 (use-package eglot
   :hook ((typescript-mode . eglot-ensure)
+         (typescriptreact-mode . eglot-ensure)
          ;; (typescript-mode . (lambda () (add-hook 'before-save-hook 'eglot-format-buffer nil 'local)))
          (css-mode . eglot-ensure)))
 
@@ -560,6 +577,23 @@ ARG: I do not know what this is."
               org-roam-completion-functions nil)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 
+(defun ya-enable-css-corfu-mode ()
+  "Enable agressive autocompletion corfu-mode."
+  (setq-local corfu-auto t
+              corfu-auto-delay 0
+              corfu-auto-prefix 1
+              corfu-quit-no-match nil
+              completion-styles '(basic)))
+
+(defun ya-enable-yaml-corfu-mode ()
+  "Enable agressive autocompletion corfu-mode."
+  (setq-local corfu-auto t
+              corfu-auto-delay 0
+              corfu-auto-prefix 1
+              corfu-quit-no-match nil
+              completion-styles '(basic))
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+
 (use-package corfu
   :after org
 
@@ -567,7 +601,9 @@ ARG: I do not know what this is."
   (corfu-cycle t)
   (corfu-preview-current nil) 
 
-  :hook ((org-mode . ya-enable-aggressive-corfu-mode))
+  :hook ((org-mode . ya-enable-aggressive-corfu-mode)
+         (css-mode . ya-enable-css-corfu-mode)
+         (yaml-mode . ya-enable-yaml-corfu-mode))
 
   :init
   (global-corfu-mode))
@@ -588,7 +624,7 @@ ARG: I do not know what this is."
  ;; If there is more than one, they won't work right.
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(cape json-mode typescript-mode consult elfeed-org vertico org-roam eval-in-repl undo-tree ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil rainbow-delimiters markdown-mode use-package base16-theme)))
+   '(exec-path-from-shell prettier-js cape json-mode typescript-mode consult elfeed-org vertico org-roam eval-in-repl undo-tree ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil rainbow-delimiters markdown-mode use-package base16-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
