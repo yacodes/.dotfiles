@@ -383,17 +383,18 @@ ARG: I do not know what this is."
   :init
   (vertico-mode))
 
-;; (use-package vertico-directory
-;;   :after vertico
+(use-package vertico-directory
+  :after vertico
+  :ensure nil
 
-;;   ;; More convenient directory navigation commands
-;;   :bind (:map vertico-map
-;;               ("RET" . vertico-directory-enter)
-;;               ("DEL" . vertico-directory-delete-char)
-;;               ("M-DEL" . vertico-directory-delete-word))
+  ;; More convenient directory navigation commands
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word))
 
-;;   ;; Tidy shadowed file names
-;;   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+  ;; Tidy shadowed file names
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 (use-package marginalia
   :init
@@ -613,6 +614,9 @@ ARG: I do not know what this is."
 
   :bind (("C-M-i" . completion-at-point)
          ("M-/" . cape-dabbrev))
+
+  :custom
+  (dabbrev-case-fold-search nil)
 
   :init
   (add-to-list 'completion-at-point-functions #'cape-dabbrev))
