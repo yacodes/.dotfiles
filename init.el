@@ -616,7 +616,8 @@ ARG: I do not know what this is."
          ("M-/" . cape-dabbrev))
 
   :custom
-  (dabbrev-case-fold-search nil)
+  (dabbrev-case-fold-search t)
+  (dabbrev-case-replace nil)
 
   :init
   (add-to-list 'completion-at-point-functions #'cape-dabbrev))
