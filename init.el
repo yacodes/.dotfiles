@@ -88,6 +88,7 @@ If no file is associated, just close buffer without prompt for save."
 
 (use-package exec-path-from-shell
   :ensure t
+
   :config
   (exec-path-from-shell-initialize))
 
@@ -112,6 +113,14 @@ If no file is associated, just close buffer without prompt for save."
   (setq-default eir-jump-after-eval nil)
   (setq-default eir-repl-placement 'below))
 
+(use-package posframe
+  :ensure t)
+
+(use-package transient
+  :ensure t)
+
+(use-package screenshot
+  :load-path "~/.sources/screenshot")
 
 ;; @TODO Breaks sclang-start command in sclang-mode
 (use-package ligature
@@ -292,6 +301,13 @@ If no file is associated, just close buffer without prompt for save."
 
 ;; Org mode
 (use-package org
+  :custom
+  ;; Color palette:
+  ;; https://github.com/tinted-theming/base16-emacs/blob/main/build/base16-tomorrow-night-theme.el#L14-L30
+  (org-todo-keyword-faces
+   '(("APPLIED" . "#b294bb")
+     ("INTERVIEW" . "#b294bb")))
+
   :config
   (setq-default org-log-done 'time)
   (setq-default org-startup-folded t)
@@ -629,7 +645,9 @@ ARG: I do not know what this is."
  ;; If there is more than one, they won't work right.
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(exec-path-from-shell prettier-js cape json-mode typescript-mode consult elfeed-org vertico org-roam eval-in-repl undo-tree ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil rainbow-delimiters markdown-mode use-package base16-theme)))
+   '(exec-path-from-shell prettier-js cape json-mode typescript-mode consult elfeed-org vertico org-roam eval-in-repl undo-tree ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil rainbow-delimiters markdown-mode use-package base16-theme))
+ '(screenshot-font-family "Iosevka")
+ '(screenshot-line-numbers-p t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
