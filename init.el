@@ -306,7 +306,9 @@ If no file is associated, just close buffer without prompt for save."
   ;; https://github.com/tinted-theming/base16-emacs/blob/main/build/base16-tomorrow-night-theme.el#L14-L30
   (org-todo-keyword-faces
    '(("APPLIED" . "#b294bb")
-     ("INTERVIEW" . "#b294bb")))
+     ("INTERVIEW" . "#b294bb")
+     ("REJECTED" . "#a3685a")
+     ("NO_REPLY" . "#a3685a")))
 
   :config
   (setq-default org-log-done 'time)
