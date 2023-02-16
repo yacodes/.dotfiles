@@ -56,6 +56,11 @@
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) t)))
 
+(defun replace-spaces-to-non-breaking (begin end)
+  "Replace all spaces in a region from BEGIN to END with non-breaking ones."
+  (interactive "r")
+  (replace-regexp-in-region " " " " begin end))
+
 ;; Text scaling key bindings
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
@@ -648,8 +653,15 @@ ARG: I do not know what this is."
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
    '(exec-path-from-shell prettier-js cape json-mode typescript-mode consult elfeed-org vertico org-roam eval-in-repl undo-tree ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil rainbow-delimiters markdown-mode use-package base16-theme))
+ '(screenshot-border-width 0)
  '(screenshot-font-family "Iosevka")
- '(screenshot-line-numbers-p t))
+ '(screenshot-font-size 20)
+ '(screenshot-line-numbers-p nil)
+ '(screenshot-min-width 100)
+ '(screenshot-remove-indent-p nil)
+ '(screenshot-shadow-offset-horizontal 0)
+ '(screenshot-shadow-offset-vertical 0)
+ '(screenshot-text-only-p nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
