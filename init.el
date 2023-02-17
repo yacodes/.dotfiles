@@ -56,10 +56,29 @@
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) t)))
 
-(defun replace-spaces-to-non-breaking (begin end)
-  "Replace all spaces in a region from BEGIN to END with non-breaking ones."
+(defun string-replace-spaces-to-non-breaking (string)
+  "Replace all spaces in STRING to non-breaking ones."
+  (string-replace " " " " string))
+
+(defun string-replace-vowels-with-underline (string)
+  "Replace all vowels in a STRING with underlines."
+  (string-replace "aeyuio" "_" string))
+
+(defun string-split-by-spaces (string)
+  "Split all letters in a STRING by spaces."
+  (string-trim
+   (mapconcat (lambda (x) (format "%c " x)) string "")))
+
+(defun ankify-region (begin end)
+  "Prepare a region from BEGIN to END for Anki's card."
   (interactive "r")
-  (replace-regexp-in-region " " " " begin end))
+  (save-excursion
+    (let ((contents (buffer-substring-no-properties begin end)))
+      (kill-region begin end)
+      (insert
+       (string-replace-spaces-to-non-breaking
+        (string-split-by-spaces
+         (string-replace-vowels-with-underline contents)))))))
 
 ;; Text scaling key bindings
 (global-set-key (kbd "C-+") 'text-scale-increase)
