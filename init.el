@@ -334,6 +334,13 @@ If no file is associated, just close buffer without prompt for save."
      ("REJECTED" . "#a3685a")
      ("NO_REPLY" . "#a3685a")))
 
+  (org-file-apps
+   '((auto-mode . emacs)
+     ("\\.x?html?\\'" . "firefox %s")
+     ("\\.pdf\\(::[0-9]+\\)?\\'" . "firefox %s")
+     ("\\.mp4\\'" . "vlc \"%s\"")
+     ("\\.mkv" . "vlc \"%s\"")))
+
   :config
   (setq-default org-log-done 'time)
   (setq-default org-startup-folded t)
