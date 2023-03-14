@@ -1,15 +1,12 @@
 export TERM=screen-256color
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-export EDITOR='vim'
+export EDITOR=nvim
 
 # Set GOPATH
 export GOPATH=$HOME/.go
-# export GOPATH=$GOPATH:/Workspace/ESH$GOPATH
-# export GOROOT=$HOME/.go
 export GOBIN=$GOPATH/bin
 export GO111MODULE=auto
-# export GO111MODULE=on
 
 # Set PATH
 export PATH=/usr/local/bin:$PATH
