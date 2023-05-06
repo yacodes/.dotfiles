@@ -62,7 +62,7 @@
 
 (defun string-replace-vowels-with-underline (string)
   "Replace all vowels in a STRING with underlines."
-  (replace-regexp-in-string "[aeyuio]" "_" string))
+  (replace-regexp-in-string "[aáeéyuúiíoó]" "_" string))
 
 (defun string-split-by-spaces (string)
   "Split all letters in a STRING by spaces."

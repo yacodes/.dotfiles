@@ -4,7 +4,7 @@ email = hi@ya.codes
 	signingkey = key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIY0QGmf9qh0M+4LbdjUVOQf8KG2uZ1Jh1NyjvqXwCDG hi@ya.codes
 
 [core]
-editor = vim
+editor = nvim
 
 [alias]
 a = add
@@ -28,3 +28,5 @@ defaultBranch = main
 	format = ssh
 [commit]
 	gpgsign = true
+[pull]
+	rebase = true

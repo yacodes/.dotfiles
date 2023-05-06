@@ -5,10 +5,13 @@
 set $mod Mod4
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-default_border pixel 2
-default_floating_border pixel 2
+# default_border pixel 2
+# default_floating_border pixel 2
+default_border pixel 0
+default_floating_border pixel 0
+
 hide_edge_borders both
-for_window [all] border pixel 2 # workaround for https://github.com/i3/i3/issues/5149
+# for_window [all] border pixel 2 # workaround for https://github.com/i3/i3/issues/5149
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -147,5 +150,6 @@ client.placeholder      #000000 #0c0c0c #c5c8c6 #000000
 client.background       #151515
 
 # Set inner/outer gaps
-gaps inner 8
+# gaps inner 8
+gaps inner 0
 gaps outer 0
