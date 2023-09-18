@@ -571,11 +571,15 @@ ARG: I do not know what this is."
 
 (use-package elfeed
   :general (general-nmap "SPC e" 'elfeed)
-  :custom (elfeed-db-directory "~/Org/.elfeed"))
-(use-package elfeed-org
-  :after elfeed
-  :custom (rmh-elfeed-org-files (list "~/Org/RSS.org"))
-  :config (elfeed-org))
+  :custom
+  (elfeed-feeds
+   '(("https://100r.co/links/rss.xml" tech blog)
+     ("http://blog.fogus.me/feed/" tech blog clojure)
+     ("https://solar.lowtechmagazine.com/feeds/all-en.atom.xml" tech blog lowtech)
+     ("https://sachachua.com/blog/feed/" emacs)
+     ("https://protesilaos.com/master.xml" emacs tech philosophy)
+     ("https://danluu.com/atom.xml" tech philosophy)
+     ("https://solarpunks.net/rss" politics solarpunk))))
 
 (use-package emacs
   :custom
@@ -678,7 +682,7 @@ ARG: I do not know what this is."
  ;; If there is more than one, they won't work right.
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(exec-path-from-shell prettier-js cape json-mode typescript-mode consult elfeed-org vertico org-roam eval-in-repl undo-tree ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil rainbow-delimiters markdown-mode use-package base16-theme))
+   '(exec-path-from-shell prettier-js cape json-mode typescript-mode consult vertico org-roam eval-in-repl undo-tree ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil rainbow-delimiters markdown-mode use-package base16-theme))
  '(screenshot-border-width 0)
  '(screenshot-font-family "Iosevka")
  '(screenshot-font-size 20)
