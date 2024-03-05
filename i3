@@ -121,6 +121,16 @@ bindsym $mod+Shift+Ctrl+Right resize grow width 3 px or 3 ppt
 # Autostart applications
 # exec_always --no-startup-id "~/.config/polybar/launch.sh"
 
+# Keyboard settings
+# Keyboard speed
+exec_always --no-startup-id "xset r rate 200 30"
+# Init FN+KEYS
+exec_always --no-startup-id "xbindkeys --poll-rc"
+# Keyboard layout, layout trigger & CAPS lock to CTRL
+exec_always --no-startup-id "setxkbmap -layout us,ru -option grp:toggle,ctrl:nocaps"
+# Map CAPS LOCK to behave as ESC *and* as CTRL
+exec_always --no-startup-id "xcape -e 'Control_L=Escape'"
+
 set_from_resource $term_background background
 set_from_resource $term_foreground foreground
 set_from_resource $term_color0     color0

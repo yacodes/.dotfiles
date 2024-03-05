@@ -117,25 +117,25 @@ If no file is associated, just close buffer without prompt for save."
   (exec-path-from-shell-initialize))
 
 ;; Geiser for Scheme-related stuff
-(use-package geiser)
-(use-package geiser-guile
-  :mode ("\\.scm\\'" . geiser-mode)
-  :init (setq geiser-guile-binary "/usr/bin/guile3")
-  :config
-  (add-hook 'geiser-repl-mode-hook 'setup-lisp-repl)
-  (add-hook 'ielm-mode-hook 'setup-lisp-repl))
+;; (use-package geiser)
+;; (use-package geiser-guile
+;;   :mode ("\\.scm\\'" . geiser-mode)
+;;   :init (setq geiser-guile-binary "/usr/bin/guile3")
+;;   :config
+;;   (add-hook 'geiser-repl-mode-hook 'setup-lisp-repl)
+;;   (add-hook 'ielm-mode-hook 'setup-lisp-repl))
 
 ;; Eval-in-REPL instead of the minibuffer
-(use-package eval-in-repl
-  :mode ("\\.scm\\'" . geiser-mode)
-  :config
-  (load "./eval-in-repl-geiser.el")
-  (load "./eval-in-repl-ielm.el")
-  ;; (load "./eval-in-repl-javascript.el")
-  (require 'eval-in-repl-geiser)
-  (require 'eval-in-repl-ielm)
-  (setq-default eir-jump-after-eval nil)
-  (setq-default eir-repl-placement 'below))
+;; (use-package eval-in-repl
+;;   :mode ("\\.scm\\'" . geiser-mode)
+;;   :config
+;;   (load "./eval-in-repl-geiser.el")
+;;   (load "./eval-in-repl-ielm.el")
+;;   ;; (load "./eval-in-repl-javascript.el")
+;;   (require 'eval-in-repl-geiser)
+;;   (require 'eval-in-repl-ielm)
+;;   (setq-default eir-jump-after-eval nil)
+;;   (setq-default eir-repl-placement 'below))
 
 (use-package posframe
   :ensure t)
@@ -151,7 +151,7 @@ If no file is associated, just close buffer without prompt for save."
   :load-path "~/.sources/ligature.el"
   :config
   (ligature-set-ligatures '(org-mode)
-			  '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "||=" "||>"
+			                    '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "||=" "||>"
                             ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
                             "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
                             "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
@@ -164,8 +164,8 @@ If no file is associated, just close buffer without prompt for save."
                             "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
                             "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
                             "\\" "://"))
-  (ligature-set-ligatures '(geiser-mode clojure-mode elisp-mode lilypond-mode typescript-mode)
-			  '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+  (ligature-set-ligatures '(elisp-mode typescript-mode)
+			                    '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
                             ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
                             "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
                             "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
@@ -199,7 +199,7 @@ If no file is associated, just close buffer without prompt for save."
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line))
 
 (use-package evil-indent-plus)
-(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable) ;; Emacs lisp rainbow
+;; (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable) ;; Emacs lisp rainbow
 
 (use-package hideshow
   :after yaml-mode
@@ -213,14 +213,14 @@ If no file is associated, just close buffer without prompt for save."
           (goto-char (cadr range))
           (end-of-line)))))
   (add-to-list 'hs-special-modes-alist
-   '(yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#" +data-hideshow-forward-sexp nil)))
+               '(yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#" +data-hideshow-forward-sexp nil)))
 
 ;; ;; General keybindings
 (use-package general
   :config
   (general-evil-setup t)
   (general-auto-unbind-keys)
-    
+  
   ;; General execute
   (general-define-key
    :states 'normal
@@ -273,14 +273,14 @@ If no file is associated, just close buffer without prompt for save."
 
   ;; Org-mode keybindings
   (nmap
-   :keymaps 'org-mode-map
-   "t" 'org-todo
-   "RET" 'org-open-at-point)
+    :keymaps 'org-mode-map
+    "t" 'org-todo
+    "RET" 'org-open-at-point)
 
   ;; Yaml keybindings
   (nmap
-   :keymaps 'yaml-mode-map
-   "TAB" 'hs-toggle-hiding)
+    :keymaps 'yaml-mode-map
+    "TAB" 'hs-toggle-hiding)
 
   (nmap
     :keymaps 'org-mode-map
@@ -292,7 +292,7 @@ If no file is associated, just close buffer without prompt for save."
     "i" 'org-clock-in
     "r r" 'org-reveal-export-to-html
     "r b" 'org-reveal-export-to-html-and-browse)
-)
+  )
 
 (use-package evil-collection
   :config
@@ -384,9 +384,9 @@ If no file is associated, just close buffer without prompt for save."
 (use-package ox-reveal
   :after org)
 
-(use-package rainbow-delimiters
-  :config
-  (rainbow-delimiters-mode))
+;; (use-package rainbow-delimiters
+;;   :config
+;;   (rainbow-delimiters-mode))
 
 ;; Matches parens
 (defun match-paren (arg)
@@ -509,6 +509,23 @@ ARG: I do not know what this is."
 ;;   :mode (("\\.js\\'" . js-mode)
 ;;          ("\\.jsx\\." . js-mode)))
 
+(setq-default treesit-language-source-alist
+              '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+                (cmake "https://github.com/uyha/tree-sitter-cmake")
+                (css "https://github.com/tree-sitter/tree-sitter-css")
+                (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+                (go "https://github.com/tree-sitter/tree-sitter-go")
+                (html "https://github.com/tree-sitter/tree-sitter-html")
+                (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+                (json "https://github.com/tree-sitter/tree-sitter-json")
+                (make "https://github.com/alemuller/tree-sitter-make")
+                (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+                (python "https://github.com/tree-sitter/tree-sitter-python")
+                (toml "https://github.com/tree-sitter/tree-sitter-toml")
+                (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+                (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+                (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+
 (use-package tree-sitter
   :config
   (global-tree-sitter-mode)
@@ -536,32 +553,14 @@ ARG: I do not know what this is."
   :custom
   (flymake-fringe-indicator-position nil))
 
-;; (use-package prettier-js
-;;   :ensure t
-
-;;   :custom
-;;   (prettier-js-command "/home/ya/.yarn/bin/prettier")
-
-;;   :config
-;;   (add-hook 'typescript-mode-hook 'prettier-js-mode)
-;;   (add-hook 'css-mode-hook 'prettier-js-mode)
-;;   (add-hook 'typescriptreact-mode-hook 'prettier-js-mode))
-
 (use-package apheleia
   :ensure t
   :config
   (apheleia-global-mode +1))
 
-;; (use-package flymake-eslint
-;;   :hook ((typescript-mode . (lambda ()
-;;                               (setq-local eglot-stay-out-of '(flymake))
-;;                               (add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend nil t)
-;;                               (flymake-eslint-enable)))))
-
 (use-package eglot
   :hook ((typescript-mode . eglot-ensure)
          (typescriptreact-mode . eglot-ensure)
-         ;; (typescript-mode . (lambda () (add-hook 'before-save-hook 'eglot-format-buffer nil 'local)))
          (css-mode . eglot-ensure)))
 
 (use-package json-mode
@@ -623,7 +622,7 @@ ARG: I do not know what this is."
 
 (defun ya-enable-aggressive-corfu-mode ()
   "Enable agressive autocompletion corfu-mode."
-  (setq-local corfu-auto t
+  (setq-local corfu-auto nil ;; t
               corfu-auto-delay 0
               corfu-auto-prefix 2
               corfu-quit-no-match nil
@@ -641,19 +640,25 @@ ARG: I do not know what this is."
 
 (defun ya-enable-yaml-corfu-mode ()
   "Enable agressive autocompletion corfu-mode."
-  (setq-local corfu-auto t
+  (setq-local corfu-auto nil ;; t
               corfu-auto-delay 0
               corfu-auto-prefix 1
               corfu-quit-no-match nil
               completion-styles '(basic))
   (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 
+;; @todo configure less aggressive corfu mode
 (use-package corfu
   :after org
 
   :custom
   (corfu-cycle t)
   (corfu-preview-current nil) 
+
+  :bind
+  (:map corfu-map
+        ("C-n" . corfu-next)
+        ("C-S-n" . corfu-previous))
 
   :hook ((org-mode . ya-enable-aggressive-corfu-mode)
          (css-mode . ya-enable-css-corfu-mode)
@@ -682,7 +687,7 @@ ARG: I do not know what this is."
  ;; If there is more than one, they won't work right.
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(exec-path-from-shell prettier-js cape json-mode typescript-mode consult vertico org-roam eval-in-repl undo-tree ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil rainbow-delimiters markdown-mode use-package base16-theme))
+   '(exec-path-from-shell prettier-js cape json-mode typescript-mode consult vertico org-roam eval-in-repl ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil markdown-mode use-package base16-theme))
  '(screenshot-border-width 0)
  '(screenshot-font-family "Iosevka")
  '(screenshot-font-size 20)

@@ -1,7 +1,7 @@
 [user]
 name = Aleksandr Yakunichev
 email = hi@ya.codes
-	signingkey = key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIY0QGmf9qh0M+4LbdjUVOQf8KG2uZ1Jh1NyjvqXwCDG hi@ya.codes
+	signingkey = /home/ya/.ssh/id_ed25519.pub
 
 [core]
 editor = nvim
