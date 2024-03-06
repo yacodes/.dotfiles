@@ -116,35 +116,32 @@ If no file is associated, just close buffer without prompt for save."
   :config
   (exec-path-from-shell-initialize))
 
-;; Geiser for Scheme-related stuff
-;; (use-package geiser)
-;; (use-package geiser-guile
-;;   :mode ("\\.scm\\'" . geiser-mode)
-;;   :init (setq geiser-guile-binary "/usr/bin/guile3")
-;;   :config
-;;   (add-hook 'geiser-repl-mode-hook 'setup-lisp-repl)
-;;   (add-hook 'ielm-mode-hook 'setup-lisp-repl))
-
-;; Eval-in-REPL instead of the minibuffer
-;; (use-package eval-in-repl
-;;   :mode ("\\.scm\\'" . geiser-mode)
-;;   :config
-;;   (load "./eval-in-repl-geiser.el")
-;;   (load "./eval-in-repl-ielm.el")
-;;   ;; (load "./eval-in-repl-javascript.el")
-;;   (require 'eval-in-repl-geiser)
-;;   (require 'eval-in-repl-ielm)
-;;   (setq-default eir-jump-after-eval nil)
-;;   (setq-default eir-repl-placement 'below))
-
 (use-package posframe
   :ensure t)
 
 (use-package transient
   :ensure t)
+(use-package typescript-mode
+  :after tree-sitter
 
-(use-package screenshot
-  :load-path "~/.sources/screenshot")
+  :custom
+  (typescript-indent-level 2)
+
+  :config
+  ;; we choose this instead of tsx-mode so that eglot can automatically figure out language for server
+  ;; see https://github.com/joaotavora/eglot/issues/624 and https://github.com/joaotavora/eglot#handling-quirky-servers
+  (define-derived-mode typescriptreact-mode typescript-mode
+    "TypeScript TSX")
+
+  ;; use our derived mode for tsx files
+  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
+  ;; by default, typescript-mode is mapped to the treesitter typescript parser
+  ;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
+  (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
+
+(use-package treesit-auto
+  :config
+  (global-treesit-auto-mode))
 
 ;; @TODO Breaks sclang-start command in sclang-mode
 (use-package ligature
@@ -164,7 +161,7 @@ If no file is associated, just close buffer without prompt for save."
                             "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
                             "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
                             "\\" "://"))
-  (ligature-set-ligatures '(elisp-mode typescript-mode)
+  (ligature-set-ligatures '(elisp-mode typescript-mode js-mode)
 			                    '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
                             ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
                             "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
@@ -257,19 +254,12 @@ If no file is associated, just close buffer without prompt for save."
     "d" 'delete-current-file
     "s" 'save-buffer
     "S" 'save-some-buffers
-    "i" 'insert-file
-    ;; "f" 'find-file
-    )
+    "i" 'insert-file)
 
   ;; Elisp keybindings
   (nmap
     :keymaps 'emacs-lisp-mode-map
     "RET" 'eir-eval-in-ielm)
-
-  ;; Geiser keybindings
-  (nmap
-    :keymaps 'geiser-mode-map
-    "RET" 'eir-eval-in-geiser)
 
   ;; Org-mode keybindings
   (nmap
@@ -289,7 +279,6 @@ If no file is associated, just close buffer without prompt for save."
     "^" 'org-sort
     "l" 'org-insert-link
     "o" 'org-open-at-point
-    "i" 'org-clock-in
     "r r" 'org-reveal-export-to-html
     "r b" 'org-reveal-export-to-html-and-browse)
   )
@@ -384,10 +373,6 @@ If no file is associated, just close buffer without prompt for save."
 (use-package ox-reveal
   :after org)
 
-;; (use-package rainbow-delimiters
-;;   :config
-;;   (rainbow-delimiters-mode))
-
 ;; Matches parens
 (defun match-paren (arg)
   "Go to the matching paren if on a paren; otherwise insert %.
@@ -396,17 +381,6 @@ ARG: I do not know what this is."
   (cond ((looking-at "\\s(") (forward-list 1) (backward-char 1))
         ((looking-at "\\s)") (forward-char 1) (backward-list 1))
         (t (self-insert-command (or arg 1)))))
-
-;; TidalCycles
-;; (use-package tidal
-;;   ;; Music pattern live-coding language syntax and environment
-;;   :config
-;;   ;; Global config
-;;   (setq-default tidal-boot-script-path "/home/ya/Workspace/Audio/TidalCycles/Sandbox/2020-09-07/Boot.hs")
-;;   (setq-default tidal-interpreter "stack")
-;;   (setq-default tidal-interpreter-arguments (list "exec" "--package" "tidal" "--" "ghci"))
-;;   ;; Evil keybindings
-;;   (evil-define-key 'normal tidal-mode-map (kbd "<RET>") 'tidal-run-multiple-lines))
 
 ;; Wrap isearch
 (defadvice isearch-repeat (after isearch-no-fail activate)
@@ -478,6 +452,7 @@ ARG: I do not know what this is."
 (use-package writeroom-mode
   :custom
   (writeroom-width 100)
+
   :config
   (add-hook 'writeroom-mode-enable-hook (lambda ()
                                           (display-line-numbers-mode -1)
@@ -508,24 +483,6 @@ ARG: I do not know what this is."
 
 ;;   :mode (("\\.js\\'" . js-mode)
 ;;          ("\\.jsx\\." . js-mode)))
-
-(setq-default treesit-language-source-alist
-              '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-                (cmake "https://github.com/uyha/tree-sitter-cmake")
-                (css "https://github.com/tree-sitter/tree-sitter-css")
-                (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-                (go "https://github.com/tree-sitter/tree-sitter-go")
-                (html "https://github.com/tree-sitter/tree-sitter-html")
-                (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-                (json "https://github.com/tree-sitter/tree-sitter-json")
-                (make "https://github.com/alemuller/tree-sitter-make")
-                (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-                (python "https://github.com/tree-sitter/tree-sitter-python")
-                (toml "https://github.com/tree-sitter/tree-sitter-toml")
-                (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-                (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-                (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
-
 (use-package tree-sitter
   :config
   (global-tree-sitter-mode)
@@ -534,27 +491,13 @@ ARG: I do not know what this is."
 (use-package tree-sitter-langs
   :after tree-sitter)
 
-(use-package typescript-mode
-  :after tree-sitter
-
-  :mode (("\\.tsx\\'" . typescriptreact-mode)
-         ("\\.ts\\'" . typescript-mode))
-  :interpreter ("typescript" . typescript-mode)
-
-  :custom
-  (typescript-indent-level 2)
-
-  :config
-  (define-derived-mode typescriptreact-mode typescript-mode "TypeScript TSX")
-  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescriptreact-mode))
-  (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
-
 (use-package flymake
   :custom
   (flymake-fringe-indicator-position nil))
 
 (use-package apheleia
   :ensure t
+
   :config
   (apheleia-global-mode +1))
 
@@ -687,7 +630,7 @@ ARG: I do not know what this is."
  ;; If there is more than one, they won't work right.
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(exec-path-from-shell prettier-js cape json-mode typescript-mode consult vertico org-roam eval-in-repl ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil markdown-mode use-package base16-theme))
+   '(exec-path-from-shell prettier-js cape json-mode consult vertico org-roam eval-in-repl ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil markdown-mode use-package base16-theme))
  '(screenshot-border-width 0)
  '(screenshot-font-family "Iosevka")
  '(screenshot-font-size 20)
