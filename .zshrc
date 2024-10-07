@@ -15,6 +15,9 @@ export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$PATH:/$GOPATH/bin
 export PATH=$HOME/.yarn/bin:$PATH
 
+export PNPM_HOME=$HOME/.local/share/pnpm
+export PATH="$PNPM_HOME:$PATH"
+
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
 
@@ -39,8 +42,8 @@ SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
 # Aliases
-alias ll="ls -lh"
-alias la="ls -lha"
+alias ll="eza -lh"
+alias la="eza -lha"
 alias zshconfig="vim ~/.zshrc"
 alias v="vim"
 alias g="git"
@@ -78,3 +81,11 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # source /usr/share/nvm/init-nvm.sh
+
+# pnpm
+export PNPM_HOME="/root/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
