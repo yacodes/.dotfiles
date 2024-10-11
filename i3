@@ -13,6 +13,10 @@ default_floating_border pixel 0
 hide_edge_borders both
 # for_window [all] border pixel 2 # workaround for https://github.com/i3/i3/issues/5149
 
+# custom windows config
+for_window [title="(?i)bitwarden"] resize set 400 801
+for_window [title="(?i)bitwarden"] move position center
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font xft:Iosevka 15
