@@ -514,6 +514,7 @@ ARG: I do not know what this is."
 (use-package elfeed
   :general (general-nmap "SPC e" 'elfeed)
   :custom
+  (shr-use-fonts nil) ; Fixes selecting monospace font for elfeed articles.
   (elfeed-feeds
    '(("https://100r.co/links/rss.xml" tech blog)
      ("http://blog.fogus.me/feed/" tech blog clojure)
@@ -630,7 +631,7 @@ ARG: I do not know what this is."
  ;; If there is more than one, they won't work right.
  '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(wgrep 0x0 exec-path-from-shell prettier-js cape json-mode consult vertico org-roam eval-in-repl ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil markdown-mode use-package base16-theme))
+   '(abl-mode aa-edit-mode wgrep 0x0 exec-path-from-shell prettier-js cape json-mode consult vertico org-roam eval-in-repl ox-reveal writeroom-mode evil-indent-plus unicode-fonts visual-fill-column yaml-mode magit evil-collection which-key general evil markdown-mode use-package base16-theme))
  '(screenshot-border-width 0)
  '(screenshot-font-family "Iosevka")
  '(screenshot-font-size 20)
