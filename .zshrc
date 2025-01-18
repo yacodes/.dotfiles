@@ -1,7 +1,16 @@
-export TERM=screen-256color
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export EDITOR=nvim
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+export EDITOR="nvim"
+export TERM="screen-256color"
+
+# XDG_DATA_DIRS often starts off empty, but an empty value is
+# interpreted as this value. Loading a profile can set it, though,
+# which effectively ignores the default value. We want it to
+# instead add to the default, so we set it here to the default
+# value.
+if [ -z "$XDG_DATA_DIRS" ]; then
+  export XDG_DATA_DIRS="/usr/local/share/:/usr/share/"
+fi
 
 # Set GOPATH
 export GOPATH=$HOME/.go
@@ -17,6 +26,10 @@ export PATH=$HOME/.yarn/bin:$PATH
 
 export PNPM_HOME=$HOME/.local/share/pnpm
 export PATH="$PNPM_HOME:$PATH"
+
+# Configure NIX
+export PATH=~/.nix-profile/bin:$PATH
+export XDG_DATA_DIRS=$HOME/.nix-profile/share:$XDG_DATA_DIRS
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
@@ -34,7 +47,6 @@ autoload -Uz promptinit
 autoload -U colors && colors
 PROMPT='%F{yellow}λ %n@%m%f%b %F{green}[%c]%f%b %F{yellow}%f%b'\$vcs_info_msg_0_'%f%b'
 
-
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 setopt histignorealldups sharehistory
 HISTSIZE=10000
@@ -44,10 +56,7 @@ HISTFILE=~/.zsh_history
 # Aliases
 alias ll="eza -lh"
 alias la="eza -lha"
-alias zshconfig="vim ~/.zshrc"
-alias v="vim"
 alias g="git"
-alias weather="curl wttr.in/Moscow"
 
 # Use modern completion system
 autoload -Uz compinit
@@ -79,8 +88,6 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Fuzzy search
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# source /usr/share/nvm/init-nvm.sh
 
 # pnpm
 export PNPM_HOME="/root/.local/share/pnpm"
