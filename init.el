@@ -384,7 +384,18 @@ ARG: I do not know what this is."
   :init
   (vertico-mode))
 
+(use-package vertico-directory
+  :after (vertico)
+  :ensure nil
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word)))
+
 (use-package marginalia
+  :bind (:map minibuffer-local-map
+              ("M-A" . marginalia-cycle))
+
   :init
   (marginalia-mode))
 
@@ -462,12 +473,10 @@ ARG: I do not know what this is."
      ("https://sachachua.com/blog/feed/" emacs)
      ("https://protesilaos.com/master.xml" emacs philosophy)
      ("https://danluu.com/atom.xml" philosophy)
-     ("https://solarpunks.net/rss" politics)
      ("https://drewdevault.com/blog/index.xml" foss)
      ("https://alexschroeder.ch/view/index.rss" foss emacs)
      ("https://emacsredux.com/atom.xml" foss emacs)
      ("https://www.donostitik.com/rss" euskadi castellano)
-     ("https://www.noticiasdegipuzkoa.eus/rss" euskadi castellano)
      ("https://systemcrafters.net/rss/news.xml" foss linux scheme emacs)
      ("https://aartaka.me/rss.xml" linux scheme))))
 
