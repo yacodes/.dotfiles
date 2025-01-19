@@ -12,9 +12,9 @@
 
 (eval-and-compile
   (require 'use-package-ensure)
-  (setq use-package-always-ensure t)
   ;; (setq use-package-verbose t)
-  (setq use-package-expand-minimally t))
+  (setq use-package-expand-minimally t)
+  (setq use-package-always-ensure t))
 
 ;; Backup configuration
 (setq-default make-backup-files nil) ; Do not make backup files
@@ -446,11 +446,13 @@ ARG: I do not know what this is."
 (use-package json-mode
   :mode ("\\.json\\'" . json-mode)
   :interpreter ("json" . json-mode)
-  :hook ((json-mode . (lambda () (add-hook 'before-save-hook 'json-pretty-print-buffer nil 'local)))))
+  ;; :hook ((json-mode . (lambda () (add-hook 'before-save-hook 'json-pretty-print-buffer nil 'local))))
+  )
 
 (use-package elfeed
-  :defer t
-  :general (general-nmap "SPC e" 'elfeed)
+  :general
+  (general-nmap "SPC e" 'elfeed)
+
   :custom
   (shr-use-fonts nil) ; Fixes selecting monospace font for elfeed articles.
   (elfeed-feeds
@@ -465,7 +467,9 @@ ARG: I do not know what this is."
      ("https://alexschroeder.ch/view/index.rss" foss emacs)
      ("https://emacsredux.com/atom.xml" foss emacs)
      ("https://www.donostitik.com/rss" euskadi castellano)
-     ("https://www.noticiasdegipuzkoa.eus/rss" euskadi castellano))))
+     ("https://www.noticiasdegipuzkoa.eus/rss" euskadi castellano)
+     ("https://systemcrafters.net/rss/news.xml" foss linux scheme emacs)
+     ("https://aartaka.me/rss.xml" linux scheme))))
 
 (use-package emacs
   :custom
@@ -563,18 +567,8 @@ ARG: I do not know what this is."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files '("~/Org/Tasks.org"))
  '(package-selected-packages
-   '(ligature eglot wgrep exec-path-from-shell prettier-js cape json-mode consult vertico org-roam eval-in-repl ox-reveal writeroom-mode unicode-fonts visual-fill-column magit evil-collection general evil markdown-mode use-package base16-theme))
- '(screenshot-border-width 0)
- '(screenshot-font-family "Iosevka")
- '(screenshot-font-size 20)
- '(screenshot-line-numbers-p nil)
- '(screenshot-min-width 100)
- '(screenshot-remove-indent-p nil)
- '(screenshot-shadow-offset-horizontal 0)
- '(screenshot-shadow-offset-vertical 0)
- '(screenshot-text-only-p nil))
+   '(ligature eglot wgrep exec-path-from-shell prettier-js cape json-mode consult vertico org-roam eval-in-repl ox-reveal writeroom-mode unicode-fonts visual-fill-column magit evil-collection general evil markdown-mode use-package base16-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
