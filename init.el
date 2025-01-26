@@ -118,18 +118,20 @@ If no file is associated, just close buffer without prompt for save."
   :defer t)
 
 (use-package tree-sitter
+  :defer nil
   :hook (prog-mode . tree-sitter-mode)
   :config
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
-(use-package tree-sitter-langs
-  :after (tree-sitter))
+(use-package tree-sitter-langs)
 
-(use-package treesit-auto
-  :after (tree-sitter tree-sitter-langs)
-  :config
-  (global-treesit-auto-mode))
+;; (use-package treesit-auto
+;;   :custom
+;;   (treesit-auto-install t)
+;;   :config
+;;   (treesit-auto-add-to-auto-mode-alist 'all)
+;;   (global-treesit-auto-mode))
 
 (use-package typescript-mode
   :mode ("\\.tsx?\\'" . typescript-mode)
@@ -439,17 +441,14 @@ ARG: I do not know what this is."
   (markdown-code-face ((t (:family "Iosevka")))))
 
 (use-package flymake
-  :defer t
   :custom
   (flymake-fringe-indicator-position nil))
 
 (use-package apheleia
-  :defer t
   :config
   (apheleia-global-mode +1))
 
 (use-package eglot
-  :defer t
   :hook ((typescript-mode . eglot-ensure)
          (tsx-mode . eglot-ensure)
          (css-mode . eglot-ensure)))
@@ -468,14 +467,18 @@ ARG: I do not know what this is."
   (shr-use-fonts nil) ; Fixes selecting monospace font for elfeed articles.
   (elfeed-feeds
    '(("https://100r.co/links/rss.xml" art)
+     ("https://pluralistic.net/feed/" politics)
      ("http://blog.fogus.me/feed/" clojure)
+     ("https://evanp.me/rss" fediverse)
+     ("https://technomancy.us/atom.xml" scheme)
      ("https://solar.lowtechmagazine.com/feeds/all-en.atom.xml" art)
      ("https://sachachua.com/blog/feed/" emacs)
      ("https://protesilaos.com/master.xml" emacs philosophy)
      ("https://danluu.com/atom.xml" philosophy)
-     ("https://drewdevault.com/blog/index.xml" foss)
      ("https://alexschroeder.ch/view/index.rss" foss emacs)
      ("https://emacsredux.com/atom.xml" foss emacs)
+     ("https://sizeof.cat/atom.xml" foss)
+     ("https://dthompson.us/feed.xml" scheme)
      ("https://www.donostitik.com/rss" euskadi castellano)
      ("https://systemcrafters.net/rss/news.xml" foss linux scheme emacs)
      ("https://aartaka.me/rss.xml" linux scheme))))
@@ -501,7 +504,10 @@ ARG: I do not know what this is."
   :general
   (general-nmap "SPC b b" 'switch-to-buffer)
   (general-nmap "SPC b k" 'kill-current-buffer)
-  (general-nmap "SPC f f" 'find-file))
+  (general-nmap "SPC f f" 'find-file)
+
+  :init
+  (add-to-list 'auto-mode-alist '("\\.mjs\\'" . javascript-mode)))
 
 (use-package magit
   :general (general-nmap "SPC g" 'magit))
@@ -557,7 +563,7 @@ ARG: I do not know what this is."
   (global-corfu-mode))
 
 (use-package cape
-  :after corfu
+  :after (corfu)
 
   :bind (("C-M-i" . completion-at-point)
          ("M-/" . cape-dabbrev))
@@ -577,7 +583,7 @@ ARG: I do not know what this is."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(ligature eglot wgrep exec-path-from-shell prettier-js cape json-mode consult vertico org-roam eval-in-repl ox-reveal writeroom-mode unicode-fonts visual-fill-column magit evil-collection general evil markdown-mode use-package base16-theme)))
+   '(ligature eglot exec-path-from-shell prettier-js cape json-mode consult vertico org-roam eval-in-repl ox-reveal writeroom-mode unicode-fonts visual-fill-column magit evil-collection general evil markdown-mode use-package base16-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
