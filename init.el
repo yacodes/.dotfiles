@@ -260,8 +260,7 @@ If no file is associated, just close buffer without prompt for save."
 (use-package base16-theme
   :config
   (set-dark-theme)
-  (set-face-attribute 'default nil :family "Iosevka" :height 178)
-  (set-face-attribute 'fringe nil :background nil))
+  (set-face-attribute 'default nil :family "Iosevka" :height 178))
 
 (use-package visual-fill-column
   :defer t
@@ -575,6 +574,10 @@ ARG: I do not know what this is."
   :init
   (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 
+(use-package jinx
+  :general
+  (general-nmap "SPC j" 'jinx-mode))
+
 (setq gc-cons-threshold (* 2 1000 1000))
 
 (custom-set-variables
@@ -583,7 +586,7 @@ ARG: I do not know what this is."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(ligature eglot exec-path-from-shell prettier-js cape json-mode consult vertico org-roam eval-in-repl ox-reveal writeroom-mode unicode-fonts visual-fill-column magit evil-collection general evil markdown-mode use-package base16-theme)))
+   '(jinx ligature eglot exec-path-from-shell prettier-js cape json-mode consult vertico org-roam eval-in-repl ox-reveal writeroom-mode unicode-fonts visual-fill-column magit evil-collection general evil markdown-mode use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
