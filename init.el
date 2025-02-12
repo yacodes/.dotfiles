@@ -469,8 +469,9 @@ ARG: I do not know what this is."
      ("https://pluralistic.net/feed/" politics)
      ("http://blog.fogus.me/feed/" clojure)
      ("https://evanp.me/rss" fediverse)
+     ("https://andregarzia.com/feeds/all.atom.xml" foss)
      ("https://technomancy.us/atom.xml" scheme)
-     ("https://solar.lowtechmagazine.com/feeds/all-en.atom.xml" art)
+     ("https://solar.lowtechmagazine.com/posts/index.xml" art)
      ("https://sachachua.com/blog/feed/" emacs)
      ("https://protesilaos.com/master.xml" emacs philosophy)
      ("https://danluu.com/atom.xml" philosophy)
@@ -478,8 +479,10 @@ ARG: I do not know what this is."
      ("https://emacsredux.com/atom.xml" foss emacs)
      ("https://sizeof.cat/atom.xml" foss)
      ("https://dthompson.us/feed.xml" scheme)
+     ("https://www.fosskers.ca/en/rss" linux emacs lisp)
      ("https://www.donostitik.com/rss" euskadi castellano)
      ("https://systemcrafters.net/rss/news.xml" foss linux scheme emacs)
+     ("https://axolot.cat/rss" toplap)
      ("https://aartaka.me/rss.xml" linux scheme))))
 
 (use-package emacs
@@ -576,7 +579,8 @@ ARG: I do not know what this is."
 
 (use-package jinx
   :general
-  (general-nmap "SPC j" 'jinx-mode))
+  (general-nmap "SPC j t" 'jinx-mode)
+  (general-nmap "SPC j j" 'jinx-correct))
 
 (setq gc-cons-threshold (* 2 1000 1000))
 
