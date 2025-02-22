@@ -14,7 +14,7 @@ hide_edge_borders both
 # for_window [all] border pixel 2 # workaround for https://github.com/i3/i3/issues/5149
 
 # custom windows config
-for_window [title="(?i)bitwarden"] resize set 400 801
+for_window [title="(?i)bitwarden"] resize set 450 801
 for_window [title="(?i)bitwarden"] move position center
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -132,18 +132,9 @@ bindsym $mod+Shift+Ctrl+Down resize grow height 3 px or 3 ppt
 bindsym $mod+Shift+Ctrl+Up resize shrink height 3 px or 3 ppt
 bindsym $mod+Shift+Ctrl+Right resize grow width 3 px or 3 ppt
 
-# Autostart applications
+# Custom scripts
 # exec_always --no-startup-id "~/.config/polybar/launch.sh"
-
-# Keyboard settings
-# Keyboard speed
-exec_always --no-startup-id "xset r rate 200 30"
-# Init FN+KEYS
-exec_always --no-startup-id "xbindkeys --poll-rc"
-# Keyboard layout, layout trigger & CAPS lock to CTRL
-exec_always --no-startup-id "setxkbmap -layout us,ru -option grp:toggle,ctrl:nocaps"
-# Map CAPS LOCK to behave as ESC *and* as CTRL
-exec_always --no-startup-id "xcape -e 'Control_L=Escape'"
+exec_always --no-startup-id "~/.dotfiles/scripts/keyboard.sh"
 
 set_from_resource $term_background background
 set_from_resource $term_foreground foreground
