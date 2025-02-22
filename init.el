@@ -469,6 +469,7 @@ ARG: I do not know what this is."
      ("https://pluralistic.net/feed/" politics)
      ("http://blog.fogus.me/feed/" clojure)
      ("https://evanp.me/rss" fediverse)
+     ("https://buttondown.com/perfectsentences/rss")
      ("https://andregarzia.com/feeds/all.atom.xml" foss)
      ("https://technomancy.us/atom.xml" scheme)
      ("https://solar.lowtechmagazine.com/posts/index.xml" art)
@@ -483,6 +484,8 @@ ARG: I do not know what this is."
      ("https://www.donostitik.com/rss" euskadi castellano)
      ("https://systemcrafters.net/rss/news.xml" foss linux scheme emacs)
      ("https://axolot.cat/rss" toplap)
+     ("https://monthlyreview.org/rss" politics socialism)
+     ("https://thebaffler.com/rss" politics)
      ("https://aartaka.me/rss.xml" linux scheme))))
 
 (use-package emacs
