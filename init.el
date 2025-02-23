@@ -469,6 +469,7 @@ ARG: I do not know what this is."
      ("https://pluralistic.net/feed/" politics)
      ("http://blog.fogus.me/feed/" clojure)
      ("https://evanp.me/rss" fediverse)
+     ("https://silly.business/index.xml" emacs)
      ("https://buttondown.com/perfectsentences/rss")
      ("https://andregarzia.com/feeds/all.atom.xml" foss)
      ("https://technomancy.us/atom.xml" scheme)

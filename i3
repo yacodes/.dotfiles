@@ -32,7 +32,7 @@ bindsym $mod+Return exec st
 bindsym $mod+e exec "env LSP_USE_PLISTS=true emacsclient -c -a ''"
 
 # Launcher
-bindsym $mod+space exec "rofi -no-default-config -no-fixed-num-lines -drun-display-format {name} -display-drun 'λ' -modi drun,window,emoji -show drun -font 'Iosevka Light 40' -yoffset 256 -location 2"
+bindsym $mod+space exec "rofi -no-default-config -show drun"
 
 # Telegram
 # bindsym $mod+t exec telegram-desktop

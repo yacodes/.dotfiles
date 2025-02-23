@@ -1,42 +1,38 @@
+configuration {
+  location: 1;
+  font: "Iosevka Term Light 24";
+  modes: "drun,emoji";
+  drun-display-format: "{name}";
+  display-drun: "λ";
+  display-emoji: "⌣";
+}
+
 * {
-  background-color: #151515;
-  border-color: #151515;
-  text-color: #c5c8c6;
   spacing: 0;
-  width: 768px;
+  width: 100%;
+  text-color: #c5c8c6;
+  background-color: #151515;
 }
 
 inputbar {
-  border: 2px 2px 0 2px;
-  border-color: #373b41;
   children: [prompt,entry];
 }
 
-prompt {
-  padding: 16px 0 16px 16px;
-  border: 0;
-}
-
-textbox {
-}
-
-entry {
-  padding: 15px;
-  border: 2px 2px 0 2px;
+mainbox {
+  border: 0 0 3 0;
+  border-color: #373b41;
 }
 
 listview {
-  cycle: false;
   margin: 0;
-  lines: 6;
-  scrollbar: false;
-  border-color: #373b41;
-  border: 0 2px 2px 2px;
+  lines: 12;
+  columns: 4;
+  cycle: true;
 }
 
-element {
-  padding: 16px 16px 14px;
-}
+entry { padding: 8 6 9; }
+prompt { padding: 9 6 6 12; }
+element { padding: 9 12 6; }
 
 element-text,
 element-icon {
