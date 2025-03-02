@@ -103,36 +103,6 @@ If no file is associated, just close buffer without prompt for save."
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-;; @todo Is it necessary?
-(use-package exec-path-from-shell
-  :defer t
-  :config
-  (exec-path-from-shell-initialize))
-
-;; @todo Is it necessary?
-(use-package posframe
-  :defer t)
-
-;; @todo Is it necessary?
-(use-package transient
-  :defer t)
-
-(use-package tree-sitter
-  :defer nil
-  :hook (prog-mode . tree-sitter-mode)
-  :config
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
-(use-package tree-sitter-langs)
-
-;; (use-package treesit-auto
-;;   :custom
-;;   (treesit-auto-install t)
-;;   :config
-;;   (treesit-auto-add-to-auto-mode-alist 'all)
-;;   (global-treesit-auto-mode))
-
 (use-package typescript-mode
   :mode ("\\.tsx?\\'" . typescript-mode)
   :interpreter ("typescript" . typescript-mode)
@@ -142,9 +112,10 @@ If no file is associated, just close buffer without prompt for save."
 
   :config
   ;; see https://github.com/joaotavora/eglot/issues/624 and https://github.com/joaotavora/eglot#handling-quirky-servers
-  (define-derived-mode typescriptreact-mode typescript-mode "TypeScript[TSX]")
-  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
-  (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
+  ;; (define-derived-mode typescriptreact-mode typescript-mode "TypeScript[TSX]")
+  ;; (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
+  ;; (add-to-list 'major-mode-remap-alist '(typescriptreact-mode . tsx))
+  )
 
 (use-package ligature
   :config
@@ -448,15 +419,12 @@ ARG: I do not know what this is."
   (apheleia-global-mode +1))
 
 (use-package eglot
-  :hook ((typescript-mode . eglot-ensure)
-         (tsx-mode . eglot-ensure)
-         (css-mode . eglot-ensure)))
-
-(use-package json-mode
-  :mode ("\\.json\\'" . json-mode)
-  :interpreter ("json" . json-mode)
-  ;; :hook ((json-mode . (lambda () (add-hook 'before-save-hook 'json-pretty-print-buffer nil 'local))))
-  )
+  :hook (
+         ;; (typescript-mode . eglot-ensure)
+         (typescript-ts-mode . eglot-ensure)
+         (tsx-ts-mode . eglot-ensure)
+         (css-mode . eglot-ensure)
+         ))
 
 (use-package elfeed
   :general
@@ -490,6 +458,13 @@ ARG: I do not know what this is."
      ("https://aartaka.me/rss.xml" linux scheme))))
 
 (use-package emacs
+  :mode (("\\.tsx\\'" . tsx-ts-mode)
+         ("\\.jsx\\'" . tsx-ts-mode)
+         ("\\.ts\\'"  . typescript-ts-mode)
+         ("\\.js\\'"  . typescript-ts-mode)
+         ("\\.mjs\\'" . typescript-ts-mode)
+         ("\\.json\\'" .  json-ts-mode))
+
   :custom
   (css-indent-offset 2)
   (js-indent-level 2)
@@ -507,13 +482,41 @@ ARG: I do not know what this is."
   ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
   (read-extended-command-predicate #'command-completion-default-include-p)
 
+  (major-mode-remap-alist
+   '((css-mode . css-ts-mode)
+     (typescript-mode . typescript-ts-mode)
+     (js-mode . typescript-ts-mode)
+     (js2-mode . typescript-ts-mode)
+     (bash-mode . bash-ts-mode)
+     (css-mode . css-ts-mode)
+     (json-mode . json-ts-mode)
+     (js-json-mode . json-ts-mode)
+     (sh-mode . bash-ts-mode)))
+
   :general
   (general-nmap "SPC b b" 'switch-to-buffer)
   (general-nmap "SPC b k" 'kill-current-buffer)
   (general-nmap "SPC f f" 'find-file)
 
   :init
-  (add-to-list 'auto-mode-alist '("\\.mjs\\'" . javascript-mode)))
+  (setq treesit-language-source-alist
+        '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+          (cmake "https://github.com/uyha/tree-sitter-cmake")
+          (css "https://github.com/tree-sitter/tree-sitter-css")
+          (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+          (go "https://github.com/tree-sitter/tree-sitter-go")
+          (html "https://github.com/tree-sitter/tree-sitter-html")
+          (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+          (json "https://github.com/tree-sitter/tree-sitter-json")
+          (make "https://github.com/alemuller/tree-sitter-make")
+          (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+          (python "https://github.com/tree-sitter/tree-sitter-python")
+          (toml "https://github.com/tree-sitter/tree-sitter-toml")
+          (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+          (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+          (yaml "https://github.com/ikatyang/tree-sitter-yaml"))))
+
+;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
 
 (use-package magit
   :general (general-nmap "SPC g" 'magit))
@@ -593,8 +596,7 @@ ARG: I do not know what this is."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(jinx ligature eglot exec-path-from-shell prettier-js cape json-mode consult vertico org-roam eval-in-repl ox-reveal writeroom-mode unicode-fonts visual-fill-column magit evil-collection general evil markdown-mode use-package)))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

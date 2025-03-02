@@ -29,7 +29,7 @@ floating_modifier $mod
 bindsym $mod+Return exec st
 
 # Editor
-bindsym $mod+e exec "env LSP_USE_PLISTS=true emacsclient -c -a ''"
+bindsym $mod+e exec "emacsclient -c -a ''"
 
 # Launcher
 bindsym $mod+space exec "rofi -no-default-config -show drun"
