@@ -412,7 +412,8 @@ ARG: I do not know what this is."
 
 (use-package flymake
   :custom
-  (flymake-fringe-indicator-position nil))
+  (flymake-fringe-indicator-position nil)
+  (flymake-indicator-type nil))
 
 (use-package apheleia
   :config
