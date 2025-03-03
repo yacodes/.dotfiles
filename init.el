@@ -483,6 +483,9 @@ ARG: I do not know what this is."
   ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
   (read-extended-command-predicate #'command-completion-default-include-p)
 
+  ;; Never save auth data.
+  (auth-source-save-behavior nil)
+
   (major-mode-remap-alist
    '((css-mode . css-ts-mode)
      (typescript-mode . typescript-ts-mode)
