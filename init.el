@@ -103,20 +103,6 @@ If no file is associated, just close buffer without prompt for save."
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package typescript-mode
-  :mode ("\\.tsx?\\'" . typescript-mode)
-  :interpreter ("typescript" . typescript-mode)
-
-  :custom
-  (typescript-indent-level 2)
-
-  :config
-  ;; see https://github.com/joaotavora/eglot/issues/624 and https://github.com/joaotavora/eglot#handling-quirky-servers
-  ;; (define-derived-mode typescriptreact-mode typescript-mode "TypeScript[TSX]")
-  ;; (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
-  ;; (add-to-list 'major-mode-remap-alist '(typescriptreact-mode . tsx))
-  )
-
 (use-package ligature
   :config
   ;; Enable all Iosevka ligatures in programming modes
@@ -256,8 +242,6 @@ If no file is associated, just close buffer without prompt for save."
                                            (setf (cdr (assq 'continuation fringe-indicator-alist)) '(left-curly-arrow right-curly-arrow)))))
 
 (use-package org
-  :defer t
-
   :custom
   ;; Color palette:
   ;; https://github.com/tinted-theming/base16-emacs/blob/main/build/base16-tomorrow-night-theme.el#L14-L30
@@ -269,8 +253,8 @@ If no file is associated, just close buffer without prompt for save."
 
   (org-file-apps
    '((auto-mode . emacs)
-     ("\\.x?html?\\'" . "firefox %s")
-     ("\\.pdf\\(::[0-9]+\\)?\\'" . "firefox %s")
+     ("\\.x?html?\\'" . "librewolf %s")
+     ("\\.pdf\\(::[0-9]+\\)?\\'" . "librewolf %s")
      ("\\.mp4\\'" . "vlc \"%s\"")
      ("\\.mkv" . "vlc \"%s\"")))
 
@@ -343,7 +327,7 @@ ARG: I do not know what this is."
 
 (setq-default initial-buffer-choice "~/Org/Tasks.org")
 
-;; Remove bars
+;; Remove UI elements
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -395,11 +379,6 @@ ARG: I do not know what this is."
   :init
   (savehist-mode))
 
-(use-package yaml-mode
-  :mode ("\\.yml\\'" . yaml-mode)
-  :interpreter ("yaml" . yaml-mode)
-  :hook ((yaml-mode-hook . (lambda () (toggle-truncate-lines t)))))
-
 (use-package markdown-mode
   :custom (markdown-command "multimarkdown")
   :commands (markdown-mode gfm-mode)
@@ -433,6 +412,7 @@ ARG: I do not know what this is."
 
   :custom
   (shr-use-fonts nil) ; Fixes selecting monospace font for elfeed articles.
+
   (elfeed-feeds
    '(("https://100r.co/links/rss.xml" art)
      ("https://pluralistic.net/feed/" politics)
@@ -464,7 +444,9 @@ ARG: I do not know what this is."
          ("\\.ts\\'"  . typescript-ts-mode)
          ("\\.js\\'"  . typescript-ts-mode)
          ("\\.mjs\\'" . typescript-ts-mode)
-         ("\\.json\\'" .  json-ts-mode))
+
+         ("\\.json\\'" .  json-ts-mode)
+         ("\\.yml\\'" . yaml-ts-mode))
 
   :custom
   (css-indent-offset 2)
@@ -486,6 +468,7 @@ ARG: I do not know what this is."
   ;; Never save auth data.
   (auth-source-save-behavior nil)
 
+  ;; Remap major modes to the treesit ones.
   (major-mode-remap-alist
    '((css-mode . css-ts-mode)
      (typescript-mode . typescript-ts-mode)
@@ -495,6 +478,7 @@ ARG: I do not know what this is."
      (css-mode . css-ts-mode)
      (json-mode . json-ts-mode)
      (js-json-mode . json-ts-mode)
+     (yaml-mode . yaml-ts-mode)
      (sh-mode . bash-ts-mode)))
 
   :general
