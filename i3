@@ -135,6 +135,8 @@ bindsym $mod+Shift+Ctrl+Right resize grow width 3 px or 3 ppt
 # Custom scripts
 # exec_always --no-startup-id "~/.config/polybar/launch.sh"
 exec_always --no-startup-id "~/.dotfiles/scripts/keyboard.sh"
+exec_always --no-startup-id "~/.dotfiles/scripts/polybar.sh"
+exec_always --no-startup-id picom -b
 
 set_from_resource $term_background background
 set_from_resource $term_foreground foreground
@@ -161,7 +163,7 @@ client.focused          #373b41 #373b41 #373b41 #373b41
 client.focused_inactive #202225 #202225 #c5c8c6 #373b41
 client.unfocused        #202225 #202225 #c5c8c6 #202225
 client.urgent           #202225 #202225 #c5c8c6 #202225
-client.placeholder      #000000 #0c0c0c #c5c8c6 #000000 
+client.placeholder      #000000 #0c0c0c #c5c8c6 #000000
 client.background       #151515
 
 # Set inner/outer gaps

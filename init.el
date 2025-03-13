@@ -418,6 +418,7 @@ ARG: I do not know what this is."
      ("https://pluralistic.net/feed/" politics)
      ("http://blog.fogus.me/feed/" clojure)
      ("https://evanp.me/rss" fediverse)
+     ("https://jvns.ca/atom.xml")
      ("https://silly.business/index.xml" emacs)
      ("https://buttondown.com/perfectsentences/rss")
      ("https://andregarzia.com/feeds/all.atom.xml" foss)
@@ -425,9 +426,11 @@ ARG: I do not know what this is."
      ("https://solar.lowtechmagazine.com/posts/index.xml" art)
      ("https://sachachua.com/blog/feed/" emacs)
      ("https://protesilaos.com/master.xml" emacs philosophy)
+     ("https://www.geoffreylitt.com/feed.xml" foss)
      ("https://danluu.com/atom.xml" philosophy)
      ("https://alexschroeder.ch/view/index.rss" foss emacs)
      ("https://emacsredux.com/atom.xml" foss emacs)
+     ("https://indieweb.org/this-week/feed.xml" foss)
      ("https://sizeof.cat/atom.xml" foss)
      ("https://dthompson.us/feed.xml" scheme)
      ("https://www.fosskers.ca/en/rss" linux emacs lisp)
@@ -446,7 +449,9 @@ ARG: I do not know what this is."
          ("\\.mjs\\'" . typescript-ts-mode)
 
          ("\\.json\\'" .  json-ts-mode)
-         ("\\.yml\\'" . yaml-ts-mode))
+         ("\\.yml\\'" . yaml-ts-mode)
+
+         ("\\.yuck\\'" . scheme-mode))
 
   :custom
   (css-indent-offset 2)
@@ -480,6 +485,9 @@ ARG: I do not know what this is."
      (js-json-mode . json-ts-mode)
      (yaml-mode . yaml-ts-mode)
      (sh-mode . bash-ts-mode)))
+
+  ;; Maximize tree-sitter decorations 
+  (treesit-font-lock-level 4)
 
   :general
   (general-nmap "SPC b b" 'switch-to-buffer)
@@ -553,8 +561,8 @@ ARG: I do not know what this is."
   (corfu-preview-current nil) 
 
   :hook ((org-mode . ya-enable-aggressive-corfu-mode)
-         (css-mode . ya-enable-css-corfu-mode)
-         (yaml-mode . ya-enable-yaml-corfu-mode))
+         (css-ts-mode . ya-enable-css-corfu-mode)
+         (yaml-ts-mode . ya-enable-yaml-corfu-mode))
 
   :init
   (global-corfu-mode))
@@ -584,7 +592,10 @@ ARG: I do not know what this is."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
+ '(package-selected-packages
+   '(apheleia base16-theme cape consult corfu dracula-theme elfeed evil-collection general
+              jinx ligature magit marginalia markdown-mode nano-theme orderless org-roam
+              rainbow-delimiters typescript-mode undo-tree vertico writeroom-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

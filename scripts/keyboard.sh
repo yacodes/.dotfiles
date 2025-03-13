@@ -4,6 +4,7 @@
 xset r rate 200 30
 
 # Init FN+KEYS
+if pgrep -x "xbindkeys" > /dev/null; then pkill xbindkeys; fi
 xbindkeys --poll-rc
 
 # Keyboard layout, layout trigger & CAPS lock to CTRL
