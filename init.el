@@ -419,6 +419,8 @@ ARG: I do not know what this is."
      ("http://blog.fogus.me/feed/" clojure)
      ("https://evanp.me/rss" fediverse)
      ("https://jvns.ca/atom.xml")
+     ("https://ploum.net/atom.xml")
+     ("https://thelibre.news/latest/rss/")
      ("https://silly.business/index.xml" emacs)
      ("https://buttondown.com/perfectsentences/rss")
      ("https://andregarzia.com/feeds/all.atom.xml" foss)
@@ -585,6 +587,9 @@ ARG: I do not know what this is."
   (general-nmap "SPC j t" 'jinx-mode)
   (general-nmap "SPC j j" 'jinx-correct))
 
+;; A package for batch-editing grep results.
+(use-package wgrep)
+
 (setq gc-cons-threshold (* 2 1000 1000))
 
 (custom-set-variables
@@ -595,7 +600,7 @@ ARG: I do not know what this is."
  '(package-selected-packages
    '(apheleia base16-theme cape consult corfu dracula-theme elfeed evil-collection general
               jinx ligature magit marginalia markdown-mode nano-theme orderless org-roam
-              rainbow-delimiters typescript-mode undo-tree vertico writeroom-mode)))
+              rainbow-delimiters typescript-mode undo-tree vertico wgrep writeroom-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
