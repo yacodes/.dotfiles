@@ -290,6 +290,16 @@ If no file is associated, just close buffer without prompt for save."
      (sql . t)
      (plantuml . t))))
 
+(use-package org-superstar
+  :after org
+  :hook (org-mode . org-superstar-mode)
+  :custom
+  (org-superstar-headline-bullets-list '("‣" "•" "◦"))
+  (org-superstar-item-bullet-alist
+   '((?* . ?⋆)
+     (?+ . ?⁃)
+     (?- . ?·))))
+
 (use-package org-roam
   :after (org)
 
@@ -607,8 +617,9 @@ ARG: I do not know what this is."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(apheleia base16-theme cape consult corfu dracula-theme elfeed evil-collection general
-              jinx ligature magit marginalia markdown-mode nano-theme orderless org-roam
-              rainbow-delimiters typescript-mode undo-tree vertico wgrep writeroom-mode)))
+              jinx ligature magit marginalia markdown-mode nano-theme orderless
+              org-roam rainbow-delimiters typescript-mode undo-tree vertico
+              wgrep writeroom-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
