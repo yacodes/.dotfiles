@@ -418,7 +418,12 @@ ARG: I do not know what this is."
      ("https://pluralistic.net/feed/" politics)
      ("http://blog.fogus.me/feed/" clojure)
      ("https://evanp.me/rss" fediverse)
+     ("https://themkat.net/feed.xml" emacs)
      ("https://jvns.ca/atom.xml")
+     ("https://sethmlarson.dev/feed")
+     ("https://www.miriamsuzanne.com/feed.xml")
+     ("https://nicolas-hoizey.com/feeds/all.xml")
+     ("https://robinrendle.com/feed.xml")
      ("https://ploum.net/atom.xml")
      ("https://thelibre.news/latest/rss/")
      ("https://silly.business/index.xml" emacs)
@@ -456,6 +461,9 @@ ARG: I do not know what this is."
          ("\\.yuck\\'" . scheme-mode))
 
   :custom
+  (scroll-conservatively 10)
+  (scroll-margin 3)
+
   (css-indent-offset 2)
   (js-indent-level 2)
   (completion-cycle-threshold 1)
