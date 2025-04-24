@@ -425,16 +425,25 @@ ARG: I do not know what this is."
 
   (elfeed-feeds
    '(("https://100r.co/links/rss.xml" art)
+     ("https://tante.cc/rss" luddism)
+     ("https://blog.infected.systems/posts/index.xml")
+     ("https://www.irun.org/es/noticias?format=feed&type=rss")
      ("https://pluralistic.net/feed/" politics)
      ("http://blog.fogus.me/feed/" clojure)
      ("https://evanp.me/rss" fediverse)
+     ("https://mdhughes.tech/feed/")
      ("https://themkat.net/feed.xml" emacs)
      ("https://jvns.ca/atom.xml")
      ("https://sethmlarson.dev/feed")
+     ("https://piccalil.li/rss")
+     ("https://ruthtillman.com/index.xml")
+     ("https://erinkissane.com/feed.rss")
+     ("https://ethanmarcotte.com/wrote/feed.xml")
      ("https://www.miriamsuzanne.com/feed.xml")
      ("https://nicolas-hoizey.com/feeds/all.xml")
      ("https://robinrendle.com/feed.xml")
      ("https://ploum.net/atom.xml")
+     ("https://newleftreview.org/feed" politics)
      ("https://thelibre.news/latest/rss/")
      ("https://silly.business/index.xml" emacs)
      ("https://buttondown.com/perfectsentences/rss")
@@ -456,6 +465,17 @@ ARG: I do not know what this is."
      ("https://axolot.cat/rss" toplap)
      ("https://monthlyreview.org/rss" politics socialism)
      ("https://thebaffler.com/rss" politics)
+     ("https://arne.me/articles/atom.xml")
+     ("https://arne.me/weekly/atom.xml")
+     ("https://arne.me/book-reviews/feed.xml")
+     ("https://blog.kotatsu.dev/feed.xml")
+     ("https://blog.kotatsu.dev/notes.xml")
+     ("https://christophvoigt.com/rss.xml")
+     ("https://hexeditreality.com/index.xml")
+     ("https://foreverliketh.is/blog/index.xml")
+     ("https://ismailefe.org/feed.xml")
+     ("https://coolcut.lol/rss")
+     ("https://laplab.me/posts/index.xml")
      ("https://aartaka.me/rss.xml" linux scheme))))
 
 (use-package emacs
@@ -473,6 +493,8 @@ ARG: I do not know what this is."
   :custom
   (scroll-conservatively 10)
   (scroll-margin 3)
+
+  (display-line-numbers-width 3)
 
   (css-indent-offset 2)
   (js-indent-level 2)
@@ -608,6 +630,14 @@ ARG: I do not know what this is."
 ;; A package for batch-editing grep results.
 (use-package wgrep)
 
+;; HTTP request from within org-mode.
+(use-package ob-http
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (http . t))))
+
 (setq gc-cons-threshold (* 2 1000 1000))
 
 (custom-set-variables
@@ -617,9 +647,9 @@ ARG: I do not know what this is."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(apheleia base16-theme cape consult corfu dracula-theme elfeed evil-collection general
-              jinx ligature magit marginalia markdown-mode nano-theme orderless
-              org-roam rainbow-delimiters typescript-mode undo-tree vertico
-              wgrep writeroom-mode)))
+              iscroll jinx ligature magit marginalia markdown-mode nano-theme ob-http
+              orderless org-modern org-roam rainbow-delimiters typescript-mode undo-tree
+              vertico wgrep writeroom-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
