@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
 echo "Installing .dotfiles..."
 
@@ -20,8 +20,11 @@ echo "Linking emacs..."
 mkdir -p ~/.emacs.d/
 ln -fs ~/.dotfiles/init.el ~/.emacs.d/init.el
 
-echo "Linking dunstrc ..."
+echo "Linking dunstrc..."
 mkdir -p ~/.config/dunst/
 ln -fs ~/.dotfiles/dunstrc ~/.config/dunst/dunstrc
+
+echo "Linking picom configuration…"
+ln -fs ~/.dotfiles/picom.conf ~/.config/picom.conf
 
 echo "Done."

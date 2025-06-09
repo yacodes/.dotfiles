@@ -425,7 +425,21 @@ ARG: I do not know what this is."
 
   (elfeed-feeds
    '(("https://100r.co/links/rss.xml" art)
+     ("https://matklad.github.io/feed.xml")
      ("https://tante.cc/rss" luddism)
+     ("https://dbushell.com/rss.xml")
+     ("https://mccd.space/feed.xml")
+     ("https://arielsalminen.com/atom.xml" web)
+     ("https://surveillanceresistancelab.org/feed/")
+     ("https://evanhahn.com/blog/index.xml" web)
+     ("https://www.frctlflm.blog/blog?format=rss" luddism)
+     ("https://seirdy.one/posts/atom.xml" luddism)
+     ("https://www.azabani.com/feed/tag/home.xml" web)
+     ("https://maggieappleton.com/rss.xml" anthropology web)
+     ("https://www.rousette.org.uk/index.xml")
+     ("https://www.dwarmstrong.org/feed.xml" linux debian)
+     ("https://mark.stosberg.com/rss/" keyboards cycling linux)
+     ("https://olddeuteronomy.github.io/index.xml" emacs)
      ("https://blog.infected.systems/posts/index.xml")
      ("https://www.irun.org/es/noticias?format=feed&type=rss")
      ("https://pluralistic.net/feed/" politics)
@@ -435,7 +449,8 @@ ARG: I do not know what this is."
      ("https://themkat.net/feed.xml" emacs)
      ("https://jvns.ca/atom.xml")
      ("https://sethmlarson.dev/feed")
-     ("https://piccalil.li/rss")
+     ("https://irreal.org/blog/?feed=rss2" emacs)
+     ("https://piccalil.li/feed.xml")
      ("https://ruthtillman.com/index.xml")
      ("https://erinkissane.com/feed.rss")
      ("https://ethanmarcotte.com/wrote/feed.xml")
@@ -646,13 +661,12 @@ ARG: I do not know what this is."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(apheleia base16-theme cape consult corfu dracula-theme elfeed evil-collection general
-              iscroll jinx ligature magit marginalia markdown-mode nano-theme ob-http
-              orderless org-modern org-roam rainbow-delimiters typescript-mode undo-tree
-              vertico wgrep writeroom-mode)))
+   '(apheleia base16-theme cape consult corfu elfeed evil-collection general jinx ligature
+              magit marginalia markdown-mode ob-http orderless org-roam
+              org-superstar rainbow-delimiters undo-tree vertico wgrep writeroom-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-ellipsis ((t :foreground unspecified))))
+ )
