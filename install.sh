@@ -27,6 +27,10 @@ ln -fs ~/.dotfiles/dunstrc ~/.config/dunst/dunstrc
 echo "Linking picom configuration…"
 ln -fs ~/.dotfiles/picom.conf ~/.config/picom.conf
 
+echo "Linking atuin configuration…"
+mkdir -p ~/.config/atuin/
+ln -fs ~/.dotfiles/atuin.toml ~/.config/atuin/config.toml
+
 echo "Linking XOrg configration…"
 ln -fs ~/.dotfiles/.xbindkeysrc ~/.xbindkeysrc
 ln -fs ~/.dotfiles/.Xresources ~/.Xresources
