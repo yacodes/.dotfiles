@@ -260,8 +260,8 @@ If no file is associated, just close buffer without prompt for save."
 
   :custom
   ;; Project management
-  (org-directory "~/Org/")
-  (org-agenda-files (list "~/Org/Tasks.org"))
+  (org-directory "~/Sync/Org/")
+  (org-agenda-files (list "~/Sync/Org/Tasks.org"))
   (org-log-done 'time)
   (org-tags-column -77)
   (org-startup-folded t)
@@ -304,7 +304,7 @@ If no file is associated, just close buffer without prompt for save."
   :after (org)
 
   :custom
-  (org-roam-directory (file-truename "~/Org/Roam/"))
+  (org-roam-directory (file-truename "~/Sync/Org/Roam/"))
   (org-roam-completion-everywhere t)
 
   :bind (("C-c n f" . org-roam-node-find)
@@ -335,7 +335,7 @@ ARG: I do not know what this is."
     (ad-enable-advice 'isearch-repeat 'after 'isearch-no-fail)
     (ad-activate 'isearch-repeat)))
 
-(setq-default initial-buffer-choice "~/Org/Tasks.org")
+(setq-default initial-buffer-choice "~/Sync/Org/Tasks.org")
 
 ;; Remove UI elements
 (scroll-bar-mode -1)
@@ -448,6 +448,7 @@ ARG: I do not know what this is."
      ("https://pluralistic.net/feed/" politics)
      ("http://blog.fogus.me/feed/" clojure)
      ("https://evanp.me/rss" fediverse)
+     ("https://www.tbray.org/ongoing/ongoing.atom")
      ("https://mdhughes.tech/feed/")
      ("https://themkat.net/feed.xml" emacs)
      ("https://jvns.ca/atom.xml")
