@@ -96,10 +96,6 @@ If no file is associated, just close buffer without prompt for save."
       (when currentFile
         (delete-file currentFile)))))
 
-(use-package elec-pair
-  :defer t
-  :init (electric-pair-mode t))
-
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
@@ -425,10 +421,26 @@ ARG: I do not know what this is."
 
   (elfeed-feeds
    '(("https://100r.co/links/rss.xml" art)
+
+     ("https://www.elsaltodiario.com/general/feed")
+
+     ("http://www.angulaberria.info/es/rss.xml" gipuzkoa irun castellano)
+
      ("https://matklad.github.io/feed.xml")
      ("https://tante.cc/rss" luddism)
      ("https://dbushell.com/rss.xml")
+     ("https://balkanist.net/feed/" philosophy)
+     ("https://www.cabinetmagazine.org/rss/rss.xml" philosophy)
+     ("https://thephilosophicalsalon.com/feed/" philosophy)
+     ("https://stephango.com/feed.xml")
+     ("https://celluloidwickerman.com/feed/" cine)
+     ("https://happyfellow.bearblog.dev/feed/")
+     ("https://schmud.de/feed.rss" clojure)
      ("https://mccd.space/feed.xml")
+     ("https://eev.ee/feeds/atom.xml")
+     ("https://andrewkelley.me/rss.xml")
+     ("https://www.victorshammas.com/blog?format=rss")
+     ("https://www.sensesofcinema.com/feed/")
      ("https://jakelazaroff.com/rss.xml" web)
      ("https://nolanlawson.com/feed/" web)
      ("https://www.keithcirkel.co.uk/feed.xml" web)

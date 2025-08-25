@@ -5,7 +5,7 @@ Xft.hintstyle: hintfull
 Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
-Xcursor.size: 38
+Xcursor.size: 40
 Xcursor.theme: phinger-cursors-light
 emacs.toolBar: 0
 emacs.menuBar: 0
