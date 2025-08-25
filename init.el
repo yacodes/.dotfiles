@@ -421,12 +421,13 @@ ARG: I do not know what this is."
 
   (elfeed-feeds
    '(("https://100r.co/links/rss.xml" art)
-
      ("https://www.elsaltodiario.com/general/feed")
-
      ("http://www.angulaberria.info/es/rss.xml" gipuzkoa irun castellano)
-
+     ("https://catskull.net/feed.xml")
+     ("https://www.joshwcomeau.com/rss.xml" css web)
      ("https://matklad.github.io/feed.xml")
+     ("https://xabier.barandiaran.net/feed/" philosophy euskadi)
+     ("https://meyerweb.com//eric/thoughts/rss2/full" web)
      ("https://tante.cc/rss" luddism)
      ("https://dbushell.com/rss.xml")
      ("https://balkanist.net/feed/" philosophy)
