@@ -1,7 +1,5 @@
 # .dotfiles
 
-![Desktop Image](./.media/system.png)
-
 ## Software
 
 - **WM:** [i3-gaps](https://github.com/Airblader/i3)
@@ -22,13 +20,3 @@ $ ./install.sh
 ```
 
 If you already have some systems configured, then the installation script will not rewrite it. You should move them manually as backups: `$ mv ~/.zshrc ~/.zshrc.bak`. Then run the script again.
-
-## Screenshots
-
-![Browser](./.media/browser.png)
-
-![Rofi](./.media/rofi.png)
-
-![Shader](./.media/shader.png)
-
-![Audio](./.media/audio.png)

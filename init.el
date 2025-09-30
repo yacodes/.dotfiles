@@ -405,12 +405,10 @@ ARG: I do not know what this is."
   (apheleia-global-mode +1))
 
 (use-package eglot
-  :hook (
-         ;; (typescript-mode . eglot-ensure)
+  :hook (;; (typescript-mode . eglot-ensure)
          (typescript-ts-mode . eglot-ensure)
          (tsx-ts-mode . eglot-ensure)
-         (css-mode . eglot-ensure)
-         ))
+         (css-mode . eglot-ensure)))
 
 (use-package elfeed
   :general
@@ -428,7 +426,22 @@ ARG: I do not know what this is."
      ("https://matklad.github.io/feed.xml")
      ("https://xabier.barandiaran.net/feed/" philosophy euskadi)
      ("https://meyerweb.com//eric/thoughts/rss2/full" web)
+     ("https://brucknerite.net/feed" politics castellano)
      ("https://tante.cc/rss" luddism)
+     ("https://infrequently.org/feed/" web accessibility)
+     ("https://tudorr.ro/feed.rss" linux)
+     ("https://evanhahn.com/blog/index.xml" web)
+     ("https://reedcodes.com/feed.xml" web)
+     ("https://www.ericafustero.com/feed")
+     ("https://entropicthoughts.com/feed")
+     ("https://manueluberti.eu/feed.xml" emacs)
+     ("https://susam.net/feed.xml" emacs lisp)
+     ("https://xn--gckvb8fzb.com/index.xml")
+     ("https://takeonrules.com/index.xml" emacs)
+     ("https://adamsilver.io/atom.xml" web ui)
+     ("https://abhinavsarkar.net/notes/feed.atom" fediverse web)
+     ("https://newsletter.wedistribute.org/rss/" fediverse)
+     ("https://sciencefictionruminations.com/feed/" sci-fi)
      ("https://dbushell.com/rss.xml")
      ("https://balkanist.net/feed/" philosophy)
      ("https://www.cabinetmagazine.org/rss/rss.xml" philosophy)
@@ -442,8 +455,23 @@ ARG: I do not know what this is."
      ("https://andrewkelley.me/rss.xml")
      ("https://www.victorshammas.com/blog?format=rss")
      ("https://www.sensesofcinema.com/feed/")
+     ("https://takeonrules.com/index.xml" emacs lisp)
+     ("https://dataswamp.org/~solene/rss.xml")
+     ("https://mccd.space/feed.xml")
+     ("https://maurycyz.com/index.xml")
+     ("https://shellsharks.com/feeds/all-feed.xml" indieweb fediverse)
+     ("https://blog.clew.se/feed/" indieweb fediverse)
+     ("https://heydonworks.com/feed.xml" web accessibility)
+     ("https://buttondown.email/cassidoo/rss" web keyboards)
+     ("https://gilest.org/feed/index.xml" web)
+     ("https://destructured.net/rss.xml" permacomputing web fediverse)
+     ("https://shkspr.mobi/blog/feed/atom" web)
      ("https://jakelazaroff.com/rss.xml" web)
      ("https://nolanlawson.com/feed/" web)
+     ("https://blog.ctms.me/index.xml" web)
+     ("https://hamatti.org/feed/feed.xml")
+     ("https://kayserifserif.place/feed.xml" web)
+     ("https://bbs.permacomputing.net/rss.xml" permacomputing)
      ("https://www.keithcirkel.co.uk/feed.xml" web)
      ("https://arielsalminen.com/atom.xml" web)
      ("https://surveillanceresistancelab.org/feed/")
@@ -458,6 +486,8 @@ ARG: I do not know what this is."
      ("https://olddeuteronomy.github.io/index.xml" emacs)
      ("https://blog.infected.systems/posts/index.xml")
      ("https://www.irun.org/es/noticias?format=feed&type=rss")
+     ("https://lyra.horse/blog/posts/index.xml" web infosec)
+     ("https://ratfactor.com/atom.xml" web tech)
      ("https://pluralistic.net/feed/" politics)
      ("http://blog.fogus.me/feed/" clojure)
      ("https://evanp.me/rss" fediverse)
@@ -503,7 +533,6 @@ ARG: I do not know what this is."
      ("https://blog.kotatsu.dev/feed.xml")
      ("https://blog.kotatsu.dev/notes.xml")
      ("https://christophvoigt.com/rss.xml")
-     ("https://hexeditreality.com/index.xml")
      ("https://foreverliketh.is/blog/index.xml")
      ("https://ismailefe.org/feed.xml")
      ("https://coolcut.lol/rss")
@@ -670,6 +699,10 @@ ARG: I do not know what this is."
    '((emacs-lisp . t)
      (http . t))))
 
+(use-package exec-path-from-shell
+  :init
+  (exec-path-from-shell-initialize))
+
 (setq gc-cons-threshold (* 2 1000 1000))
 
 (custom-set-variables
@@ -678,9 +711,10 @@ ARG: I do not know what this is."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(apheleia base16-theme cape consult corfu elfeed evil-collection general jinx ligature
-              magit marginalia markdown-mode ob-http orderless org-roam
-              org-superstar rainbow-delimiters undo-tree vertico wgrep writeroom-mode)))
+   '(apheleia base16-theme cape consult corfu elfeed evil-collection exec-path-from-shell
+              general jinx ligature magit marginalia markdown-mode ob-http orderless
+              org-roam org-superstar rainbow-delimiters undo-tree vertico wgrep
+              writeroom-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
