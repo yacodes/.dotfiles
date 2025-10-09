@@ -419,7 +419,7 @@ ARG: I do not know what this is."
 
   (elfeed-feeds
    '(("https://100r.co/links/rss.xml" art)
-     ("https://www.elsaltodiario.com/general/feed")
+     ;; ("https://www.elsaltodiario.com/general/feed")
      ("http://www.angulaberria.info/es/rss.xml" gipuzkoa irun castellano)
      ("https://catskull.net/feed.xml")
      ("https://www.joshwcomeau.com/rss.xml" css web)
